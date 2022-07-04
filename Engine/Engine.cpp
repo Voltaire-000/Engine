@@ -48,20 +48,20 @@ CEngineApp::CEngineApp() noexcept
 
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
-	static Handle(Aspect_DisplayConnection) displayConnection;
-	if (displayConnection.IsNull())
-		displayConnection = new Aspect_DisplayConnection();
-	if (!m_GraphicDriver.IsNull())
-	{
-		try
-		{
-			m_GraphicDriver = new OpenGl_GraphicDriver(displayConnection, false);
-		}
-		catch (Standard_Failure)
-		{
-			//AfxMessageBox(IDP_DRIVER_INIT_FAILED);
-		}
-	}
+	//static Handle(Aspect_DisplayConnection) displayConnection;
+	//if (displayConnection.IsNull())
+	//	displayConnection = new Aspect_DisplayConnection();
+	//if (!m_GraphicDriver.IsNull())
+	//{
+	//	try
+	//	{
+	//		m_GraphicDriver = new OpenGl_GraphicDriver(displayConnection, false);
+	//	}
+	//	catch (Standard_Failure)
+	//	{
+	//		//AfxMessageBox(IDP_DRIVER_INIT_FAILED);
+	//	}
+	//}
 }
 
 // The one and only CEngineApp object

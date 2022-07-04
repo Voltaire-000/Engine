@@ -26,8 +26,19 @@ END_MESSAGE_MAP()
 
 CEngineDoc::CEngineDoc() noexcept
 {
-	// TODO: add one-time construction code here
-	Handle(Graphic3d_GraphicDriver) theGraphicDriver = ((CEngineApp*)AfxGetApp())->GetGraphicDriver();
+	static Handle(Aspect_DisplayConnection) displayConnection;
+	if (displayConnection.IsNull())
+			displayConnection = new Aspect_DisplayConnection();
+	Handle(OpenGl_GraphicDriver) graphicDriver = new OpenGl_GraphicDriver(displayConnection, false);
+	//	Initialize V3d_Viewer
+	myViewer = new V3d_Viewer(graphicDriver);
+	myViewer->SetLightOn();
+	myViewer->SetDefaultBackgroundColor(Quantity_NOC_BLACK);
+
+	//	create a new window over the existing window
+	myAISContext = new AIS_InteractiveContext(myViewer);
+	myAISContext->SetDisplayMode(AIS_Shaded, true);
+	myAISContext->SetAutomaticHilight(Standard_False);
 
 }
 
@@ -37,6 +48,11 @@ CEngineDoc::~CEngineDoc()
 
 void CEngineDoc::DrawSphere(double Radius)
 {
+	BRepPrimAPI_MakeSphere mkSphere(Radius);
+	mkSphere.Build();
+	TopoDS_Shape Sphere = mkSphere.Shape();
+
+	myAISContext->Display(new AIS_Shape(Sphere), true);
 }
 
 BOOL CEngineDoc::OnNewDocument()
