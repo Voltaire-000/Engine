@@ -32,11 +32,21 @@ CEngineDoc::CEngineDoc() noexcept
 	Handle(OpenGl_GraphicDriver) graphicDriver = new OpenGl_GraphicDriver(displayConnection, false);
 	//	Initialize V3d_Viewer
 	myViewer = new V3d_Viewer(graphicDriver);
-	myViewer->SetLightOn();
-	myViewer->SetDefaultBackgroundColor(Quantity_NOC_BLACK);
-
 	//	create a new window over the existing window
 	myAISContext = new AIS_InteractiveContext(myViewer);
+
+
+	///////////////////////////////////////////////
+	//	Lighting
+	Handle(V3d_DirectionalLight)	LightDir = new V3d_DirectionalLight(V3d_Zneg, Quantity_Color(Quantity_NOC_GRAY97), 1);
+	Handle(V3d_AmbientLight)		LightAmb = new V3d_AmbientLight();
+	LightDir->SetDirection(1.0, -2.0, -10.0);
+	myViewer->AddLight(LightDir);
+	myViewer->AddLight(LightAmb);
+	myViewer->SetLightOn(LightDir);
+	myViewer->SetLightOn(LightAmb);
+	//	Lighting end
+	/////////////////////////////////////////////
 	myAISContext->SetDisplayMode(AIS_Shaded, true);
 	myAISContext->SetAutomaticHilight(Standard_False);
 
@@ -51,7 +61,7 @@ void CEngineDoc::DrawSphere(double Radius)
 	BRepPrimAPI_MakeSphere mkSphere(Radius);
 	mkSphere.Build();
 	TopoDS_Shape Sphere = mkSphere.Shape();
-
+	
 	myAISContext->Display(new AIS_Shape(Sphere), true);
 }
 
