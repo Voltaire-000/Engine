@@ -16,8 +16,14 @@
 
 class CEngineApp : public CWinAppEx
 {
+private:
+	Handle(Graphic3d_GraphicDriver) m_GraphicDriver;
 public:
 	CEngineApp() noexcept;
+	Handle(Graphic3d_GraphicDriver) GetGraphicDriver()
+	{
+		return m_GraphicDriver;
+	}
 
 
 // Overrides

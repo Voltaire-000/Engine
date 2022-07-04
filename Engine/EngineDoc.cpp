@@ -14,10 +14,6 @@
 
 #include <propkey.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
-
 // CEngineDoc
 
 IMPLEMENT_DYNCREATE(CEngineDoc, CDocument)
@@ -31,10 +27,15 @@ END_MESSAGE_MAP()
 CEngineDoc::CEngineDoc() noexcept
 {
 	// TODO: add one-time construction code here
+	Handle(Graphic3d_GraphicDriver) theGraphicDriver = ((CEngineApp*)AfxGetApp())->GetGraphicDriver();
 
 }
 
 CEngineDoc::~CEngineDoc()
+{
+}
+
+void CEngineDoc::DrawSphere(double Radius)
 {
 }
 

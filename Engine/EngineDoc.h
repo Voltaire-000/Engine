@@ -14,9 +14,16 @@ protected: // create from serialization only
 
 // Attributes
 public:
+	Handle(AIS_InteractiveContext)	myAISContext;
+	Handle(V3d_Viewer)				myViewer;
 
 // Operations
 public:
+	Handle(V3d_Viewer) GetViewer()
+	{
+		return myViewer;
+	}
+	void DrawSphere(double Radius);
 
 // Overrides
 public:
