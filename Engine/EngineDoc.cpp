@@ -35,7 +35,17 @@ CEngineDoc::CEngineDoc() noexcept
 	//	create a new window over the existing window
 	myAISContext = new AIS_InteractiveContext(myViewer);
 
-
+	////////////////////////////////////////////////
+	// ViewCube
+	m_viewcube = new AIS_ViewCube();
+	m_viewcube->SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_TriedronPers, Aspect_TOTP_RIGHT_UPPER, Graphic3d_Vec2i(100, 100)));
+	Standard_Real theValue = 40;
+	m_viewcube->SetSize(theValue);
+	m_viewcube->SetBoxColor(Quantity_NOC_GRAY1);
+	m_viewcube->SetBoxTransparency(0.4);
+	m_viewcube->SetDrawAxes(FALSE);
+	myAISContext->Display(m_viewcube, true);
+	//	End ViewCube
 	///////////////////////////////////////////////
 	//	Lighting
 	Handle(V3d_DirectionalLight)	LightDir = new V3d_DirectionalLight(V3d_Zneg, Quantity_Color(Quantity_NOC_GRAY97), 1);
@@ -47,8 +57,12 @@ CEngineDoc::CEngineDoc() noexcept
 	myViewer->SetLightOn(LightAmb);
 	//	Lighting end
 	/////////////////////////////////////////////
+
+	myAISContext->Activate(4, true);
+	myAISContext->Activate(2, true);
+
 	myAISContext->SetDisplayMode(AIS_Shaded, true);
-	myAISContext->SetAutomaticHilight(Standard_False);
+	myAISContext->SetAutomaticHilight(Standard_True);
 
 }
 
@@ -61,8 +75,13 @@ void CEngineDoc::DrawSphere(double Radius)
 	BRepPrimAPI_MakeSphere mkSphere(Radius);
 	mkSphere.Build();
 	TopoDS_Shape Sphere = mkSphere.Shape();
-	
-	myAISContext->Display(new AIS_Shape(Sphere), true);
+	Handle(AIS_Shape) shape = new AIS_Shape(Sphere);
+	shape->SetMaterial(Graphic3d_NameOfMaterial_Chrome);
+	myAISContext->Activate(4, true);
+	myAISContext->Activate(2, true);
+	myAISContext->Display(shape, true);
+	//myAISContext->Display(new AIS_Shape(Sphere), true);
+
 }
 
 BOOL CEngineDoc::OnNewDocument()

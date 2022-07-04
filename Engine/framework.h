@@ -55,6 +55,7 @@
 #include <AIS_ListOfInteractive.hxx>
 #include <AIS_ListIteratorOfListOfInteractive.hxx>
 #include <AIS_Point.hxx>
+#include <AIS_ViewCube.hxx>
 
 
 #include <Aspect_Background.hxx>

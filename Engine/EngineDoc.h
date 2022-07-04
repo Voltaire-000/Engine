@@ -48,6 +48,10 @@ protected:
 protected:
 	DECLARE_MESSAGE_MAP()
 
+	//	opencascade things
+private:
+	Handle(AIS_ViewCube)		m_viewcube;
+
 #ifdef SHARED_HANDLERS
 	// Helper function that sets search content for a Search Handler
 	void SetSearchContent(const CString& value);
