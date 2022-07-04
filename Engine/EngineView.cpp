@@ -93,6 +93,7 @@ void CEngineView::OnInitialUpdate()
 {
 	myView = GetDocument()->GetViewer()->CreateView();
 	myView->SetShadingModel(V3d_GOURAUD);
+	myView->SetBgGradientColors(Quantity_NOC_GRAY10, Quantity_NOC_GRAY99, Aspect_GradientFillMethod_Vertical);
 	Handle(Graphic3d_GraphicDriver) theGraphicDriver = ((CEngineApp*)AfxGetApp())->GetGraphicDriver();
 	Aspect_Handle aWindowHandle = (Aspect_Handle)GetSafeHwnd();
 	Handle(WNT_Window) aWntWindow = new WNT_Window(GetSafeHwnd());
