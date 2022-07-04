@@ -13,11 +13,6 @@
 #include "EngineDoc.h"
 #include "EngineView.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
-
-
 // CEngineView
 
 IMPLEMENT_DYNCREATE(CEngineView, CView)
@@ -61,6 +56,10 @@ void CEngineView::OnDraw(CDC* /*pDC*/)
 		return;
 
 	// TODO: add draw code for native data here
+	myView->MustBeResized();
+	myView->Update();
+	pDoc->DrawSphere(10.0);
+	myView->FitAll();
 }
 
 
@@ -90,6 +89,29 @@ void CEngineView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 	// TODO: add cleanup after printing
 }
 
+void CEngineView::OnInitialUpdate()
+{
+	myView = GetDocument()->GetViewer()->CreateView();
+	myView->SetShadingModel(V3d_GOURAUD);
+	Handle(Graphic3d_GraphicDriver) theGraphicDriver = ((CEngineApp*)AfxGetApp())->GetGraphicDriver();
+	Aspect_Handle aWindowHandle = (Aspect_Handle)GetSafeHwnd();
+	Handle(WNT_Window) aWntWindow = new WNT_Window(GetSafeHwnd());
+	myView->SetWindow(aWntWindow);
+
+	if (!aWntWindow->IsMapped())
+	{
+		aWntWindow->Map();
+	}
+
+	Standard_Integer w = 100;
+	Standard_Integer h = 100;
+	aWntWindow->Size(w, h);
+	::PostMessage(GetSafeHwnd(), WM_SIZE, SIZE_RESTORED, w + h * 65536);
+	myView->FitAll();
+	myView->ZBufferTriedronSetup(Quantity_NOC_RED, Quantity_NOC_GREEN, Quantity_NOC_BLUE1, 0.8, 0.05, 12);
+	myView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_WHITE, 0.2, V3d_ZBUFFER);
+}
+
 void CEngineView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
 	ClientToScreen(&point);
@@ -101,6 +123,16 @@ void CEngineView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 #ifndef SHARED_HANDLERS
 	theApp.GetContextMenuManager()->ShowPopupMenu(IDR_POPUP_EDIT, point.x, point.y, this, TRUE);
 #endif
+}
+
+void CEngineView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	CView::OnMouseMove(nFlags, point);
+	if (nFlags && MK_LBUTTON)
+	{
+		myView->Rotation(point.x, point.y);
+		myView->StartRotation(point.x, point.y);
+	}
 }
 
 

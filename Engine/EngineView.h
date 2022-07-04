@@ -14,6 +14,7 @@ protected: // create from serialization only
 // Attributes
 public:
 	CEngineDoc* GetDocument() const;
+	Handle(V3d_View) myView;
 
 // Operations
 public:
@@ -26,6 +27,7 @@ protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+	virtual void OnInitialUpdate();
 
 // Implementation
 public:
@@ -43,6 +45,8 @@ protected:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // debug version in EngineView.cpp
