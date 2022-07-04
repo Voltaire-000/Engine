@@ -8,10 +8,6 @@
 
 #include "MainFrm.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
-
 // CMainFrame
 
 IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWndEx)
@@ -55,6 +51,14 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	BOOL bNameValid;
+
+	CMDITabInfo mdiTabparams;
+	mdiTabparams.m_style = CMFCTabCtrl::STYLE_3D_ONENOTE;
+	mdiTabparams.m_bActiveTabCloseButton = TRUE;
+	mdiTabparams.m_bTabIcons = FALSE;
+	mdiTabparams.m_bAutoColor = TRUE;
+	mdiTabparams.m_bDocumentMenu = TRUE;
+	EnableMDITabbedGroups(TRUE, mdiTabparams);
 
 	if (!m_wndMenuBar.Create(this))
 	{
@@ -151,6 +155,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	lstBasicCommands.AddTail(ID_VIEW_APPLOOK_WINDOWS_7);
 
 	CMFCToolBar::SetBasicCommands(lstBasicCommands);
+
+	ModifyStyle(0, FWS_PREFIXTITLE);
 
 	return 0;
 }
