@@ -30,10 +30,22 @@ CEngineDoc::CEngineDoc() noexcept
 	if (displayConnection.IsNull())
 			displayConnection = new Aspect_DisplayConnection();
 	Handle(OpenGl_GraphicDriver) graphicDriver = new OpenGl_GraphicDriver(displayConnection, false);
+
 	//	Initialize V3d_Viewer
 	myViewer = new V3d_Viewer(graphicDriver);
 	//	create a new window over the existing window
 	myAISContext = new AIS_InteractiveContext(myViewer);
+
+	//////////////////////////////////////////////////////
+	//	set up grid
+	Aspect_GridType aGridType = Aspect_GT_Rectangular;
+	Aspect_GridDrawMode aGridDrawMode = Aspect_GDM_Lines;
+	myViewer->SetRectangularGridValues(0, 0, 10, 10, 0);
+	Handle(Graphic3d_AspectMarker3d) aMarker = new Graphic3d_AspectMarker3d(Aspect_TOM_BALL, Quantity_NOC_BLUE4, 2);
+	myViewer->SetGridEcho(aMarker);
+	myViewer->ActivateGrid(aGridType, aGridDrawMode);
+	//	end grid
+	/////////////////////////////////////////////////////
 
 	////////////////////////////////////////////////
 	// ViewCube
@@ -50,7 +62,9 @@ CEngineDoc::CEngineDoc() noexcept
 	//	Lighting
 	Handle(V3d_DirectionalLight)	LightDir = new V3d_DirectionalLight(V3d_Zneg, Quantity_Color(Quantity_NOC_GRAY97), 1);
 	Handle(V3d_AmbientLight)		LightAmb = new V3d_AmbientLight();
-	LightDir->SetDirection(1.0, -2.0, -10.0);
+	LightDir->SetDirection(1.0, -20.0, -10.0);
+	LightDir->SetIntensity(0.15);
+	LightAmb->SetIntensity(0.15);
 	myViewer->AddLight(LightDir);
 	myViewer->AddLight(LightAmb);
 	myViewer->SetLightOn(LightDir);
@@ -76,7 +90,7 @@ void CEngineDoc::DrawSphere(double Radius)
 	mkSphere.Build();
 	TopoDS_Shape Sphere = mkSphere.Shape();
 	Handle(AIS_Shape) shape = new AIS_Shape(Sphere);
-	shape->SetMaterial(Graphic3d_NameOfMaterial_Chrome);
+	shape->SetMaterial(Graphic3d_NameOfMaterial_Copper);
 	myAISContext->Activate(4, true);
 	myAISContext->Activate(2, true);
 	myAISContext->Display(shape, true);
@@ -94,9 +108,6 @@ BOOL CEngineDoc::OnNewDocument()
 
 	return TRUE;
 }
-
-
-
 
 // CEngineDoc serialization
 

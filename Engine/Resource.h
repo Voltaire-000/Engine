@@ -4,7 +4,7 @@
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
-#define IDP_G_DRIVER_INIT_FAILED        101
+//#define IDP_G_DRIVER_INIT_FAILED        101
 #define IDP_DRIVER_INIT_FAILED          101
 #define IDR_POPUP_EDIT                  119
 #define ID_STATUSBAR_PANE1              120

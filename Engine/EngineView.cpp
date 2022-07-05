@@ -24,6 +24,7 @@ BEGIN_MESSAGE_MAP(CEngineView, CView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CEngineView::OnFilePrintPreview)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 // CEngineView construction/destruction
@@ -58,7 +59,7 @@ void CEngineView::OnDraw(CDC* /*pDC*/)
 	// TODO: add draw code for native data here
 	myView->MustBeResized();
 	myView->Update();
-	pDoc->DrawSphere(10.0);
+	pDoc->DrawSphere(100.0);
 	myView->FitAll();
 }
 
