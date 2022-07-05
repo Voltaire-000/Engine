@@ -24,7 +24,9 @@ BEGIN_MESSAGE_MAP(CEngineView, CView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CEngineView::OnFilePrintPreview)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
+
 	ON_WM_MOUSEMOVE()
+	ON_WM_LBUTTONUP()
 END_MESSAGE_MAP()
 
 // CEngineView construction/destruction
@@ -59,14 +61,12 @@ void CEngineView::OnDraw(CDC* /*pDC*/)
 	// TODO: add draw code for native data here
 	myView->MustBeResized();
 	myView->Update();
+	//TODO
 	pDoc->DrawSphere(100.0);
 	myView->FitAll();
 }
 
-
 // CEngineView printing
-
-
 void CEngineView::OnFilePrintPreview()
 {
 #ifndef SHARED_HANDLERS
@@ -93,8 +93,8 @@ void CEngineView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 void CEngineView::OnInitialUpdate()
 {
 	myView = GetDocument()->GetViewer()->CreateView();
-	myView->SetShadingModel(V3d_PHONG);
-	myView->SetLightOn();
+	//myView->SetShadingModel(V3d_PHONG);
+	//myView->SetLightOn();
 	myView->SetBgGradientColors(Quantity_NOC_GRAY10, Quantity_NOC_GRAY99, Aspect_GradientFillMethod_Vertical);
 	Handle(Graphic3d_GraphicDriver) theGraphicDriver = ((CEngineApp*)AfxGetApp())->GetGraphicDriver();
 	Aspect_Handle aWindowHandle = (Aspect_Handle)GetSafeHwnd();
@@ -111,8 +111,6 @@ void CEngineView::OnInitialUpdate()
 	aWntWindow->Size(w, h);
 	::PostMessage(GetSafeHwnd(), WM_SIZE, SIZE_RESTORED, w + h * 65536);
 	myView->FitAll();
-	myView->ZBufferTriedronSetup(Quantity_NOC_RED, Quantity_NOC_GREEN, Quantity_NOC_BLUE1, 0.8, 0.05, 12);
-	myView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_WHITE, 0.2, V3d_ZBUFFER);
 }
 
 void CEngineView::OnRButtonUp(UINT /* nFlags */, CPoint point)
@@ -137,7 +135,6 @@ void CEngineView::OnMouseMove(UINT nFlags, CPoint point)
 		myView->StartRotation(point.x, point.y);
 	}
 }
-
 
 // CEngineView diagnostics
 

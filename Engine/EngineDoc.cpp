@@ -33,10 +33,40 @@ CEngineDoc::CEngineDoc() noexcept
 
 	//	Initialize V3d_Viewer
 	myViewer = new V3d_Viewer(graphicDriver);
+
 	//	create a new window over the existing window
 	myAISContext = new AIS_InteractiveContext(myViewer);
 
-	//////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////
+	//	Prs3d_Drawer test TODO
+	Handle(Prs3d_Drawer) selDrawer = new Prs3d_Drawer();
+	//
+	selDrawer->SetLink(myAISContext->DefaultDrawer());
+	selDrawer->SetFaceBoundaryDraw(true);
+	selDrawer->SetDisplayMode(1);	//	Shaded
+	selDrawer->SetTransparency(0.5f);
+	selDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
+	selDrawer->SetColor(Quantity_NOC_GOLD);
+	selDrawer->SetBasicFillAreaAspect(new Graphic3d_AspectFillArea3d());
+
+	//	Adjust fill area aspect
+	const Handle(Graphic3d_AspectFillArea3d)& fillArea = selDrawer->BasicFillAreaAspect();
+	//
+	fillArea->SetInteriorColor(Quantity_NOC_GOLD);
+	fillArea->SetBackInteriorColor(Quantity_NOC_GOLD);
+	//
+	fillArea->ChangeFrontMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
+	fillArea->ChangeFrontMaterial().SetTransparency(0.4f);
+	fillArea->ChangeBackMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
+	fillArea->ChangeBackMaterial().SetTransparency(0.4f);
+
+	selDrawer->UnFreeBoundaryAspect()->SetWidth(1.0);
+	//	Update AIS context
+	myAISContext->SetHighlightStyle(Prs3d_TypeOfHighlight_LocalSelected, selDrawer);
+	//	end Prs3d
+	///////////////////////////////////////////////////////////////////////////////
+
+	////////////////////////////////////////////////////////////////////////////////
 	//	set up grid
 	Aspect_GridType aGridType = Aspect_GT_Rectangular;
 	Aspect_GridDrawMode aGridDrawMode = Aspect_GDM_Lines;
@@ -45,7 +75,7 @@ CEngineDoc::CEngineDoc() noexcept
 	myViewer->SetGridEcho(aMarker);
 	myViewer->ActivateGrid(aGridType, aGridDrawMode);
 	//	end grid
-	/////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////
 
 	////////////////////////////////////////////////
 	// ViewCube
@@ -54,11 +84,12 @@ CEngineDoc::CEngineDoc() noexcept
 	Standard_Real theValue = 40;
 	m_viewcube->SetSize(theValue);
 	m_viewcube->SetBoxColor(Quantity_NOC_GRAY1);
-	m_viewcube->SetBoxTransparency(0.4);
-	m_viewcube->SetDrawAxes(FALSE);
+	m_viewcube->SetBoxTransparency(0.25);
+	m_viewcube->SetDrawAxes(TRUE);
 	myAISContext->Display(m_viewcube, true);
 	//	End ViewCube
 	///////////////////////////////////////////////
+	
 	//	Lighting
 	Handle(V3d_DirectionalLight)	LightDir = new V3d_DirectionalLight(V3d_Zneg, Quantity_Color(Quantity_NOC_GRAY97), 1);
 	Handle(V3d_AmbientLight)		LightAmb = new V3d_AmbientLight();
@@ -72,12 +103,9 @@ CEngineDoc::CEngineDoc() noexcept
 	//	Lighting end
 	/////////////////////////////////////////////
 
-	myAISContext->Activate(4, true);
-	myAISContext->Activate(2, true);
-
 	myAISContext->SetDisplayMode(AIS_Shaded, true);
-	myAISContext->SetAutomaticHilight(Standard_True);
-
+	myAISContext->SetAutomaticHilight(Standard_False);
+	
 }
 
 CEngineDoc::~CEngineDoc()
@@ -86,16 +114,40 @@ CEngineDoc::~CEngineDoc()
 
 void CEngineDoc::DrawSphere(double Radius)
 {
+	//	TODO add shape to m_shapes vector ??
+
 	BRepPrimAPI_MakeSphere mkSphere(Radius);
 	mkSphere.Build();
 	TopoDS_Shape Sphere = mkSphere.Shape();
 	Handle(AIS_Shape) shape = new AIS_Shape(Sphere);
 	shape->SetMaterial(Graphic3d_NameOfMaterial_Copper);
-	myAISContext->Activate(4, true);
-	myAISContext->Activate(2, true);
+
+	AddShape(Sphere);
+
 	myAISContext->Display(shape, true);
 	//myAISContext->Display(new AIS_Shape(Sphere), true);
 
+}
+
+void CEngineDoc::AddShape(const TopoDS_Shape& shape)
+{
+	m_shapes.push_back(shape);
+}
+
+void CEngineDoc::MessageLoop()
+{
+	for (auto sh : m_shapes)
+	{
+		Handle(AIS_Shape) shape = new AIS_Shape(sh);
+		myAISContext->Display(shape, true);
+		myAISContext->SetDisplayMode(shape, AIS_Shaded, true);
+
+		shape->SetMaterial(Graphic3d_NameOfMaterial_Copper);
+
+		myAISContext->Activate(4, true);
+		myAISContext->Activate(2, true);
+		myAISContext->Activate(m_viewcube);
+	}
 }
 
 BOOL CEngineDoc::OnNewDocument()
@@ -190,6 +242,5 @@ void CEngineDoc::Dump(CDumpContext& dc) const
 	CDocument::Dump(dc);
 }
 #endif //_DEBUG
-
 
 // CEngineDoc commands

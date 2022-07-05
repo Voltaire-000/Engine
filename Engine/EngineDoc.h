@@ -8,6 +8,7 @@
 
 class CEngineDoc : public CDocument
 {
+
 protected: // create from serialization only
 	CEngineDoc() noexcept;
 	DECLARE_DYNCREATE(CEngineDoc)
@@ -24,6 +25,16 @@ public:
 		return myViewer;
 	}
 	void DrawSphere(double Radius);
+
+	//////////////////////////////////////////////////
+	CEngineDoc& operator<<(const TopoDS_Shape& shape)
+	{
+		this->AddShape(shape);
+		return *this;
+	}
+	void AddShape(const TopoDS_Shape& shape);
+	//////////////////////////////////////////////////
+	void MessageLoop();
 
 // Overrides
 public:
@@ -47,6 +58,10 @@ protected:
 // Generated message map functions
 protected:
 	DECLARE_MESSAGE_MAP()
+
+private:
+	//	the shapes to visulize
+	std::vector<TopoDS_Shape> m_shapes;
 
 	//	opencascade things
 private:
