@@ -134,22 +134,6 @@ void CEngineDoc::AddShape(const TopoDS_Shape& shape)
 	m_shapes.push_back(shape);
 }
 
-void CEngineDoc::MessageLoop()
-{
-	for (auto sh : m_shapes)
-	{
-		Handle(AIS_Shape) shape = new AIS_Shape(sh);
-		m_context->Display(shape, true);
-		m_context->SetDisplayMode(shape, AIS_Shaded, true);
-
-		shape->SetMaterial(Graphic3d_NameOfMaterial_Copper);
-
-		m_context->Activate(4, true);
-		m_context->Activate(2, true);
-		m_context->Activate(m_viewcube);
-	}
-}
-
 BOOL CEngineDoc::OnNewDocument()
 {
 	if (!CDocument::OnNewDocument())

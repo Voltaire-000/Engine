@@ -8,21 +8,40 @@
 class CEngineDoc : public CDocument
 {
 
-protected: // create from serialization only
+public: // create from serialization only
 	CEngineDoc() noexcept;
+	virtual ~CEngineDoc();
+
 	DECLARE_DYNCREATE(CEngineDoc)
 
-// Attributes
 public:
-	Handle(AIS_InteractiveContext)	m_context;
-	Handle(V3d_Viewer)				m_viewer;
+	const Handle(AIS_InteractiveContext)& GetAISContext() const
+	{ 
+		return m_context;
+	}
+	const Handle(AIS_InteractiveContext)& GetInteractiveContext()const
+	{
+		return m_context;
+	}
 
-// Operations
 public:
 	Handle(V3d_Viewer) GetViewer()
 	{
 		return m_viewer;
 	}
+
+	//	events
+public:
+	virtual void OnSelectionChanged(const Handle(AIS_InteractiveContext)&,
+		const Handle(V3d_View)&){}
+
+// Attributes
+protected:
+	Handle(AIS_InteractiveContext)	m_context;
+	Handle(V3d_Viewer)				m_viewer;
+
+// Operations
+public:
 	void DrawSphere(double Radius);
 
 	//////////////////////////////////////////////////
@@ -33,7 +52,6 @@ public:
 	}
 	void AddShape(const TopoDS_Shape& shape);
 	//////////////////////////////////////////////////
-	void MessageLoop();
 
 // Overrides
 public:
@@ -44,9 +62,6 @@ public:
 	virtual void OnDrawThumbnail(CDC& dc, LPRECT lprcBounds);
 #endif // SHARED_HANDLERS
 
-// Implementation
-public:
-	virtual ~CEngineDoc();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;

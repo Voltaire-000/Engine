@@ -24,16 +24,20 @@ BEGIN_MESSAGE_MAP(CEngineView, CView)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
 
+	ON_WM_MOUSEWHEEL()
 	ON_WM_MOUSEMOVE()
+	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
 END_MESSAGE_MAP()
 
 // CEngineView construction/destruction
 
 CEngineView::CEngineView() noexcept
+	:m_updateRequests(0),
+	m_curZoom(0.0),
+	m_currentMode(CurAction3d_Nothing)
 {
-	// TODO: add construction code here
-
+	m_DefaultGestures = myMouseGestureMap;
 }
 
 CEngineView::~CEngineView()
@@ -50,6 +54,85 @@ BOOL CEngineView::PreCreateWindow(CREATESTRUCT& cs)
 
 // CEngineView drawing
 
+void CEngineView::update3dView()
+{
+	if (!m_view.IsNull())
+	{
+		if (++m_updateRequests == 1)
+		{
+			Invalidate(FALSE);
+			UpdateWindow();
+		}
+	}
+}
+
+void CEngineView::redraw3dView()
+{
+	if (!m_view.IsNull())
+	{
+		FlushViewEvents(GetAISContext(), m_view, true);
+	}
+}
+
+void CEngineView::handleViewRedraw(const Handle(AIS_InteractiveContext)& theCtx,
+	const Handle(V3d_View)& theView)
+{
+	m_updateRequests = 0;
+	AIS_ViewController::handleViewRedraw(theCtx, theView);
+}
+
+void CEngineView::OnSelectionChanged(const Handle(AIS_InteractiveContext)& theCtx,
+	const Handle(V3d_View)& theView)
+{
+	AIS_ViewController::OnSelectionChanged(theCtx, theView);
+	GetDocument()->OnSelectionChanged(theCtx, theView);
+}
+
+const Handle(AIS_InteractiveContext)& CEngineView::GetAISContext() const
+{
+	return ((CEngineDoc*)m_pDocument)->GetInteractiveContext();
+}
+
+void CEngineView::defineMouseGestures()
+{
+	myMouseGestureMap.Clear();
+	AIS_MouseGesture aRot = AIS_MouseGesture_RotateOrbit;
+	switch (m_currentMode)
+	{
+
+		case CurAction3d_Nothing:
+		{
+			myMouseGestureMap = m_DefaultGestures;
+			break;
+		}
+		case CurAction3d_DynamicZooming:
+		{
+			myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_Zoom);
+			break;
+		}
+		case CurAction3d_GlobalPanning:
+		{
+			break;
+		}
+		case CurAction3d_WindowZooming:
+		{
+			myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_ZoomWindow);
+			break;
+		}
+		case CurAction3d_DynamicPanning:
+		{
+			myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_Pan);
+			break;
+		}
+		case CurAction3d_DynamicRotation:
+		{
+			myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, aRot);
+			break;
+		}
+
+	}
+}
+
 void CEngineView::OnDraw(CDC* /*pDC*/)
 {
 	CEngineDoc* pDoc = GetDocument();
@@ -61,7 +144,7 @@ void CEngineView::OnDraw(CDC* /*pDC*/)
 	m_view->MustBeResized();
 	m_view->Update();
 	//TODO
-	pDoc->DrawSphere(10.0);
+	pDoc->DrawSphere(50.0);
 	//myView->FitAll();
 }
 
@@ -105,11 +188,9 @@ void CEngineView::OnInitialUpdate()
 		aWntWindow->Map();
 	}
 
-	Standard_Integer w = 100;
-	Standard_Integer h = 100;
-	aWntWindow->Size(w, h);
-	::PostMessage(GetSafeHwnd(), WM_SIZE, SIZE_RESTORED, w + h * 65536);
-	m_view->FitAll();
+	m_view->Redraw();
+	m_view->Invalidate();
+
 }
 
 void CEngineView::OnRButtonUp(UINT /* nFlags */, CPoint point)
@@ -125,13 +206,35 @@ void CEngineView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 #endif
 }
 
+BOOL CEngineView::OnMouseWheel(UINT nFlags, short theDelta, CPoint point)
+{
+	const Standard_Real aDeltaF = Standard_Real(theDelta) / Standard_Real(WHEEL_DELTA);
+	CPoint aCursorPnt = point;
+	ScreenToClient(&aCursorPnt);
+	const Graphic3d_Vec2i aPos(aCursorPnt.x, aCursorPnt.y);
+	const Aspect_VKeyFlags aFlags = WNT_Window::MouseKeyFlagsFromEvent(nFlags);
+	if (UpdateMouseScroll(Aspect_ScrollDelta(aPos, aDeltaF, aFlags)))
+	{
+		update3dView();
+	}
+	return true;
+}
+
 void CEngineView::OnMouseMove(UINT nFlags, CPoint point)
 {
-	CView::OnMouseMove(nFlags, point);
-	if (nFlags && MK_LBUTTON)
+	TRACKMOUSEEVENT aMouseEvent;
+	aMouseEvent.cbSize = sizeof(aMouseEvent);
+	aMouseEvent.dwFlags = TME_LEAVE;
+	aMouseEvent.hwndTrack = m_hWnd;
+	aMouseEvent.dwHoverTime = HOVER_DEFAULT;
+	if (!::_TrackMouseEvent(&aMouseEvent))
 	{
-		m_view->Rotation(point.x, point.y);
-		m_view->StartRotation(point.x, point.y);
+		TRACE("Track Error\n");
+	}
+	const Aspect_VKeyFlags aFlags = WNT_Window::MouseKeyFlagsFromEvent(nFlags);
+	if (UpdateMousePosition(Graphic3d_Vec2i(point.x, point.y), PressedMouseButtons(), nFlags, false))
+	{
+		update3dView();
 	}
 }
 
@@ -148,7 +251,7 @@ void CEngineView::Dump(CDumpContext& dc) const
 	CView::Dump(dc);
 }
 
-CEngineDoc* CEngineView::GetDocument() const // non-debug version is inline
+CEngineDoc* CEngineView::GetDocument() // non-debug version is inline
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CEngineDoc)));
 	return (CEngineDoc*)m_pDocument;

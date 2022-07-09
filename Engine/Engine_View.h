@@ -3,18 +3,65 @@
 //
 
 #pragma once
+#include "framework.h"
+#include <AIS_InteractiveContext.hxx>
+#include <AIS_ViewController.hxx>
 
-
-class CEngineView : public CView
+enum CurAction3d
 {
-protected: // create from serialization only
-	CEngineView() noexcept;
-	DECLARE_DYNCREATE(CEngineView)
+	CurAction3d_Nothing,
+	CurAction3d_DynamicZooming,
+	CurAction3d_WindowZooming,
+	CurAction3d_DynamicPanning,
+	CurAction3d_GlobalPanning,
+	CurAction3d_DynamicRotation
+};
 
-// Attributes
+class Standard_EXPORT CEngineView : public CView, public AIS_ViewController
+{
+	DECLARE_DYNCREATE(CEngineView)
+public: // create from serialization only
+	CEngineView() noexcept;
+	virtual ~CEngineView();
+	CEngineDoc* GetDocument();
+
+	//	return the view
+	const Handle(V3d_View)& GetView() const
+	{
+		return m_view;
+	}
+
 public:
-	CEngineDoc* GetDocument() const;
-	Handle(V3d_View) m_view;
+	virtual void OnInitialUpdate();
+
+protected:
+	Handle(V3d_View)	m_view;
+	AIS_MouseGestureMap	m_DefaultGestures;
+	Graphic3d_Vec2i		m_clickPos;
+	Standard_Real		m_curZoom;
+	unsigned int		m_updateRequests;
+
+private:
+	CurAction3d			m_currentMode;
+	
+public:
+	//	request view redraw
+	void update3dView();
+	//	flush events and redraw view
+	void redraw3dView();
+
+protected:
+	//	handle view redraw
+	virtual void handleViewRedraw(const Handle(AIS_InteractiveContext)& theCtx,
+		const Handle(V3d_View)& theView) Standard_OVERRIDE;
+	//	called by handleMoveTo() on Selection in 3D Viewer
+	virtual void OnSelectionChanged(const Handle(AIS_InteractiveContext)& theCtx,
+		const Handle(V3d_View)& theView) Standard_OVERRIDE;
+	//	return the interactive context
+	virtual const Handle(AIS_InteractiveContext)& GetAISContext() const;
+
+protected:
+	void defineMouseGestures();
 
 // Operations
 public:
@@ -28,11 +75,10 @@ protected:
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
 	// Override
-	virtual void OnInitialUpdate();
+
 
 // Implementation
-public:
-	virtual ~CEngineView();
+
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
@@ -47,6 +93,7 @@ protected:
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	DECLARE_MESSAGE_MAP()
 public:
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short theDelta, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 };
 
