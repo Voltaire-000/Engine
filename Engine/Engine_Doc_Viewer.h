@@ -7,12 +7,15 @@
 
 class CEngineDoc : public CDocument
 {
-
+	DECLARE_DYNCREATE(CEngineDoc)
 public: // create from serialization only
 	CEngineDoc() noexcept;
 	virtual ~CEngineDoc();
 
-	DECLARE_DYNCREATE(CEngineDoc)
+	virtual void InputEvent(const Standard_Integer theMouseX,
+		const Standard_Integer theMouseY,
+		const Standard_Integer theState,
+		const Handle(V3d_View)& theView);
 
 public:
 	const Handle(AIS_InteractiveContext)& GetAISContext() const

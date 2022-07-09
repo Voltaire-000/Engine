@@ -23,13 +23,25 @@ class Standard_EXPORT CEngineView : public CView, public AIS_ViewController
 public: // create from serialization only
 	CEngineView() noexcept;
 	virtual ~CEngineView();
+
 	CEngineDoc* GetDocument();
+
+	//	request view redraw
+	void update3dView();
+
+	//	flush events and redraw view
+	void redraw3dView();
 
 	//	return the view
 	const Handle(V3d_View)& GetView() const
 	{
 		return m_view;
 	}
+
+	void FitAll() { if (!m_view.IsNull()) m_view->FitAll();  m_view->ZFitAll(); };
+	void Redraw() { if (!m_view.IsNull()) m_view->Redraw(); };
+
+	void SetZoom(const Standard_Real& Coef) { m_view->SetZoom(Coef); };
 
 public:
 	virtual void OnInitialUpdate();
@@ -43,13 +55,6 @@ protected:
 
 private:
 	CurAction3d			m_currentMode;
-	
-public:
-	//	request view redraw
-	void update3dView();
-	//	flush events and redraw view
-	void redraw3dView();
-
 protected:
 	//	handle view redraw
 	virtual void handleViewRedraw(const Handle(AIS_InteractiveContext)& theCtx,
@@ -91,6 +96,8 @@ protected:
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+
+	afx_msg void OnButtonFront();
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short theDelta, CPoint point);

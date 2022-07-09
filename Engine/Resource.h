@@ -34,6 +34,8 @@
 #define ID_VIEW_APPLOOK_WINDOWS_7       219
 #define IDS_EDIT_MENU                   306
 
+#define ID_BUTTONFront                  40006
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED

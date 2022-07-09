@@ -112,6 +112,16 @@ CEngineDoc::~CEngineDoc()
 {
 }
 
+void CEngineDoc::InputEvent(const Standard_Integer theMouseX,
+	const Standard_Integer theMouseY,
+	const Standard_Integer theState,
+	const Handle(V3d_View)& theView)
+{
+	m_context->MoveTo(theMouseX, theMouseY, theView, Standard_False);
+	m_context->SelectDetected();
+	m_context->UpdateCurrentViewer();
+}
+
 void CEngineDoc::DrawSphere(double Radius)
 {
 	//	TODO add shape to m_shapes vector ??

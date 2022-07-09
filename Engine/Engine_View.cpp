@@ -12,6 +12,8 @@
 #include "Engine_Doc_Viewer.h"
 #include "Engine_View.h"
 
+#include <Graphic3d_Camera.hxx>
+
 // CEngineView
 
 IMPLEMENT_DYNCREATE(CEngineView, CView)
@@ -174,12 +176,20 @@ void CEngineView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 
 void CEngineView::OnInitialUpdate()
 {
-	m_view = GetDocument()->GetViewer()->CreateView();
+	//m_view = GetDocument()->GetViewer()->CreateView();
+	m_view = GetAISContext()->CurrentViewer()->CreateView();
+	m_view->SetImmediateUpdate(false);
+	m_view->SetComputedMode(Standard_False);
 	//myView->SetShadingModel(V3d_PHONG);
 	//myView->SetLightOn();
 	m_view->SetBgGradientColors(Quantity_NOC_GRAY10, Quantity_NOC_GRAY99, Aspect_GradientFillMethod_Vertical);
-	Handle(Graphic3d_GraphicDriver) theGraphicDriver = ((CEngineApp*)AfxGetApp())->GetGraphicDriver();
-	Aspect_Handle aWindowHandle = (Aspect_Handle)GetSafeHwnd();
+	//Handle(Graphic3d_GraphicDriver) theGraphicDriver = ((CEngineApp*)AfxGetApp())->GetGraphicDriver();
+	Handle(OpenGl_GraphicDriver) aDriver = Handle(OpenGl_GraphicDriver)::DownCast(m_view->Viewer()->Driver());
+	m_view->Camera()->SetProjectionType(aDriver->Options().contextStereo 
+										? Graphic3d_Camera::Projection_Orthographic
+										: Graphic3d_Camera::Projection_Stereo);
+
+	//Aspect_Handle aWindowHandle = (Aspect_Handle)GetSafeHwnd();
 	Handle(WNT_Window) aWntWindow = new WNT_Window(GetSafeHwnd());
 	m_view->SetWindow(aWntWindow);
 
@@ -204,6 +214,12 @@ void CEngineView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 #ifndef SHARED_HANDLERS
 	theApp.GetContextMenuManager()->ShowPopupMenu(IDR_POPUP_EDIT, point.x, point.y, this, TRUE);
 #endif
+}
+
+void CEngineView::OnButtonFront()
+{
+	m_view->SetProj(V3d_Yneg);
+	m_view->Redraw();
 }
 
 BOOL CEngineView::OnMouseWheel(UINT nFlags, short theDelta, CPoint point)
