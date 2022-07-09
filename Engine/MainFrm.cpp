@@ -3,9 +3,7 @@
 //
 
 #include "pch.h"
-#include "framework.h"
-#include "Engine.h"
-
+#include "Engine_App.h"
 #include "MainFrm.h"
 
 // CMainFrame

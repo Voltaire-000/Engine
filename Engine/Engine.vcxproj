@@ -190,9 +190,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ChildFrm.h" />
-    <ClInclude Include="Engine.h" />
-    <ClInclude Include="EngineDoc.h" />
-    <ClInclude Include="EngineView.h" />
+    <ClInclude Include="Engine_App.h" />
+    <ClInclude Include="Engine_Doc_Viewer.h" />
+    <ClInclude Include="Engine_View.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="pch.h" />
@@ -201,9 +201,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp" />
-    <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="EngineDoc.cpp" />
-    <ClCompile Include="EngineView.cpp" />
+    <ClCompile Include="Engine_App.cpp" />
+    <ClCompile Include="Engine_Doc_Viewer.cpp" />
+    <ClCompile Include="Engine_View.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -218,6 +218,7 @@
   <ItemGroup>
     <Image Include="res\Engine.ico" />
     <Image Include="res\EngineDoc.ico" />
+    <Image Include="res\fram2.bmp" />
     <Image Include="res\Toolbar.bmp" />
     <Image Include="res\Toolbar256.bmp" />
     <Image Include="res\userimages.bmp" />

@@ -3,15 +3,14 @@
 //
 
 #include "pch.h"
-#include "framework.h"
 #include "afxwinappex.h"
 #include "afxdialogex.h"
-#include "Engine.h"
+#include "Engine_App.h"
 #include "MainFrm.h"
 
 #include "ChildFrm.h"
-#include "EngineDoc.h"
-#include "EngineView.h"
+#include "Engine_Doc_Viewer.h"
+#include "Engine_View.h"
 
 // CEngineApp
 
@@ -71,7 +70,7 @@ CEngineApp theApp;
 
 // CEngineApp initialization
 
-BOOL CEngineApp::InitInstance()
+BOOL CEngineApp::InitApplication()
 {
 	// InitCommonControlsEx() is required on Windows XP if an application
 	// manifest specifies use of ComCtl32.dll version 6 or later to enable

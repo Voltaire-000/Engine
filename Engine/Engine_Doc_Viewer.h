@@ -2,7 +2,6 @@
 // EngineDoc.h : interface of the CEngineDoc class
 //
 
-
 #pragma once
 
 
@@ -15,14 +14,14 @@ protected: // create from serialization only
 
 // Attributes
 public:
-	Handle(AIS_InteractiveContext)	myAISContext;
-	Handle(V3d_Viewer)				myViewer;
+	Handle(AIS_InteractiveContext)	m_context;
+	Handle(V3d_Viewer)				m_viewer;
 
 // Operations
 public:
 	Handle(V3d_Viewer) GetViewer()
 	{
-		return myViewer;
+		return m_viewer;
 	}
 	void DrawSphere(double Radius);
 

@@ -18,6 +18,7 @@
 #define IDR_MAINFRAME_256               129
 #define IDR_EngineTYPE                  130
 #define ID_WINDOW_MANAGER               131
+#define IDR_FRAME2						132
 #define IDR_THEME_MENU                  200
 #define ID_SET_STYLE                    201
 #define ID_VIEW_APPLOOK_WIN_2000        205

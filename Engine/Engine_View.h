@@ -14,7 +14,7 @@ protected: // create from serialization only
 // Attributes
 public:
 	CEngineDoc* GetDocument() const;
-	Handle(V3d_View) myView;
+	Handle(V3d_View) m_view;
 
 // Operations
 public:

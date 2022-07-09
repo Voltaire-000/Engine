@@ -1,17 +1,16 @@
 
 // EngineView.cpp : implementation of the CEngineView class
-//
+//	Creates the View
 
 #include "pch.h"
-#include "framework.h"
 // SHARED_HANDLERS can be defined in an ATL project implementing preview, thumbnail
 // and search filter handlers and allows sharing of document code with that project.
 #ifndef SHARED_HANDLERS
-#include "Engine.h"
+#include "Engine_App.h"
 #endif
 
-#include "EngineDoc.h"
-#include "EngineView.h"
+#include "Engine_Doc_Viewer.h"
+#include "Engine_View.h"
 
 // CEngineView
 
@@ -59,11 +58,11 @@ void CEngineView::OnDraw(CDC* /*pDC*/)
 		return;
 
 	// TODO: add draw code for native data here
-	myView->MustBeResized();
-	myView->Update();
+	m_view->MustBeResized();
+	m_view->Update();
 	//TODO
-	pDoc->DrawSphere(100.0);
-	myView->FitAll();
+	pDoc->DrawSphere(10.0);
+	//myView->FitAll();
 }
 
 // CEngineView printing
@@ -92,14 +91,14 @@ void CEngineView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 
 void CEngineView::OnInitialUpdate()
 {
-	myView = GetDocument()->GetViewer()->CreateView();
+	m_view = GetDocument()->GetViewer()->CreateView();
 	//myView->SetShadingModel(V3d_PHONG);
 	//myView->SetLightOn();
-	myView->SetBgGradientColors(Quantity_NOC_GRAY10, Quantity_NOC_GRAY99, Aspect_GradientFillMethod_Vertical);
+	m_view->SetBgGradientColors(Quantity_NOC_GRAY10, Quantity_NOC_GRAY99, Aspect_GradientFillMethod_Vertical);
 	Handle(Graphic3d_GraphicDriver) theGraphicDriver = ((CEngineApp*)AfxGetApp())->GetGraphicDriver();
 	Aspect_Handle aWindowHandle = (Aspect_Handle)GetSafeHwnd();
 	Handle(WNT_Window) aWntWindow = new WNT_Window(GetSafeHwnd());
-	myView->SetWindow(aWntWindow);
+	m_view->SetWindow(aWntWindow);
 
 	if (!aWntWindow->IsMapped())
 	{
@@ -110,7 +109,7 @@ void CEngineView::OnInitialUpdate()
 	Standard_Integer h = 100;
 	aWntWindow->Size(w, h);
 	::PostMessage(GetSafeHwnd(), WM_SIZE, SIZE_RESTORED, w + h * 65536);
-	myView->FitAll();
+	m_view->FitAll();
 }
 
 void CEngineView::OnRButtonUp(UINT /* nFlags */, CPoint point)
@@ -131,8 +130,8 @@ void CEngineView::OnMouseMove(UINT nFlags, CPoint point)
 	CView::OnMouseMove(nFlags, point);
 	if (nFlags && MK_LBUTTON)
 	{
-		myView->Rotation(point.x, point.y);
-		myView->StartRotation(point.x, point.y);
+		m_view->Rotation(point.x, point.y);
+		m_view->StartRotation(point.x, point.y);
 	}
 }
 

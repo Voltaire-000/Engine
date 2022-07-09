@@ -3,18 +3,18 @@
 //
 
 #include "pch.h"
-#include "framework.h"
 // SHARED_HANDLERS can be defined in an ATL project implementing preview, thumbnail
 // and search filter handlers and allows sharing of document code with that project.
 #ifndef SHARED_HANDLERS
-#include "Engine.h"
+#include "Engine_App.h"
 #endif
 
-#include "EngineDoc.h"
+#include "Engine_Doc_Viewer.h"
 
 #include <propkey.h>
 
 // CEngineDoc
+//	Creates the Viewer
 
 IMPLEMENT_DYNCREATE(CEngineDoc, CDocument)
 
@@ -32,16 +32,16 @@ CEngineDoc::CEngineDoc() noexcept
 	Handle(OpenGl_GraphicDriver) graphicDriver = new OpenGl_GraphicDriver(displayConnection, false);
 
 	//	Initialize V3d_Viewer
-	myViewer = new V3d_Viewer(graphicDriver);
+	m_viewer = new V3d_Viewer(graphicDriver);
 
 	//	create a new window over the existing window
-	myAISContext = new AIS_InteractiveContext(myViewer);
+	m_context = new AIS_InteractiveContext(m_viewer);
 
 	////////////////////////////////////////////////////////////////////////////
 	//	Prs3d_Drawer test TODO
 	Handle(Prs3d_Drawer) selDrawer = new Prs3d_Drawer();
 	//
-	selDrawer->SetLink(myAISContext->DefaultDrawer());
+	selDrawer->SetLink(m_context->DefaultDrawer());
 	selDrawer->SetFaceBoundaryDraw(true);
 	selDrawer->SetDisplayMode(1);	//	Shaded
 	selDrawer->SetTransparency(0.5f);
@@ -62,7 +62,7 @@ CEngineDoc::CEngineDoc() noexcept
 
 	selDrawer->UnFreeBoundaryAspect()->SetWidth(1.0);
 	//	Update AIS context
-	myAISContext->SetHighlightStyle(Prs3d_TypeOfHighlight_LocalSelected, selDrawer);
+	m_context->SetHighlightStyle(Prs3d_TypeOfHighlight_LocalSelected, selDrawer);
 	//	end Prs3d
 	///////////////////////////////////////////////////////////////////////////////
 
@@ -70,10 +70,10 @@ CEngineDoc::CEngineDoc() noexcept
 	//	set up grid
 	Aspect_GridType aGridType = Aspect_GT_Rectangular;
 	Aspect_GridDrawMode aGridDrawMode = Aspect_GDM_Lines;
-	myViewer->SetRectangularGridValues(0, 0, 10, 10, 0);
+	m_viewer->SetRectangularGridValues(0, 0, 10, 10, 0);
 	Handle(Graphic3d_AspectMarker3d) aMarker = new Graphic3d_AspectMarker3d(Aspect_TOM_BALL, Quantity_NOC_BLUE4, 2);
-	myViewer->SetGridEcho(aMarker);
-	myViewer->ActivateGrid(aGridType, aGridDrawMode);
+	m_viewer->SetGridEcho(aMarker);
+	m_viewer->ActivateGrid(aGridType, aGridDrawMode);
 	//	end grid
 	/////////////////////////////////////////////////////////////////////////////
 
@@ -86,7 +86,7 @@ CEngineDoc::CEngineDoc() noexcept
 	m_viewcube->SetBoxColor(Quantity_NOC_GRAY1);
 	m_viewcube->SetBoxTransparency(0.25);
 	m_viewcube->SetDrawAxes(TRUE);
-	myAISContext->Display(m_viewcube, true);
+	m_context->Display(m_viewcube, true);
 	//	End ViewCube
 	///////////////////////////////////////////////
 	
@@ -96,15 +96,15 @@ CEngineDoc::CEngineDoc() noexcept
 	LightDir->SetDirection(1.0, -20.0, -10.0);
 	LightDir->SetIntensity(0.15);
 	LightAmb->SetIntensity(0.15);
-	myViewer->AddLight(LightDir);
-	myViewer->AddLight(LightAmb);
-	myViewer->SetLightOn(LightDir);
-	myViewer->SetLightOn(LightAmb);
+	m_viewer->AddLight(LightDir);
+	m_viewer->AddLight(LightAmb);
+	m_viewer->SetLightOn(LightDir);
+	m_viewer->SetLightOn(LightAmb);
 	//	Lighting end
 	/////////////////////////////////////////////
 
-	myAISContext->SetDisplayMode(AIS_Shaded, true);
-	myAISContext->SetAutomaticHilight(Standard_False);
+	m_context->SetDisplayMode(AIS_Shaded, true);
+	m_context->SetAutomaticHilight(Standard_False);
 	
 }
 
@@ -124,7 +124,7 @@ void CEngineDoc::DrawSphere(double Radius)
 
 	AddShape(Sphere);
 
-	myAISContext->Display(shape, true);
+	m_context->Display(shape, true);
 	//myAISContext->Display(new AIS_Shape(Sphere), true);
 
 }
@@ -139,14 +139,14 @@ void CEngineDoc::MessageLoop()
 	for (auto sh : m_shapes)
 	{
 		Handle(AIS_Shape) shape = new AIS_Shape(sh);
-		myAISContext->Display(shape, true);
-		myAISContext->SetDisplayMode(shape, AIS_Shaded, true);
+		m_context->Display(shape, true);
+		m_context->SetDisplayMode(shape, AIS_Shaded, true);
 
 		shape->SetMaterial(Graphic3d_NameOfMaterial_Copper);
 
-		myAISContext->Activate(4, true);
-		myAISContext->Activate(2, true);
-		myAISContext->Activate(m_viewcube);
+		m_context->Activate(4, true);
+		m_context->Activate(2, true);
+		m_context->Activate(m_viewcube);
 	}
 }
 
