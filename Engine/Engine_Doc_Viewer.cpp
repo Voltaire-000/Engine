@@ -39,30 +39,30 @@ CEngineDoc::CEngineDoc() noexcept
 
 	////////////////////////////////////////////////////////////////////////////
 	//	Prs3d_Drawer test TODO
-	Handle(Prs3d_Drawer) selDrawer = new Prs3d_Drawer();
-	//
-	selDrawer->SetLink(m_context->DefaultDrawer());
-	selDrawer->SetFaceBoundaryDraw(true);
-	selDrawer->SetDisplayMode(1);	//	Shaded
-	selDrawer->SetTransparency(0.5f);
-	selDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
-	selDrawer->SetColor(Quantity_NOC_GOLD);
-	selDrawer->SetBasicFillAreaAspect(new Graphic3d_AspectFillArea3d());
+	//Handle(Prs3d_Drawer) selDrawer = new Prs3d_Drawer();
+	////
+	//selDrawer->SetLink(m_context->DefaultDrawer());
+	//selDrawer->SetFaceBoundaryDraw(true);
+	//selDrawer->SetDisplayMode(1);	//	Shaded
+	//selDrawer->SetTransparency(0.5f);
+	//selDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
+	//selDrawer->SetColor(Quantity_NOC_GOLD);
+	//selDrawer->SetBasicFillAreaAspect(new Graphic3d_AspectFillArea3d());
 
-	//	Adjust fill area aspect
-	const Handle(Graphic3d_AspectFillArea3d)& fillArea = selDrawer->BasicFillAreaAspect();
-	//
-	fillArea->SetInteriorColor(Quantity_NOC_GOLD);
-	fillArea->SetBackInteriorColor(Quantity_NOC_GOLD);
-	//
-	fillArea->ChangeFrontMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
-	fillArea->ChangeFrontMaterial().SetTransparency(0.4f);
-	fillArea->ChangeBackMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
-	fillArea->ChangeBackMaterial().SetTransparency(0.4f);
+	////	Adjust fill area aspect
+	//const Handle(Graphic3d_AspectFillArea3d)& fillArea = selDrawer->BasicFillAreaAspect();
+	////
+	//fillArea->SetInteriorColor(Quantity_NOC_GOLD);
+	//fillArea->SetBackInteriorColor(Quantity_NOC_GOLD);
+	////
+	//fillArea->ChangeFrontMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
+	//fillArea->ChangeFrontMaterial().SetTransparency(0.4f);
+	//fillArea->ChangeBackMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
+	//fillArea->ChangeBackMaterial().SetTransparency(0.4f);
 
-	selDrawer->UnFreeBoundaryAspect()->SetWidth(1.0);
-	//	Update AIS context
-	m_context->SetHighlightStyle(Prs3d_TypeOfHighlight_LocalSelected, selDrawer);
+	//selDrawer->UnFreeBoundaryAspect()->SetWidth(1.0);
+	////	Update AIS context
+	//m_context->SetHighlightStyle(Prs3d_TypeOfHighlight_LocalSelected, selDrawer);
 	//	end Prs3d
 	///////////////////////////////////////////////////////////////////////////////
 

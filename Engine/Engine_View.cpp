@@ -24,12 +24,13 @@ BEGIN_MESSAGE_MAP(CEngineView, CView)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CEngineView::OnFilePrintPreview)
 	ON_WM_CONTEXTMENU()
-	ON_WM_RBUTTONUP()
 
 	ON_WM_MOUSEWHEEL()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
+	ON_WM_RBUTTONDOWN()
+	ON_WM_RBUTTONUP()
 END_MESSAGE_MAP()
 
 // CEngineView construction/destruction
@@ -146,7 +147,7 @@ void CEngineView::OnDraw(CDC* /*pDC*/)
 	m_view->MustBeResized();
 	m_view->Update();
 	//TODO
-	pDoc->DrawSphere(50.0);
+	//pDoc->DrawSphere(50.0);
 	//myView->FitAll();
 }
 
@@ -180,14 +181,14 @@ void CEngineView::OnInitialUpdate()
 	m_view = GetAISContext()->CurrentViewer()->CreateView();
 	m_view->SetImmediateUpdate(false);
 	m_view->SetComputedMode(Standard_False);
-	//myView->SetShadingModel(V3d_PHONG);
+	m_view->SetShadingModel(V3d_FLAT);
 	//myView->SetLightOn();
 	m_view->SetBgGradientColors(Quantity_NOC_GRAY10, Quantity_NOC_GRAY99, Aspect_GradientFillMethod_Vertical);
 	//Handle(Graphic3d_GraphicDriver) theGraphicDriver = ((CEngineApp*)AfxGetApp())->GetGraphicDriver();
 	Handle(OpenGl_GraphicDriver) aDriver = Handle(OpenGl_GraphicDriver)::DownCast(m_view->Viewer()->Driver());
 	m_view->Camera()->SetProjectionType(aDriver->Options().contextStereo 
-										? Graphic3d_Camera::Projection_Orthographic
-										: Graphic3d_Camera::Projection_Stereo);
+										? Graphic3d_Camera::Projection_Stereo
+										: Graphic3d_Camera::Projection_Orthographic);
 
 	//Aspect_Handle aWindowHandle = (Aspect_Handle)GetSafeHwnd();
 	Handle(WNT_Window) aWntWindow = new WNT_Window(GetSafeHwnd());
@@ -197,6 +198,9 @@ void CEngineView::OnInitialUpdate()
 	{
 		aWntWindow->Map();
 	}
+	Standard_Integer w = 100;
+	Standard_Integer h = 100;
+	::PostMessage(GetSafeHwnd(), WM_SIZE, SIZE_RESTORED, w + h * 65536);
 
 	m_view->Redraw();
 	m_view->Invalidate();
@@ -229,26 +233,28 @@ BOOL CEngineView::OnMouseWheel(UINT nFlags, short theDelta, CPoint point)
 	ScreenToClient(&aCursorPnt);
 	const Graphic3d_Vec2i aPos(aCursorPnt.x, aCursorPnt.y);
 	const Aspect_VKeyFlags aFlags = WNT_Window::MouseKeyFlagsFromEvent(nFlags);
-	if (UpdateMouseScroll(Aspect_ScrollDelta(aPos, aDeltaF, aFlags)))
-	{
-		update3dView();
-	}
+	UpdateMouseScroll(Aspect_ScrollDelta(aPos, aDeltaF, aFlags));
+	FlushViewEvents(GetAISContext(), m_view, true);
 	return true;
 }
 
 void CEngineView::OnMouseMove(UINT nFlags, CPoint point)
 {
-	TRACKMOUSEEVENT aMouseEvent;
+	//CView::OnMouseMove(nFlags, point);
+	//if (nFlags && MK_LBUTTON)
+	//{
+	//	m_view->Rotation(point.x, point.y);
+	//	m_view->StartRotation(point.x, point.y);
+	//}
+	TRACKMOUSEEVENT aMouseEvent;          // for WM_MOUSELEAVE
 	aMouseEvent.cbSize = sizeof(aMouseEvent);
 	aMouseEvent.dwFlags = TME_LEAVE;
 	aMouseEvent.hwndTrack = m_hWnd;
 	aMouseEvent.dwHoverTime = HOVER_DEFAULT;
-	if (!::_TrackMouseEvent(&aMouseEvent))
-	{
-		TRACE("Track Error\n");
-	}
+	if (!::_TrackMouseEvent(&aMouseEvent)) { TRACE("Track ERROR!\n"); }
+
 	const Aspect_VKeyFlags aFlags = WNT_Window::MouseKeyFlagsFromEvent(nFlags);
-	if (UpdateMousePosition(Graphic3d_Vec2i(point.x, point.y), PressedMouseButtons(), nFlags, false))
+	if (UpdateMousePosition(Graphic3d_Vec2i(point.x, point.y), PressedMouseButtons(), aFlags, false))
 	{
 		update3dView();
 	}
