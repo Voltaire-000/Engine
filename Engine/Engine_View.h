@@ -107,8 +107,8 @@ public:
 	virtual void OnDraw(CDC* /*pDC*/) Standard_OVERRIDE;  // overridden to draw this view
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short theDelta, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-	//afx_msg void OnLButtonDown(UINT theFlags, CPoint thePoint);
-	//afx_msg void OnLButtonUp(UINT theFlags, CPoint thePoint);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	//afx_msg void OnMButtonDown(UINT theFlags, CPoint thePoint);
 	//afx_msg void OnMButtonUp(UINT theFlags, CPoint thePoint);
 	//afx_msg void OnRButtonDown(UINT theFlags, CPoint thePoint);

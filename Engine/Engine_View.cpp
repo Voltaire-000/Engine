@@ -66,6 +66,7 @@ void CEngineView::update3dView()
 			Invalidate(FALSE);
 			UpdateWindow();
 		}
+		FlushViewEvents(GetAISContext(), m_view, true);
 	}
 }
 
@@ -147,7 +148,7 @@ void CEngineView::OnDraw(CDC* /*pDC*/)
 	m_view->MustBeResized();
 	m_view->Update();
 	//TODO
-	//pDoc->DrawSphere(50.0);
+	pDoc->DrawSphere(50.0);
 	//myView->FitAll();
 }
 
@@ -181,7 +182,7 @@ void CEngineView::OnInitialUpdate()
 	m_view = GetAISContext()->CurrentViewer()->CreateView();
 	m_view->SetImmediateUpdate(false);
 	m_view->SetComputedMode(Standard_False);
-	m_view->SetShadingModel(V3d_FLAT);
+	m_view->SetShadingModel(V3d_GOURAUD);
 	//myView->SetLightOn();
 	m_view->SetBgGradientColors(Quantity_NOC_GRAY10, Quantity_NOC_GRAY99, Aspect_GradientFillMethod_Vertical);
 	//Handle(Graphic3d_GraphicDriver) theGraphicDriver = ((CEngineApp*)AfxGetApp())->GetGraphicDriver();
@@ -233,8 +234,11 @@ BOOL CEngineView::OnMouseWheel(UINT nFlags, short theDelta, CPoint point)
 	ScreenToClient(&aCursorPnt);
 	const Graphic3d_Vec2i aPos(aCursorPnt.x, aCursorPnt.y);
 	const Aspect_VKeyFlags aFlags = WNT_Window::MouseKeyFlagsFromEvent(nFlags);
-	UpdateMouseScroll(Aspect_ScrollDelta(aPos, aDeltaF, aFlags));
-	FlushViewEvents(GetAISContext(), m_view, true);
+	if (UpdateMouseScroll(Aspect_ScrollDelta(aPos, aDeltaF, aFlags)))
+	{
+		update3dView();
+	}
+
 	return true;
 }
 
@@ -258,7 +262,32 @@ void CEngineView::OnMouseMove(UINT nFlags, CPoint point)
 	{
 		update3dView();
 	}
+	
 }
+
+void CEngineView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	const Aspect_VKeyFlags aFlags = WNT_Window::MouseKeyFlagsFromEvent(nFlags);
+	PressMouseButton(Graphic3d_Vec2i(point.x, point.y), Aspect_VKeyMouse_LeftButton, nFlags, false);
+	update3dView();
+}
+
+void CEngineView::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	const Aspect_VKeyFlags aFlags = WNT_Window::MouseKeyFlagsFromEvent(nFlags);
+	ReleaseMouseButton(Graphic3d_Vec2i(point.x, point.y), Aspect_VKeyMouse_LeftButton, nFlags, false);
+	if (m_currentMode == CurAction3d_GlobalPanning)
+	{
+		m_view->Place(point.x, point.y, m_curZoom);
+		m_view->Invalidate();
+	}
+	if (m_currentMode != CurAction3d_Nothing)
+	{
+		setCurrentAction(CurAction3d_Nothing);
+	}
+	update3dView();
+}
+
 
 // CEngineView diagnostics
 
