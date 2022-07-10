@@ -83,8 +83,8 @@ CEngineDoc::CEngineDoc() noexcept
 	m_viewcube->SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_TriedronPers, Aspect_TOTP_RIGHT_UPPER, Graphic3d_Vec2i(100, 100)));
 	Standard_Real theValue = 40;
 	m_viewcube->SetSize(theValue);
-	m_viewcube->SetBoxColor(Quantity_NOC_GRAY1);
-	m_viewcube->SetBoxTransparency(0.25);
+	m_viewcube->SetBoxColor(Quantity_NOC_ANTIQUEWHITE4);
+	m_viewcube->SetBoxTransparency(0.0);
 	m_viewcube->SetDrawAxes(TRUE);
 	m_context->Display(m_viewcube, true);
 	//	End ViewCube
