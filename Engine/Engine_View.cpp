@@ -187,7 +187,7 @@ void CEngineView::OnInitialUpdate()
 	//m_view->SetShadingModel(V3d_GOURAUD);
 	//m_view->SetShadingModel(V3d_FLAT);
 
-	m_view->GeneratePBREnvironment(true);
+	m_view->GeneratePBREnvironment(false);
 
 	//=============================================================================
 	//	Sky Dome
@@ -229,7 +229,7 @@ void CEngineView::OnInitialUpdate()
 	RenderParams.AdaptiveScreenSampling = true;
 	RenderParams.CoherentPathTracingMode = true;
 	RenderParams.IsGlobalIlluminationEnabled = false;
-	RenderParams.NbRayTracingTiles = 1024;
+	RenderParams.NbRayTracingTiles = 256;
 	RenderParams.PbrEnvBakingSpecNbSamples = 6;
 	RenderParams.PbrEnvSpecMapNbLevels = 6;
 	RenderParams.RaytracingDepth = 6;
@@ -240,7 +240,7 @@ void CEngineView::OnInitialUpdate()
 	RenderParams.NbMsaaSamples = 8; // Anti-aliasing by multi-sampling
 	RenderParams.IsShadowEnabled = true;
 	RenderParams.CollectedStats = Graphic3d_RenderingParams::PerfCounters_NONE;
-
+	
 	m_view->Redraw();
 	m_view->Invalidate();
 
