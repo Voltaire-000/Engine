@@ -182,8 +182,12 @@ void CEngineView::OnInitialUpdate()
 	m_view = GetAISContext()->CurrentViewer()->CreateView();
 	m_view->SetImmediateUpdate(false);
 	m_view->SetComputedMode(Standard_False);
-	m_view->SetShadingModel(V3d_GOURAUD);
-	//myView->SetLightOn();
+
+	//m_view->SetShadingModel(V3d_PHONG);
+	//m_view->SetShadingModel(V3d_GOURAUD);
+	//m_view->SetShadingModel(V3d_FLAT);
+
+	m_view->GeneratePBREnvironment(false);
 	m_view->SetBgGradientColors(Quantity_NOC_GRAY10, Quantity_NOC_GRAY99, Aspect_GradientFillMethod_Vertical);
 	//Handle(Graphic3d_GraphicDriver) theGraphicDriver = ((CEngineApp*)AfxGetApp())->GetGraphicDriver();
 	Handle(OpenGl_GraphicDriver) aDriver = Handle(OpenGl_GraphicDriver)::DownCast(m_view->Viewer()->Driver());
@@ -202,6 +206,25 @@ void CEngineView::OnInitialUpdate()
 	Standard_Integer w = 100;
 	Standard_Integer h = 100;
 	::PostMessage(GetSafeHwnd(), WM_SIZE, SIZE_RESTORED, w + h * 65536);
+
+	//	Configure rendering params
+	Graphic3d_RenderingParams& RenderParams = m_view->ChangeRenderingParams();
+	//RenderParams.Method = Graphic3d_RM_RAYTRACING;
+	RenderParams.Method = Graphic3d_RM_RASTERIZATION;
+	RenderParams.AdaptiveScreenSampling = true;
+	RenderParams.CoherentPathTracingMode = true;
+	RenderParams.IsGlobalIlluminationEnabled = false;
+	RenderParams.NbRayTracingTiles = 1024;
+	RenderParams.PbrEnvBakingSpecNbSamples = 6;
+	RenderParams.PbrEnvSpecMapNbLevels = 6;
+	RenderParams.RaytracingDepth = 6;
+	RenderParams.RayTracingTileSize = 16;
+	RenderParams.IsTransparentShadowEnabled = true;
+	RenderParams.IsReflectionEnabled = true;
+	RenderParams.IsAntialiasingEnabled = true;
+	RenderParams.NbMsaaSamples = 8; // Anti-aliasing by multi-sampling
+	RenderParams.IsShadowEnabled = true;
+	RenderParams.CollectedStats = Graphic3d_RenderingParams::PerfCounters_NONE;
 
 	m_view->Redraw();
 	m_view->Invalidate();
