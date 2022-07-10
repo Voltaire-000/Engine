@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "DeLaval.h"
+
 class CMainFrame : public CMDIFrameWndEx
 {
 	DECLARE_DYNAMIC(CMainFrame)
@@ -30,10 +32,13 @@ public:
 #endif
 
 protected:  // control bar embedded members
-	CMFCMenuBar       m_wndMenuBar;
-	CMFCToolBar       m_wndToolBar;
-	CMFCStatusBar     m_wndStatusBar;
-	CMFCToolBarImages m_UserImages;
+	CMFCMenuBar			m_wndMenuBar;
+	CMFCToolBar			m_wndToolBar;
+	CMFCStatusBar		m_wndStatusBar;
+	CMFCToolBarImages	m_UserImages;
+	CMFCOutlookBar		m_wndNavigationBar;
+
+	DeLaval				m_wndDeLaval;
 
 // Generated message map functions
 protected:
@@ -44,6 +49,14 @@ protected:
 	afx_msg void OnApplicationLook(UINT id);
 	afx_msg void OnUpdateApplicationLook(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()
+
+	BOOL CreateOutlookBar(CMFCOutlookBar& bar, UINT uiID, DeLaval& delaval, int nInitialWidth);
+
+	int FindFocusedOutlookWnd(CMFCOutlookBarTabCtrl** ppOutlookWnd);
+
+	CMFCOutlookBarTabCtrl*	FindOutlookParent(CWnd* pWnd);
+	CMFCOutlookBarTabCtrl*	m_pCurrOutlookWnd;
+	CMFCOutlookBarPane*		m_pCurrOutlookPage;
 
 };
 

@@ -103,11 +103,24 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	DockPane(&m_wndMenuBar);
 	DockPane(&m_wndToolBar);
 
-
 	// enable Visual Studio 2005 style docking window behavior
 	CDockingManager::SetDockingMode(DT_SMART);
 	// enable Visual Studio 2005 style docking window auto-hide behavior
 	EnableAutoHidePanes(CBRS_ALIGN_ANY);
+
+	//	Navigation pane will be created on the left, so temporary disable docking at the left side
+	EnableDocking(CBRS_ALIGN_TOP | CBRS_ALIGN_BOTTOM | CBRS_ALIGN_RIGHT);
+
+	//	Create and setup "Outlook" navigation bar
+	if (!CreateOutlookBar(m_wndNavigationBar, ID_VIEW_NAVIGATION, m_wndDeLaval, 300))
+	{
+		TRACE0("Failed to create navigation pane\n");
+		return -1;
+	}
+	//	OutlookBar is created and docking on the left side should be allowed
+	EnableDocking(CBRS_ALIGN_LEFT);
+	EnableAutoHidePanes(CBRS_ALIGN_RIGHT);
+
 	// set the visual manager and style based on persisted value
 	OnApplicationLook(theApp.m_nAppLook);
 
@@ -123,7 +136,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CMFCToolBar::GetUserImages() == nullptr)
 	{
 		// load user-defined toolbar images
-		if (m_UserImages.Load(_T(".\\UserImages.bmp")))
+		if (m_UserImages.Load(_T(".\\userimages.bmp")))
 		{
 			CMFCToolBar::SetUserImages(&m_UserImages);
 		}
@@ -291,6 +304,72 @@ void CMainFrame::OnApplicationLook(UINT id)
 void CMainFrame::OnUpdateApplicationLook(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetRadio(theApp.m_nAppLook == pCmdUI->m_nID);
+}
+
+BOOL CMainFrame::CreateOutlookBar(CMFCOutlookBar& bar, UINT uiID, DeLaval& delaval, int nInitialWidth)
+{
+	bar.SetMode2003();
+
+	BOOL bNameValid;
+	CString strTemp;
+	bNameValid = strTemp.LoadStringW(IDS_SHORTCUTS);
+	ASSERT(bNameValid);
+	if (!bar.Create(strTemp, this, CRect(0, 0, nInitialWidth, 32000), uiID, WS_CHILD | WS_VISIBLE | CBRS_LEFT))
+	{
+		return FALSE;
+	}
+
+	CMFCOutlookBarTabCtrl* pOutlookBar = (CMFCOutlookBarTabCtrl*)bar.GetUnderlyingWindow();
+	if (pOutlookBar == nullptr)
+	{
+		ASSERT(FALSE);
+		return FALSE;
+	}
+
+	pOutlookBar->EnableInPlaceEdit(TRUE);
+
+	static UINT uiPageID = 1;
+
+	//	can float, can autohide, can resize, CAN NOT CLOSE
+	DWORD dwStyle = AFX_CBRS_FLOAT | AFX_CBRS_AUTOHIDE | AFX_CBRS_RESIZE;
+
+	//	create the property panes here
+	//==================================
+	CRect rectDummy(0, 0, 0, 0);
+
+	//=========================================
+	//	DeLaval
+	delaval.Create(rectDummy, &bar, 1202);
+	bNameValid = strTemp.LoadStringW(IDS_DELAVAL);
+	ASSERT(bNameValid);
+	pOutlookBar->AddControl(&delaval, strTemp, 4, TRUE, dwStyle);
+		
+	//	end DeLaval
+	//===========================================================
+
+	bar.SetPaneStyle(bar.GetPaneStyle() | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC);
+
+	//pOutlookBar->SetImageList(theApp.m_bHiColorIcons)
+	//pOutlookBar->SetToolbarImageList(theApp.m_bHiColorIcons ? )
+
+	pOutlookBar->RecalcLayout();
+
+	BOOL bAnimation = theApp.GetInt(_T("OutlookAnimation"), TRUE);
+	CMFCOutlookBarTabCtrl::EnableAnimation(bAnimation);
+
+	bar.SetButtonsFont(&afxGlobalData.fontBold);
+
+	return TRUE;
+}
+
+int CMainFrame::FindFocusedOutlookWnd(CMFCOutlookBarTabCtrl** ppOutlookWnd)
+{
+	return 0;
+}
+
+CMFCOutlookBarTabCtrl* CMainFrame::FindOutlookParent(CWnd* pWnd)
+{
+	return nullptr;
 }
 
 
