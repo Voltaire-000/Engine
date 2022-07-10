@@ -50,6 +50,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	BOOL bNameValid;
 
+	//	get rid of tabs ?? TODO
 	CMDITabInfo mdiTabparams;
 	mdiTabparams.m_style = CMFCTabCtrl::STYLE_3D_ONENOTE;
 	mdiTabparams.m_bActiveTabCloseButton = TRUE;
@@ -121,6 +122,17 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	EnableDocking(CBRS_ALIGN_LEFT);
 	EnableAutoHidePanes(CBRS_ALIGN_RIGHT);
 
+
+	//	create docking windows
+	//if (!CreateDockingWindows())
+	//{
+	//	TRACE0("Failed to create docking windows\n");
+	//	return -1;
+	//}
+
+	//	do property window here TODO
+	// 
+	
 	// set the visual manager and style based on persisted value
 	OnApplicationLook(theApp.m_nAppLook);
 
@@ -167,7 +179,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CMFCToolBar::SetBasicCommands(lstBasicCommands);
 
-	ModifyStyle(0, FWS_PREFIXTITLE);
+	//ModifyStyle(0, FWS_PREFIXTITLE);
 
 	return 0;
 }
@@ -306,6 +318,17 @@ void CMainFrame::OnUpdateApplicationLook(CCmdUI* pCmdUI)
 	pCmdUI->SetRadio(theApp.m_nAppLook == pCmdUI->m_nID);
 }
 
+//	properties window TODO
+//BOOL CMainFrame::CreateDockingWindows()
+//{
+//	return 0;
+//}
+
+//	properties window TODO
+//void CMainFrame::SetDockingWindowIcons(BOOL bHiColorIcons)
+//{
+//}
+
 BOOL CMainFrame::CreateOutlookBar(CMFCOutlookBar& bar, UINT uiID, DeLaval& delaval, int nInitialWidth)
 {
 	bar.SetMode2003();
@@ -326,7 +349,9 @@ BOOL CMainFrame::CreateOutlookBar(CMFCOutlookBar& bar, UINT uiID, DeLaval& delav
 		return FALSE;
 	}
 
-	pOutlookBar->EnableInPlaceEdit(TRUE);
+	pOutlookBar->EnableInPlaceEdit(FALSE);
+	pOutlookBar->EnableTabSwap(TRUE);
+	int m_height = pOutlookBar->GetTabsHeight();
 
 	static UINT uiPageID = 1;
 
@@ -342,15 +367,15 @@ BOOL CMainFrame::CreateOutlookBar(CMFCOutlookBar& bar, UINT uiID, DeLaval& delav
 	delaval.Create(rectDummy, &bar, 1202);
 	bNameValid = strTemp.LoadStringW(IDS_DELAVAL);
 	ASSERT(bNameValid);
-	pOutlookBar->AddControl(&delaval, strTemp, 4, TRUE, dwStyle);
+	pOutlookBar->AddControl(&delaval, strTemp, 0, TRUE, dwStyle);
 		
 	//	end DeLaval
 	//===========================================================
 
 	bar.SetPaneStyle(bar.GetPaneStyle() | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC);
 
-	//pOutlookBar->SetImageList(theApp.m_bHiColorIcons)
-	//pOutlookBar->SetToolbarImageList(theApp.m_bHiColorIcons ? )
+	//pOutlookBar->SetImageList(theApp.m_bHiColorIcons ? IDB_PAGES_HC : IDB_PAGES, 24);
+	//pOutlookBar->SetToolbarImageList(theApp.m_bHiColorIcons ? IDB_PAGES_SMALL_HC : IDB_PAGES_SMALL, 16);
 
 	pOutlookBar->RecalcLayout();
 
@@ -362,16 +387,15 @@ BOOL CMainFrame::CreateOutlookBar(CMFCOutlookBar& bar, UINT uiID, DeLaval& delav
 	return TRUE;
 }
 
-int CMainFrame::FindFocusedOutlookWnd(CMFCOutlookBarTabCtrl** ppOutlookWnd)
-{
-	return 0;
-}
+//int CMainFrame::FindFocusedOutlookWnd(CMFCOutlookBarTabCtrl** ppOutlookWnd)
+//{
+//	return 0;
+//}
 
-CMFCOutlookBarTabCtrl* CMainFrame::FindOutlookParent(CWnd* pWnd)
-{
-	return nullptr;
-}
-
+//CMFCOutlookBarTabCtrl* CMainFrame::FindOutlookParent(CWnd* pWnd)
+//{
+//	return nullptr;
+//}
 
 BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParentWnd, CCreateContext* pContext)
 {

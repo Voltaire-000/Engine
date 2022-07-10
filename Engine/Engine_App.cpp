@@ -3,6 +3,7 @@
 //
 
 #include "pch.h"
+#include "framework.h"
 #include "afxwinappex.h"
 #include "afxdialogex.h"
 #include "Engine_App.h"
@@ -106,8 +107,10 @@ BOOL CEngineApp::InitApplication()
 	// Change the registry key under which our settings are stored
 	// TODO: You should modify this string to be something appropriate
 	// such as the name of your company or organization
-	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
-	LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
+
+	//	this caused the outlookBar to disappear TODO ALERT !! CRITICAL 
+	SetRegistryKey(_T("Local Applications"));
+	//LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
 
 
 	InitContextMenuManager();

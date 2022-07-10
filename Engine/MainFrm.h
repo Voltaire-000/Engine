@@ -6,6 +6,12 @@
 
 #include "DeLaval.h"
 
+class COutlookBar : public CMFCOutlookBar
+{
+	virtual BOOL AllowShowOnPaneMenu() const { return TRUE; }
+	virtual void GetPaneName(CString& strName) const { BOOL bNameValid = strName.LoadStringW(IDS_OUTLOOKBAR); ASSERT(bNameValid); if (!bNameValid) strName.Empty(); }
+};
+
 class CMainFrame : public CMDIFrameWndEx
 {
 	DECLARE_DYNAMIC(CMainFrame)
@@ -36,7 +42,7 @@ protected:  // control bar embedded members
 	CMFCToolBar			m_wndToolBar;
 	CMFCStatusBar		m_wndStatusBar;
 	CMFCToolBarImages	m_UserImages;
-	CMFCOutlookBar		m_wndNavigationBar;
+	COutlookBar			m_wndNavigationBar;
 
 	DeLaval				m_wndDeLaval;
 
@@ -50,13 +56,15 @@ protected:
 	afx_msg void OnUpdateApplicationLook(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()
 
+	//BOOL CreateDockingWindows();
+	//void SetDockingWindowIcons(BOOL bHiColorIcons);
 	BOOL CreateOutlookBar(CMFCOutlookBar& bar, UINT uiID, DeLaval& delaval, int nInitialWidth);
 
-	int FindFocusedOutlookWnd(CMFCOutlookBarTabCtrl** ppOutlookWnd);
+	//int FindFocusedOutlookWnd(CMFCOutlookBarTabCtrl** ppOutlookWnd);
 
-	CMFCOutlookBarTabCtrl*	FindOutlookParent(CWnd* pWnd);
-	CMFCOutlookBarTabCtrl*	m_pCurrOutlookWnd;
-	CMFCOutlookBarPane*		m_pCurrOutlookPage;
+	//CMFCOutlookBarTabCtrl*	FindOutlookParent(CWnd* pWnd);
+	CMFCOutlookBarTabCtrl*		m_pCurrOutlookWnd;
+	CMFCOutlookBarPane*			m_pCurrOutlookPage;
 
 };
 

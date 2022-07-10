@@ -36,6 +36,7 @@
 #define IDS_EDIT_MENU                   306
 #define IDS_SHORTCUTS					240
 #define IDS_DELAVAL						241
+#define IDS_OUTLOOKBAR					242
 
 #define ID_BUTTONFront                  40006
 
