@@ -187,14 +187,29 @@ void CEngineView::OnInitialUpdate()
 	//m_view->SetShadingModel(V3d_GOURAUD);
 	//m_view->SetShadingModel(V3d_FLAT);
 
-	m_view->GeneratePBREnvironment(false);
-	m_view->SetBgGradientColors(Quantity_NOC_GRAY10, Quantity_NOC_GRAY99, Aspect_GradientFillMethod_Vertical);
+	m_view->GeneratePBREnvironment(true);
+
+	//=============================================================================
+	//	Sky Dome
+	gp_Dir theSunDirection;
+	gp_XYZ theXYZ(-300, 100, 0);
+	theSunDirection.SetXYZ(theXYZ);
+	Standard_ShortReal theCloudiness = 0.08;
+	Standard_ShortReal theTime = 8;
+	Standard_ShortReal theFogginess = 0.8;
+	Standard_Integer theSize = 1800;
+	const Aspect_SkydomeBackground theAspect = Aspect_SkydomeBackground(theSunDirection, theCloudiness, theTime, theFogginess, theSize);
+	m_view->SetBackgroundSkydome(theAspect, true);
+	//============================================================================
+
+	//	have to turn off background color to see skydome
+	//m_view->SetBgGradientColors(Quantity_NOC_GRAY10, Quantity_NOC_GRAY99, Aspect_GradientFillMethod_Vertical);
 	//Handle(Graphic3d_GraphicDriver) theGraphicDriver = ((CEngineApp*)AfxGetApp())->GetGraphicDriver();
 	Handle(OpenGl_GraphicDriver) aDriver = Handle(OpenGl_GraphicDriver)::DownCast(m_view->Viewer()->Driver());
 	m_view->Camera()->SetProjectionType(aDriver->Options().contextStereo 
 										? Graphic3d_Camera::Projection_Stereo
 										: Graphic3d_Camera::Projection_Orthographic);
-
+	
 	//Aspect_Handle aWindowHandle = (Aspect_Handle)GetSafeHwnd();
 	Handle(WNT_Window) aWntWindow = new WNT_Window(GetSafeHwnd());
 	m_view->SetWindow(aWntWindow);

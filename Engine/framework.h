@@ -62,6 +62,7 @@
 #include <Aspect_TypeOfLine.hxx>
 #include <Aspect_WidthOfLine.hxx>
 #include <Aspect_Window.hxx>
+#include <Aspect_SkydomeBackground.hxx>
 
 #include <BRep_Builder.hxx>
 #include <BRep_Tool.hxx>
