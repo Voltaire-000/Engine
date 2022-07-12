@@ -39,53 +39,70 @@ CEngineDoc::CEngineDoc() noexcept
 
 	////////////////////////////////////////////////////////////////////////////
 	//	Prs3d_Drawer test TODO
-	//Handle(Prs3d_Drawer) selDrawer = new Prs3d_Drawer();
-	////
-	//selDrawer->SetLink(m_context->DefaultDrawer());
-	//selDrawer->SetFaceBoundaryDraw(true);
-	//selDrawer->SetDisplayMode(1);	//	Shaded
-	//selDrawer->SetTransparency(0.5f);
-	//selDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
-	//selDrawer->SetColor(Quantity_NOC_GOLD);
-	//selDrawer->SetBasicFillAreaAspect(new Graphic3d_AspectFillArea3d());
+	Handle(Prs3d_Drawer) selDrawer = new Prs3d_Drawer();
+	//
+	selDrawer->SetLink(m_context->DefaultDrawer());
+	selDrawer->SetFaceBoundaryDraw(true);
+	selDrawer->SetDisplayMode(1);	//	Shaded
+	selDrawer->SetTransparency(0.5f);
+	selDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
+	selDrawer->SetColor(Quantity_NOC_GOLD);
+	selDrawer->SetBasicFillAreaAspect(new Graphic3d_AspectFillArea3d());
 
-	////	Adjust fill area aspect
-	//const Handle(Graphic3d_AspectFillArea3d)& fillArea = selDrawer->BasicFillAreaAspect();
-	////
-	//fillArea->SetInteriorColor(Quantity_NOC_GOLD);
-	//fillArea->SetBackInteriorColor(Quantity_NOC_GOLD);
-	////
-	//fillArea->ChangeFrontMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
-	//fillArea->ChangeFrontMaterial().SetTransparency(0.4f);
-	//fillArea->ChangeBackMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
-	//fillArea->ChangeBackMaterial().SetTransparency(0.4f);
+	//	Adjust fill area aspect
+	const Handle(Graphic3d_AspectFillArea3d)& fillArea = selDrawer->BasicFillAreaAspect();
+	//
+	fillArea->SetInteriorColor(Quantity_NOC_GOLD);
+	fillArea->SetBackInteriorColor(Quantity_NOC_GOLD);
+	//
+	fillArea->ChangeFrontMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
+	fillArea->ChangeFrontMaterial().SetTransparency(0.4f);
+	fillArea->ChangeBackMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
+	fillArea->ChangeBackMaterial().SetTransparency(0.4f);
 
-	//selDrawer->UnFreeBoundaryAspect()->SetWidth(1.0);
-	////	Update AIS context
-	//m_context->SetHighlightStyle(Prs3d_TypeOfHighlight_LocalSelected, selDrawer);
+	selDrawer->UnFreeBoundaryAspect()->SetWidth(1.0);
+	//	Update AIS context
+	m_context->SetHighlightStyle(Prs3d_TypeOfHighlight_LocalSelected, selDrawer);
 	//	end Prs3d
 	///////////////////////////////////////////////////////////////////////////////
 
 
 	//=============================================================================
-	//	View type
+	//	Projection type
 	m_viewer->SetDefaultTypeOfView(V3d_PERSPECTIVE);
 
 	//=============================================================================
 
+	///////////////////////////////////////////////////////////////////////////////
+	//	Default Background
+	Quantity_Color theColor1 = Quantity_NOC_LIGHTSLATEGRAY;
+	Quantity_Color theColor2 = Quantity_NOC_LIGHTBLUE;
+	Aspect_GradientFillMethod theFillStyle = Aspect_GradientFillMethod_Vertical;
+
+	m_viewer->SetDefaultBgGradientColors(theColor1, theColor2, theFillStyle);
+	//=============================================================================
+	///////////////////////////////////////////////////////////////////////////////
+
 	////////////////////////////////////////////////////////////////////////////////
-	//	set up grid
+	//	GRID
 	Aspect_GridType aGridType = Aspect_GT_Rectangular;
 	Aspect_GridDrawMode aGridDrawMode = Aspect_GDM_Lines;
 	m_viewer->SetRectangularGridValues(0, 0, 10, 10, 0);
 	Handle(Graphic3d_AspectMarker3d) aMarker = new Graphic3d_AspectMarker3d(Aspect_TOM_BALL, Quantity_NOC_BLUE4, 2);
 	m_viewer->SetGridEcho(aMarker);
 	m_viewer->ActivateGrid(aGridType, aGridDrawMode);
-	//	end grid
+	//	end GRID
 	/////////////////////////////////////////////////////////////////////////////
 
 	////////////////////////////////////////////////
 	// ViewCube
+	Handle(Prs3d_TextAspect) aspectText = new Prs3d_TextAspect();
+	aspectText->SetFont("Courier");
+	aspectText->SetHeight(20);
+	Handle(Prs3d_Drawer) aDrawer = new Prs3d_Drawer();
+
+	aDrawer->SetTextAspect(aspectText);
+
 	m_viewcube = new AIS_ViewCube();
 	m_viewcube->SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_TriedronPers, Aspect_TOTP_RIGHT_UPPER, Graphic3d_Vec2i(100, 100)));
 	Standard_Real theValue = 40;
@@ -93,25 +110,63 @@ CEngineDoc::CEngineDoc() noexcept
 	m_viewcube->SetBoxColor(Quantity_NOC_ANTIQUEWHITE);
 	m_viewcube->SetBoxTransparency(0.0);
 	m_viewcube->SetDrawAxes(TRUE);
+	m_viewcube->SetAutoHilight(TRUE);
+	m_viewcube->SetAttributes(aDrawer);
 	m_context->Display(m_viewcube, true);
 	//	End ViewCube
 	///////////////////////////////////////////////
 	
 	//	Lighting
-	Handle(V3d_DirectionalLight)	LightDir = new V3d_DirectionalLight(V3d_Zneg, Quantity_Color(Quantity_NOC_GRAY97), 1);
+
 	Handle(V3d_AmbientLight)		LightAmb = new V3d_AmbientLight();
-	LightDir->SetDirection(1.0, -20.0, -10.0);
-	LightDir->SetIntensity(0.15);
-	LightAmb->SetIntensity(0.15);
-	m_viewer->AddLight(LightDir);
+	//=========================================
+	//	Directional light
+	Handle(V3d_DirectionalLight)	LightDir_1 = new V3d_DirectionalLight(V3d_XposYposZpos, Quantity_Color(Quantity_NOC_WHITE), 0);
+	LightDir_1->SetDirection(10.0, 0.0, 100.0);
+	LightDir_1->SetCastShadows(TRUE);
+	LightDir_1->SetIntensity(15.0);
+	m_viewer->AddLight(LightDir_1);
+	m_viewer->SetLightOn(LightDir_1);
+	//=========================================
+	// 
+	//	Directional light
+	Handle(V3d_DirectionalLight)	LightDir_2 = new V3d_DirectionalLight();
+	LightDir_2->SetDirection(0.0, 100, -100.0);
+	LightDir_2->SetCastShadows(TRUE);
+	LightDir_2->SetIntensity(15.0);
+	m_viewer->AddLight(LightDir_2);
+	m_viewer->SetLightOn(LightDir_2);
+	//=========================================
+	//=========================================
+	//	Positional light
+	gp_Pnt thePos(0, 0, 0);
+	
+	Handle(V3d_PositionalLight)	LightPositional_1 = new V3d_PositionalLight(thePos);
+	LightPositional_1->SetIntensity(1.0);
+	m_viewer->AddLight(LightPositional_1);
+	m_viewer->SetLightOn(LightPositional_1);
+	//=========================================
+
+	LightAmb->SetIntensity(2.0);
+	
 	m_viewer->AddLight(LightAmb);
-	m_viewer->SetLightOn(LightDir);
+	
 	m_viewer->SetLightOn(LightAmb);
-	//	Lighting end
+	//	end Lighting
 	/////////////////////////////////////////////
 
 	m_context->SetDisplayMode(AIS_Shaded, true);
-	m_context->SetAutomaticHilight(Standard_False);
+	m_context->SetAutomaticHilight(Standard_True);
+
+	/////////////////////////////////////////////
+	m_shapes;
+	// 
+	//	Set selection modes
+	m_context->Activate(4, true);
+	m_context->Activate(2, true);
+	m_context->Activate(m_viewcube);
+	//
+	/////////////////////////////////////////////
 	
 }
 
@@ -144,6 +199,40 @@ void CEngineDoc::DrawSphere(double Radius)
 	m_context->Display(shape, true);
 	//myAISContext->Display(new AIS_Shape(Sphere), true);
 
+}
+
+void CEngineDoc::DrawRevolve(Standard_Real theAngle)
+{
+	//theAngle = 180;
+	TopoDS_Shape shape = MakeRevolve(theAngle);
+	AddShape(shape);
+	m_context->Display(new AIS_Shape(shape), true);
+}
+
+void CEngineDoc::DrawLiner(const Standard_Real theRadius, const Standard_Real theThickness, const Standard_Real theLength, const Standard_Real theAngle, const Graphic3d_MaterialAspect theMaterial)
+{
+	BOOL shapeAdded = false;
+	//	TODO inherit from BRepBuilderAPI_MakeShape() ?? Probably not needed
+
+		TopoDS_Shape liner = MakeLiner(theRadius, theThickness, theLength, theAngle);
+
+		Handle(AIS_Shape) shape = new AIS_Shape(liner);
+
+		if (!shapeAdded)
+		{
+			shape->SetMaterial(theMaterial);
+
+			AddShape(liner);
+
+			//m_context->SetDisplayMode(AIS_Shaded, true);
+			//m_context->SetAutomaticHilight(Standard_True);
+			//m_context->Activate(4, true);
+			//m_context->Activate(2, true);
+			//m_context->Activate(shape);
+			shapeAdded = true;
+		}
+		m_context->Display(shape, true);
+	//m_context->Display(new AIS_Shape(shape), true);
 }
 
 void CEngineDoc::AddShape(const TopoDS_Shape& shape)

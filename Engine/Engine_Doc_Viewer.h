@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "MakeRevolve.h"
+#include "MakeLiner.h"
 
 class CEngineDoc : public CDocument
 {
@@ -46,6 +48,14 @@ protected:
 // Operations
 public:
 	void DrawSphere(double Radius);
+
+	void DrawRevolve(Standard_Real theAngle);
+
+	void DrawLiner(const Standard_Real theRadius,
+		const Standard_Real theThickness,
+		const Standard_Real theLength,
+		const Standard_Real theAngle = 360,
+		const Graphic3d_MaterialAspect theMaterial = Graphic3d_NameOfMaterial_Aluminum);
 
 	//////////////////////////////////////////////////
 	CEngineDoc& operator<<(const TopoDS_Shape& shape)

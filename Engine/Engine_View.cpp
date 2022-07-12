@@ -145,11 +145,18 @@ void CEngineView::OnDraw(CDC* /*pDC*/)
 		return;
 
 	// TODO: add draw code for native data here
+
+	//TODO
+	//pDoc->DrawSphere(50.0);
+	//pDoc->DrawRevolve(180);
+	// 
+	//	TODO move this to a button
+	pDoc->DrawLiner(75, 10, 100, 180, Graphic3d_NameOfMaterial_Copper);
+
 	m_view->MustBeResized();
 	m_view->Update();
-	//TODO
-	pDoc->DrawSphere(50.0);
-	//myView->FitAll();
+
+
 }
 
 // CEngineView printing
@@ -187,19 +194,23 @@ void CEngineView::OnInitialUpdate()
 	//m_view->SetShadingModel(V3d_GOURAUD);
 	//m_view->SetShadingModel(V3d_FLAT);
 
-	m_view->GeneratePBREnvironment(false);
+	m_view->GeneratePBREnvironment(true);
 
 	//=============================================================================
 	//	Sky Dome
-	gp_Dir theSunDirection;
-	gp_XYZ theXYZ(-300, 100, 0);
-	theSunDirection.SetXYZ(theXYZ);
-	Standard_ShortReal theCloudiness = 0.08;
-	Standard_ShortReal theTime = 8;
-	Standard_ShortReal theFogginess = 0.8;
-	Standard_Integer theSize = 1800;
-	const Aspect_SkydomeBackground theAspect = Aspect_SkydomeBackground(theSunDirection, theCloudiness, theTime, theFogginess, theSize);
-	m_view->SetBackgroundSkydome(theAspect, true);
+	BOOL skyDomeOn = false;
+	if (skyDomeOn)
+	{
+		gp_Dir theSunDirection;
+		gp_XYZ theXYZ(-300, 100, 0);
+		theSunDirection.SetXYZ(theXYZ);
+		Standard_ShortReal theCloudiness = 0.08;
+		Standard_ShortReal theTime = 8;
+		Standard_ShortReal theFogginess = 0.8;
+		Standard_Integer theSize = 1800;
+		const Aspect_SkydomeBackground theAspect = Aspect_SkydomeBackground(theSunDirection, theCloudiness, theTime, theFogginess, theSize);
+		m_view->SetBackgroundSkydome(theAspect, true);
+	}
 	//============================================================================
 
 	//	have to turn off background color to see skydome
@@ -220,27 +231,27 @@ void CEngineView::OnInitialUpdate()
 	}
 	Standard_Integer w = 100;
 	Standard_Integer h = 100;
-	::PostMessage(GetSafeHwnd(), WM_SIZE, SIZE_RESTORED, w + h * 65536);
+	::PostMessage(GetSafeHwnd(), WM_SIZE, SIZE_RESTORED, w + static_cast<LPARAM>(h) * 65536);
 
 	//	Configure rendering params
 	Graphic3d_RenderingParams& RenderParams = m_view->ChangeRenderingParams();
 	//RenderParams.Method = Graphic3d_RM_RAYTRACING;
 	RenderParams.Method = Graphic3d_RM_RASTERIZATION;
-	RenderParams.AdaptiveScreenSampling = true;
-	RenderParams.CoherentPathTracingMode = true;
+	RenderParams.AdaptiveScreenSampling = false;
+	RenderParams.CoherentPathTracingMode = false;
 	RenderParams.IsGlobalIlluminationEnabled = false;
-	RenderParams.NbRayTracingTiles = 256;
-	RenderParams.PbrEnvBakingSpecNbSamples = 6;
+	RenderParams.NbRayTracingTiles = 1024;
+	RenderParams.PbrEnvBakingSpecNbSamples = 256;
 	RenderParams.PbrEnvSpecMapNbLevels = 6;
 	RenderParams.RaytracingDepth = 6;
-	RenderParams.RayTracingTileSize = 16;
+	RenderParams.RayTracingTileSize = 32;
 	RenderParams.IsTransparentShadowEnabled = true;
 	RenderParams.IsReflectionEnabled = true;
 	RenderParams.IsAntialiasingEnabled = true;
 	RenderParams.NbMsaaSamples = 8; // Anti-aliasing by multi-sampling
 	RenderParams.IsShadowEnabled = true;
-	RenderParams.CollectedStats = Graphic3d_RenderingParams::PerfCounters_NONE;
-	
+	RenderParams.CollectedStats = Graphic3d_RenderingParams::PerfCounters_Basic;
+
 	m_view->Redraw();
 	m_view->Invalidate();
 

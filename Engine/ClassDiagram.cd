@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CAboutDlg" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine_App.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CChildFrame" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAQACAAAgAAAgAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>ChildFrm.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeLaval" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEGAAEAAAAEAAAgAAAAAgAAAACAACEAAAAAAAAAAEAA=</HashCode>
+      <FileName>DeLaval.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeLavalBase" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>DeLavalBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CEngineApp" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAgAAAAAAAAAAEAAAAAAAABQAAAAEACAAARAAACAAA=</HashCode>
+      <FileName>Engine_App.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CEngineDoc" Collapsed="true">
+    <Position X="3" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIQgAAAAAAACACgCCgAAgASggIAAAAAIAAAEDAAA=</HashCode>
+      <FileName>Engine_Doc_Viewer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CEngineView" Collapsed="true">
+    <Position X="4.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAgAAAAABAAITACAAigAhAoBAAAAgAEAjJAAIYAQA=</HashCode>
+      <FileName>Engine_View.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="COutlookBar" Collapsed="true">
+    <Position X="3" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>MainFrm.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CMainFrame" Collapsed="true">
+    <Position X="7" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAECAAAAAIIAAAQCAAAiAAAoCEAAgAgAABQAAAAEhA=</HashCode>
+      <FileName>MainFrm.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="CurAction3d" Collapsed="true">
+    <Position X="3" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQQAAAAAAAAAAAAAAAAAAAQAAAAABEQAA=</HashCode>
+      <FileName>Engine_View.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
