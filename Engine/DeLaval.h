@@ -9,15 +9,20 @@ class DeLaval : public DeLavalBase
 {
 	//	Construction
 public:
-	DeLaval();
-	//virtual BOOL Create(_In_ DWORD dwStyle, _In_ const RECT& rect, _In_ CWnd* pParentWnd, _In_ UINT nId);
+	DeLaval() noexcept;
+	
+	void AdjustLayout();
 
 	//	Attributes
 protected:
 	// TODO check if right
-	DeLavalBase m_wndDeLaval;
-	CImageList m_Images;
-	int m_nMyDeLavalY;
+	DeLavalBase		m_wndDeLaval;
+	CImageList		m_Images;
+	int				m_nMyDeLavalY;
+	int				m_nComboHeight;
+	CComboBox		m_wndPropellantCombo;
+	CButton			m_wndProfileButton;
+	CEdit			m_wndDevEdit;
 
 	//	Overrides
 public:
@@ -34,6 +39,7 @@ protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnPaint();
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
+	afx_msg void OnButtonClick();
 
 	DECLARE_MESSAGE_MAP()
 

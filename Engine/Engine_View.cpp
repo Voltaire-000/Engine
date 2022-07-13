@@ -151,7 +151,7 @@ void CEngineView::OnDraw(CDC* /*pDC*/)
 	//pDoc->DrawRevolve(180);
 	// 
 	//	TODO move this to a button
-	pDoc->DrawLiner(75, 10, 100, 180, Graphic3d_NameOfMaterial_Copper);
+	//pDoc->DrawLiner(75, 10, 100, 180, Graphic3d_NameOfMaterial_Copper);
 
 	m_view->MustBeResized();
 	m_view->Update();

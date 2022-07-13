@@ -37,6 +37,8 @@
 #define IDS_SHORTCUTS					240
 #define IDS_DELAVAL						241
 #define IDS_OUTLOOKBAR					242
+#define ID_STYLE_MARGIN_LEFT			10
+#define ID_STYLE_RIBBON_WIDTH			250
 
 #define ID_BUTTONFront                  40006
 

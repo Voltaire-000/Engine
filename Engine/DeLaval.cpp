@@ -2,6 +2,8 @@
 #include "framework.h"
 #include "DeLaval.h"
 #include "Engine_App.h"
+//#include "Engine_View.h"
+//#include "Engine_Doc_Viewer.h"
 
 #ifdef DEBUG
 #define new DEBUG_NEW
@@ -14,7 +16,8 @@ const int nBorderSize = 10;
 //////////////////////////////////////////
 //	DeLaval
 
-DeLaval::DeLaval()
+DeLaval::DeLaval() noexcept
+	:m_nComboHeight(20)
 {
 	m_nMyDeLavalY = 0;
 }
@@ -31,18 +34,87 @@ BEGIN_MESSAGE_MAP(DeLaval, CWnd)
 	ON_WM_PAINT()
 	ON_WM_SETFOCUS()
 	ON_WM_SETTINGCHANGE()
+	ON_BN_CLICKED(3, OnButtonClick)
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////
+void DeLaval::AdjustLayout()
+{
+	if (GetSafeHwnd() == nullptr || (AfxGetMainWnd() != nullptr && AfxGetMainWnd()->IsIconic()))
+	{
+		return;
+	}
+
+	CRect rectClient;
+	GetClientRect(rectClient);
+
+	//=================================================
+	//	Combo dropdown
+	m_wndPropellantCombo.SetWindowPos(
+		nullptr,
+		rectClient.left + ID_STYLE_MARGIN_LEFT,
+		rectClient.top,
+		ID_STYLE_RIBBON_WIDTH,
+		m_nComboHeight,
+		SWP_NOACTIVATE | SWP_NOZORDER);
+	CRect m_ComboRect;
+	m_wndPropellantCombo.GetWindowRect(m_ComboRect);
+	int m_PropellantComboHeight = m_ComboRect.Height();
+	//	end combobox
+	//================================================
+	//================================================
+	//	Edit Box
+	m_wndProfileButton.SetWindowPos(
+		nullptr,
+		rectClient.left + ID_STYLE_MARGIN_LEFT,
+		m_PropellantComboHeight + 10,
+		ID_STYLE_RIBBON_WIDTH,
+		40,
+		SWP_NOACTIVATE | SWP_NOZORDER);
+
+}
+
+//====================================================
 //	DeLaval message handlers
 
 int DeLaval::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if (CWnd::OnCreate(lpCreateStruct) == -1)
-		return -1;
-
 	CRect rectDummy(0, 0, 0, 0);
-	//	m_wndDeLaval is CPane, check if correct
+	rectDummy.SetRectEmpty();
+
+	//================================================
+	const DWORD dwViewStyle = WS_CHILD | WS_VISIBLE | CBS_DROPDOWN | WS_BORDER | CBS_SORT | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
+	/// <summary>
+	/// Creates the Propellant Combobox
+	/// </summary>
+	/// <param name="lpCreateStruct"></param>
+	/// <returns></returns>
+	if (!m_wndPropellantCombo.Create(dwViewStyle, rectDummy, this, 2))
+	{
+		TRACE0("Failed to create DeLaval Combobox\n");
+		return -1;
+	}
+
+	//	add the items to the combobox
+	m_wndPropellantCombo.AddString(_T("Prop Specs"));
+	m_wndPropellantCombo.AddString(_T("Fuel Type"));
+	m_wndPropellantCombo.SetCurSel(1);
+
+	CRect rectCombo;
+	m_wndPropellantCombo.GetClientRect(&rectCombo);
+	m_nComboHeight = rectCombo.Height();
+	//	end combobox
+	//===================================================
+
+	//===================================================
+	//	Create Button
+	if (!m_wndProfileButton.Create(L"Make profile", WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, rectDummy, this, 3))
+	{
+		TRACE0("Failed to create Button\n");
+		return -1;
+	}
+
+	//	end Button
+	//===================================================
 	m_wndDeLaval.Create( WS_CHILD | WS_VISIBLE, rectDummy, this, 1);
 
 	CBitmap bmp;
@@ -51,16 +123,17 @@ int DeLaval::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_Images.Create(16, 16, ILC_COLOR24 | ILC_MASK, 0, 0);
 	m_Images.Add(&bmp, RGB(255, 0, 255));
 
+	AdjustLayout();
 	return 0;
 }
 
 BOOL DeLaval::PreTranslateMessage(MSG* pMsg)
 {
-	if (pMsg->message == WM_LBUTTONDOWN)
-	{
-		//	Ensure that kewboard focus is set to DeLaval
-		m_wndDeLaval.SetFocus();
-	}
+	//if (pMsg->message == WM_LBUTTONDOWN)
+	//{
+	//	//	Ensure that kewboard focus is set to DeLaval
+	//	m_wndDeLaval.SetFocus();
+	//}
 
 	return CWnd::PreTranslateMessage(pMsg);
 }
@@ -76,6 +149,17 @@ void DeLaval::OnSetFocus(CWnd* pOldWnd)
 	m_wndDeLaval.SetFocus();
 }
 
+void DeLaval::OnButtonClick()
+{
+	//pDoc->DrawLiner(75, 10, 100, 180, Graphic3d_NameOfMaterial_Copper);
+	//CEngineView* mxView = new CEngineView();
+	
+	//CEngineDoc::DrawLiner drawLiner(75, 10, 100, 180, Graphic3d_NameOfMaterial_Copper);
+	//CEngineDoc* pDoc = (CEngineDoc)mxView->GetDocument();
+	//
+	//pDoc->DrawLiner(75, 10, 100, 180, Graphic3d_NameOfMaterial_Copper);
+}
+
 void DeLaval::OnSize(UINT nType, int cx, int cy)
 {
 	CWnd::OnSize(nType, cx, cy);
@@ -84,7 +168,11 @@ void DeLaval::OnSize(UINT nType, int cx, int cy)
 
 	if (m_wndDeLaval.GetSafeHwnd() != nullptr)
 	{
-		m_wndDeLaval.SetWindowPos(nullptr, nBorderSize, nBorderSize, cx - 2 * nBorderSize, cy - 2 * nMyDeLavalPaneHeight - 10, SWP_NOZORDER | SWP_NOACTIVATE);
+		m_wndDeLaval.SetWindowPos(nullptr,
+			nBorderSize, nBorderSize,
+			cx - 2 * nBorderSize,
+			cy - 2 * nMyDeLavalPaneHeight - 10,
+			SWP_NOZORDER | SWP_NOACTIVATE);
 	}
 
 	m_nMyDeLavalY = cy - nMyDeLavalPaneHeight;
