@@ -43,6 +43,8 @@ public: // create from serialization only
 
 	void SetZoom(const Standard_Real& Coef) { m_view->SetZoom(Coef); };
 
+	
+
 protected:
 	Handle(V3d_View)	m_view;
 	AIS_MouseGestureMap	m_DefaultGestures;
@@ -113,6 +115,7 @@ public:
 	//afx_msg void OnMButtonUp(UINT theFlags, CPoint thePoint);
 	//afx_msg void OnRButtonDown(UINT theFlags, CPoint thePoint);
 	afx_msg void OnRButtonUp(UINT theFlags, CPoint thePoint);
+
 };
 
 #ifndef _DEBUG  // debug version in EngineView.cpp

@@ -2,8 +2,6 @@
 #include "framework.h"
 #include "DeLaval.h"
 #include "Engine_App.h"
-//#include "Engine_View.h"
-//#include "Engine_Doc_Viewer.h"
 
 #ifdef DEBUG
 #define new DEBUG_NEW
@@ -17,7 +15,7 @@ const int nBorderSize = 10;
 //	DeLaval
 
 DeLaval::DeLaval() noexcept
-	:m_nComboHeight(20)
+	:m_nComboHeight(24)
 {
 	m_nMyDeLavalY = 0;
 }
@@ -34,7 +32,6 @@ BEGIN_MESSAGE_MAP(DeLaval, CWnd)
 	ON_WM_PAINT()
 	ON_WM_SETFOCUS()
 	ON_WM_SETTINGCHANGE()
-	ON_BN_CLICKED(3, OnButtonClick)
 END_MESSAGE_MAP()
 
 void DeLaval::AdjustLayout()
@@ -149,17 +146,6 @@ void DeLaval::OnSetFocus(CWnd* pOldWnd)
 	m_wndDeLaval.SetFocus();
 }
 
-void DeLaval::OnButtonClick()
-{
-	//pDoc->DrawLiner(75, 10, 100, 180, Graphic3d_NameOfMaterial_Copper);
-	//CEngineView* mxView = new CEngineView();
-	
-	//CEngineDoc::DrawLiner drawLiner(75, 10, 100, 180, Graphic3d_NameOfMaterial_Copper);
-	//CEngineDoc* pDoc = (CEngineDoc)mxView->GetDocument();
-	//
-	//pDoc->DrawLiner(75, 10, 100, 180, Graphic3d_NameOfMaterial_Copper);
-}
-
 void DeLaval::OnSize(UINT nType, int cx, int cy)
 {
 	CWnd::OnSize(nType, cx, cy);
@@ -246,4 +232,9 @@ void DeLaval::OnPaint()
 
 		dc.SelectObject(pOldFont);
 	}
+}
+
+void DeLaval::CreateProfile()
+{
+	throw;
 }

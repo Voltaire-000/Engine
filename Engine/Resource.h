@@ -2,9 +2,10 @@
 // Microsoft Visual C++ generated include file.
 // Used by Engine.rc
 //
+#define ID_PROFILE                      1
+#define ID_STYLE_MARGIN_LEFT            10
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
-//#define IDP_G_DRIVER_INIT_FAILED        101
 #define IDP_DRIVER_INIT_FAILED          101
 #define IDR_POPUP_EDIT                  119
 #define ID_STATUSBAR_PANE1              120
@@ -18,7 +19,7 @@
 #define IDR_MAINFRAME_256               129
 #define IDR_EngineTYPE                  130
 #define ID_WINDOW_MANAGER               131
-#define IDR_FRAME2						132
+#define IDR_FRAME2                      132
 #define IDR_THEME_MENU                  200
 #define ID_SET_STYLE                    201
 #define ID_VIEW_APPLOOK_WIN_2000        205
@@ -32,22 +33,23 @@
 #define ID_VIEW_APPLOOK_OFF_2007_SILVER 217
 #define ID_VIEW_APPLOOK_OFF_2007_AQUA   218
 #define ID_VIEW_APPLOOK_WINDOWS_7       219
-#define ID_VIEW_NAVIGATION				220
+#define ID_VIEW_NAVIGATION              220
+#define IDS_SHORTCUTS                   240
+#define IDS_DELAVAL                     241
+#define IDS_OUTLOOKBAR                  242
+#define ID_STYLE_RIBBON_WIDTH           250
 #define IDS_EDIT_MENU                   306
-#define IDS_SHORTCUTS					240
-#define IDS_DELAVAL						241
-#define IDS_OUTLOOKBAR					242
-#define ID_STYLE_MARGIN_LEFT			10
-#define ID_STYLE_RIBBON_WIDTH			250
-
+#define IDR_RIBBON1                     310
+#define IDR_TOOLBAR1                    311
+#define ID_BUTTON2                      32771
 #define ID_BUTTONFront                  40006
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        310
-#define _APS_NEXT_COMMAND_VALUE         32771
+#define _APS_NEXT_RESOURCE_VALUE        313
+#define _APS_NEXT_COMMAND_VALUE         32772
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

@@ -11,6 +11,7 @@
 
 #include "Engine_Doc_Viewer.h"
 #include "Engine_View.h"
+#include "DeLaval.h"
 
 #include <Graphic3d_Camera.hxx>
 
@@ -31,6 +32,7 @@ BEGIN_MESSAGE_MAP(CEngineView, CView)
 	ON_WM_LBUTTONUP()
 	ON_WM_RBUTTONDOWN()
 	ON_WM_RBUTTONUP()
+
 END_MESSAGE_MAP()
 
 // CEngineView construction/destruction
@@ -152,10 +154,9 @@ void CEngineView::OnDraw(CDC* /*pDC*/)
 	// 
 	//	TODO move this to a button
 	//pDoc->DrawLiner(75, 10, 100, 180, Graphic3d_NameOfMaterial_Copper);
-
+	
 	m_view->MustBeResized();
 	m_view->Update();
-
 
 }
 

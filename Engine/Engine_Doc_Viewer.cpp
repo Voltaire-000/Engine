@@ -231,8 +231,9 @@ void CEngineDoc::DrawLiner(const Standard_Real theRadius, const Standard_Real th
 			//m_context->Activate(shape);
 			shapeAdded = true;
 		}
+		
 		m_context->Display(shape, true);
-	//m_context->Display(new AIS_Shape(shape), true);
+
 }
 
 void CEngineDoc::AddShape(const TopoDS_Shape& shape)
