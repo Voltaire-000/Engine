@@ -32,6 +32,7 @@ BEGIN_MESSAGE_MAP(DeLaval, CWnd)
 	ON_WM_PAINT()
 	ON_WM_SETFOCUS()
 	ON_WM_SETTINGCHANGE()
+	ON_BN_CLICKED(ID_BUTTON_PROFILE, CreateProfile)
 END_MESSAGE_MAP()
 
 void DeLaval::AdjustLayout()
@@ -103,7 +104,7 @@ int DeLaval::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//===================================================
 
 	//===================================================
-	//	Create Button
+	//	Create Button id # 3
 	if (!m_wndProfileButton.Create(L"Make profile", WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, rectDummy, this, 3))
 	{
 		TRACE0("Failed to create Button\n");
