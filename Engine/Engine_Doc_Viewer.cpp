@@ -346,6 +346,8 @@ void CEngineDoc::OnProfile()
 
 	m_context->Display(shapeLiner, true);
 
+	m_context->UpdateCurrentViewer();
+
 }
 #endif //_DEBUG
 
