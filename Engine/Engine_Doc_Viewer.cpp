@@ -335,19 +335,17 @@ void CEngineDoc::OnProfile()
 	AIS_ListOfInteractive aList;
 	m_context->DisplayedObjects(aList);
 	AIS_ListIteratorOfListOfInteractive aListIterator;
-	for (aListIterator.Initialize(aList); aListIterator.More(); aListIterator.Next())
-	{
-		m_context->Remove(aListIterator.Value(), Standard_False);
-	}
+	//for (aListIterator.Initialize(aList); aListIterator.More(); aListIterator.Next())
+	//{
+	//	m_context->Remove(aListIterator.Value(), Standard_False);
+	//}
 	TopoDS_Shape liner = MakeLiner(70, 10, 100, 180);
 	Handle(AIS_Shape) shapeLiner = new AIS_Shape(liner);
 	m_context->SetMaterial(shapeLiner, Graphic3d_NOM_PLASTIC, Standard_False);
 	m_context->SetColor(shapeLiner, Quantity_NOC_GREEN, Standard_False);
-
+	AddShape(liner);
 	m_context->Display(shapeLiner, true);
-
 	m_context->UpdateCurrentViewer();
-
 }
 #endif //_DEBUG
 
