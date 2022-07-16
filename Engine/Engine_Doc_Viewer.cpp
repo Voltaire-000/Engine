@@ -19,7 +19,7 @@
 IMPLEMENT_DYNCREATE(CEngineDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CEngineDoc, CDocument)
-
+	ON_COMMAND(ID_PROFILE, OnProfile)
 END_MESSAGE_MAP()
 
 
@@ -231,6 +231,7 @@ void CEngineDoc::DrawLiner(const Standard_Real theRadius, const Standard_Real th
 		
 		m_context->Display(shape, true);
 
+
 }
 
 void CEngineDoc::AddShape(const TopoDS_Shape& shape)
@@ -328,6 +329,23 @@ void CEngineDoc::AssertValid() const
 void CEngineDoc::Dump(CDumpContext& dc) const
 {
 	CDocument::Dump(dc);
+}
+void CEngineDoc::OnProfile()
+{
+	AIS_ListOfInteractive aList;
+	m_context->DisplayedObjects(aList);
+	AIS_ListIteratorOfListOfInteractive aListIterator;
+	for (aListIterator.Initialize(aList); aListIterator.More(); aListIterator.Next())
+	{
+		m_context->Remove(aListIterator.Value(), Standard_False);
+	}
+	TopoDS_Shape liner = MakeLiner(70, 10, 100, 180);
+	Handle(AIS_Shape) shapeLiner = new AIS_Shape(liner);
+	m_context->SetMaterial(shapeLiner, Graphic3d_NOM_PLASTIC, Standard_False);
+	m_context->SetColor(shapeLiner, Quantity_NOC_GREEN, Standard_False);
+
+	m_context->Display(shapeLiner, true);
+
 }
 #endif //_DEBUG
 

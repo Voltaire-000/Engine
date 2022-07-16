@@ -80,10 +80,9 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-protected:
-
 // Generated message map functions
 protected:
+	afx_msg void OnProfile();
 	DECLARE_MESSAGE_MAP()
 
 private:

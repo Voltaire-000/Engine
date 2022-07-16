@@ -22,7 +22,6 @@ BEGIN_MESSAGE_MAP(CEngineApp, CWinAppEx)
 	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
 	// Standard print setup command
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinAppEx::OnFilePrintSetup)
-	ON_BN_CLICKED(IDC_BUTTON_PROFILE, &DeLaval::CreateProfile)
 END_MESSAGE_MAP()
 
 

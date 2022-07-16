@@ -2,8 +2,8 @@
 #include "framework.h"
 #include "DeLaval.h"
 #include "Engine_App.h"
-//#include "Engine_Doc_Viewer.h"
-//#include "Engine_View.h"
+#include "Engine_Doc_Viewer.h"
+#include "Engine_View.h"
 
 #ifdef DEBUG
 #define new DEBUG_NEW
@@ -151,7 +151,7 @@ void DeLaval::OnSetFocus(CWnd* pOldWnd)
 
 void DeLaval::OnCreateProfile()
 {
-	throw;
+
 }
 
 void DeLaval::OnSize(UINT nType, int cx, int cy)

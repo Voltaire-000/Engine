@@ -155,7 +155,7 @@ void CEngineView::OnDraw(CDC* /*pDC*/)
 	//pDoc->DrawLiner(75, 10, 100, 180, Graphic3d_NameOfMaterial_Copper);
 	
 	m_view->MustBeResized();
-	m_view->Update();
+	m_view->Redraw();
 
 }
 
@@ -274,6 +274,11 @@ void CEngineView::OnButtonFront()
 {
 	m_view->SetProj(V3d_Yneg);
 	m_view->Redraw();
+}
+
+void CEngineView::OnUpdate()
+{
+	m_view->Invalidate();
 }
 
 BOOL CEngineView::OnMouseWheel(UINT nFlags, short theDelta, CPoint point)

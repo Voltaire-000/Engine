@@ -104,6 +104,9 @@ protected:
 	afx_msg void OnButtonFront();
 	DECLARE_MESSAGE_MAP()
 public:
+
+	virtual void OnUpdate();
+
 	virtual void OnInitialUpdate() Standard_OVERRIDE;
 	virtual void OnDraw(CDC* /*pDC*/) Standard_OVERRIDE;  // overridden to draw this view
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short theDelta, CPoint point);
