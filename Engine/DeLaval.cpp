@@ -2,6 +2,8 @@
 #include "framework.h"
 #include "DeLaval.h"
 #include "Engine_App.h"
+//#include "Engine_Doc_Viewer.h"
+//#include "Engine_View.h"
 
 #ifdef DEBUG
 #define new DEBUG_NEW
@@ -32,7 +34,7 @@ BEGIN_MESSAGE_MAP(DeLaval, CWnd)
 	ON_WM_PAINT()
 	ON_WM_SETFOCUS()
 	ON_WM_SETTINGCHANGE()
-	ON_BN_CLICKED(ID_BUTTON_PROFILE, CreateProfile)
+	ON_BN_CLICKED(IDC_BUTTON_PROFILE, OnCreateProfile)
 END_MESSAGE_MAP()
 
 void DeLaval::AdjustLayout()
@@ -147,6 +149,11 @@ void DeLaval::OnSetFocus(CWnd* pOldWnd)
 	m_wndDeLaval.SetFocus();
 }
 
+void DeLaval::OnCreateProfile()
+{
+	throw;
+}
+
 void DeLaval::OnSize(UINT nType, int cx, int cy)
 {
 	CWnd::OnSize(nType, cx, cy);
@@ -233,9 +240,4 @@ void DeLaval::OnPaint()
 
 		dc.SelectObject(pOldFont);
 	}
-}
-
-void DeLaval::CreateProfile()
-{
-	throw;
 }

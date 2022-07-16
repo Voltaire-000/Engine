@@ -208,7 +208,6 @@ void CMainFrame::Dump(CDumpContext& dc) const
 }
 #endif //_DEBUG
 
-
 // CMainFrame message handlers
 
 void CMainFrame::OnWindowManager()
@@ -386,16 +385,6 @@ BOOL CMainFrame::CreateOutlookBar(CMFCOutlookBar& bar, UINT uiID, DeLaval& delav
 
 	return TRUE;
 }
-
-//int CMainFrame::FindFocusedOutlookWnd(CMFCOutlookBarTabCtrl** ppOutlookWnd)
-//{
-//	return 0;
-//}
-
-//CMFCOutlookBarTabCtrl* CMainFrame::FindOutlookParent(CWnd* pWnd)
-//{
-//	return nullptr;
-//}
 
 BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParentWnd, CCreateContext* pContext)
 {

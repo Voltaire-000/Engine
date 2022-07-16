@@ -19,6 +19,7 @@
 IMPLEMENT_DYNCREATE(CEngineDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CEngineDoc, CDocument)
+
 END_MESSAGE_MAP()
 
 
@@ -116,21 +117,19 @@ CEngineDoc::CEngineDoc() noexcept
 	//	End ViewCube
 	///////////////////////////////////////////////
 	
+	///////////////////////////////////////////////
 	//	Lighting
-
-	Handle(V3d_AmbientLight)		LightAmb = new V3d_AmbientLight();
 	//=========================================
 	//	Directional light
-	Handle(V3d_DirectionalLight)	LightDir_1 = new V3d_DirectionalLight(V3d_XposYposZpos, Quantity_Color(Quantity_NOC_WHITE), 0);
+	Handle(V3d_DirectionalLight) LightDir_1 = new V3d_DirectionalLight(V3d_XposYposZpos, Quantity_Color(Quantity_NOC_WHITE), 0);
 	LightDir_1->SetDirection(10.0, 0.0, 100.0);
 	LightDir_1->SetCastShadows(TRUE);
 	LightDir_1->SetIntensity(15.0);
 	m_viewer->AddLight(LightDir_1);
 	m_viewer->SetLightOn(LightDir_1);
 	//=========================================
-	// 
 	//	Directional light
-	Handle(V3d_DirectionalLight)	LightDir_2 = new V3d_DirectionalLight();
+	Handle(V3d_DirectionalLight) LightDir_2 = new V3d_DirectionalLight();
 	LightDir_2->SetDirection(0.0, 100, -100.0);
 	LightDir_2->SetCastShadows(TRUE);
 	LightDir_2->SetIntensity(15.0);
@@ -140,17 +139,15 @@ CEngineDoc::CEngineDoc() noexcept
 	//=========================================
 	//	Positional light
 	gp_Pnt thePos(0, 0, 0);
-	
 	Handle(V3d_PositionalLight)	LightPositional_1 = new V3d_PositionalLight(thePos);
 	LightPositional_1->SetIntensity(1.0);
 	m_viewer->AddLight(LightPositional_1);
 	m_viewer->SetLightOn(LightPositional_1);
 	//=========================================
-
+	//	Ambient light
+	Handle(V3d_AmbientLight) LightAmb = new V3d_AmbientLight();
 	LightAmb->SetIntensity(2.0);
-	
 	m_viewer->AddLight(LightAmb);
-	
 	m_viewer->SetLightOn(LightAmb);
 	//	end Lighting
 	/////////////////////////////////////////////

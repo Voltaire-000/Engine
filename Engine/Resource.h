@@ -2,7 +2,7 @@
 // Microsoft Visual C++ generated include file.
 // Used by Engine.rc
 //
-#define ID_BUTTON_PROFILE               3
+#define IDC_BUTTON_PROFILE               3
 #define ID_STYLE_MARGIN_LEFT            10
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100

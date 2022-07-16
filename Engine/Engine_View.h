@@ -6,6 +6,7 @@
 #include "framework.h"
 #include <AIS_InteractiveContext.hxx>
 #include <AIS_ViewController.hxx>
+#include "DeLaval.h"
 
 enum CurAction3d
 {
@@ -42,8 +43,6 @@ public: // create from serialization only
 	void Redraw() { if (!m_view.IsNull()) m_view->Redraw(); };
 
 	void SetZoom(const Standard_Real& Coef) { m_view->SetZoom(Coef); };
-
-	
 
 protected:
 	Handle(V3d_View)	m_view;

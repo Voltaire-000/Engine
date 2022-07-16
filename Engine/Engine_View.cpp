@@ -32,7 +32,6 @@ BEGIN_MESSAGE_MAP(CEngineView, CView)
 	ON_WM_LBUTTONUP()
 	ON_WM_RBUTTONDOWN()
 	ON_WM_RBUTTONUP()
-
 END_MESSAGE_MAP()
 
 // CEngineView construction/destruction
@@ -338,7 +337,6 @@ void CEngineView::OnLButtonUp(UINT nFlags, CPoint point)
 	update3dView();
 }
 
-
 // CEngineView diagnostics
 
 #ifdef _DEBUG
@@ -358,6 +356,5 @@ CEngineDoc* CEngineView::GetDocument() // non-debug version is inline
 	return (CEngineDoc*)m_pDocument;
 }
 #endif //_DEBUG
-
 
 // CEngineView message handlers
