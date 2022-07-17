@@ -20,7 +20,7 @@
 IMPLEMENT_DYNCREATE(CEngineDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CEngineDoc, CDocument)
-	ON_COMMAND(ID_PROFILE, &CEngineDoc::OnDrawLiner)
+	//ON_COMMAND(ID_PROFILE, &CEngineDoc::OnDrawLiner)
 END_MESSAGE_MAP()
 
 
@@ -347,6 +347,8 @@ void CEngineDoc::Dump(CDumpContext& dc) const
 
 void CEngineDoc::OnDrawLiner()
 {
+	//	TODO pass in values from edit box
+
 	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
 	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
 	CEngineView* pView = (CEngineView*)pChild->GetActiveView();

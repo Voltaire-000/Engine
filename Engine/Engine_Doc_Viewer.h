@@ -52,6 +52,8 @@ public:
 
 	void DrawRevolve(Standard_Real theAngle);
 
+	void OnDrawLiner();
+
 	void DrawLiner(const Standard_Real theRadius,
 		const Standard_Real theThickness,
 		const Standard_Real theLength,
@@ -85,7 +87,7 @@ public:
 
 // Generated message map functions
 public:
-	afx_msg void OnDrawLiner();
+	//afx_msg void OnDrawLiner();
 	DECLARE_MESSAGE_MAP()
 
 private:
