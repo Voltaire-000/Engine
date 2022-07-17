@@ -44,6 +44,7 @@
 #define ID_BUTTON2                      32771
 #define ID_BUTTONFront                  40006
 #define ID_PROFILE						4
+#define ID_ON_DRAW							5
 
 // Next default values for new objects
 // 

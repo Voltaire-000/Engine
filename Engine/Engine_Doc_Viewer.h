@@ -41,6 +41,7 @@ public:
 		const Handle(V3d_View)&){}
 
 // Attributes
+
 protected:
 	Handle(AIS_InteractiveContext)	m_context;
 	Handle(V3d_Viewer)				m_viewer;
@@ -83,8 +84,8 @@ public:
 #endif
 
 // Generated message map functions
-protected:
-	
+public:
+	afx_msg void OnDrawLiner();
 	DECLARE_MESSAGE_MAP()
 
 private:

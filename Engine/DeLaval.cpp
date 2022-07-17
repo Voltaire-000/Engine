@@ -2,6 +2,7 @@
 #include "framework.h"
 #include "DeLaval.h"
 #include "Engine_App.h"
+#include "Engine_Doc_Viewer.h"
 
 #ifdef DEBUG
 #define new DEBUG_NEW
@@ -32,7 +33,7 @@ BEGIN_MESSAGE_MAP(DeLaval, CWnd)
 	ON_WM_PAINT()
 	ON_WM_SETFOCUS()
 	ON_WM_SETTINGCHANGE()
-	ON_COMMAND(IDC_BUTTON_PROFILE, &CEngineApp::OnAppAbout)
+	ON_COMMAND(IDC_BUTTON_PROFILE, &CEngineDoc::OnDrawLiner)
 END_MESSAGE_MAP()
 
 void DeLaval::AdjustLayout()

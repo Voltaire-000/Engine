@@ -108,7 +108,7 @@ public:
 	virtual void OnUpdate();
 
 	virtual void OnInitialUpdate() Standard_OVERRIDE;
-	virtual void OnDraw(CDC* /*pDC*/) Standard_OVERRIDE;  // overridden to draw this view
+	afx_msg virtual void OnDraw(CDC* /*pDC*/) Standard_OVERRIDE;  // overridden to draw this view
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short theDelta, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);

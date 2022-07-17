@@ -10,6 +10,7 @@
 #endif
 
 #include "Engine_Doc_Viewer.h"
+#include "Engine_View.h"
 
 #include <propkey.h>
 
@@ -19,7 +20,7 @@
 IMPLEMENT_DYNCREATE(CEngineDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CEngineDoc, CDocument)
-	ON_COMMAND(ID_PROFILE, OnProfile)
+	ON_COMMAND(ID_PROFILE, &CEngineDoc::OnDrawLiner)
 END_MESSAGE_MAP()
 
 
@@ -228,7 +229,6 @@ void CEngineDoc::DrawLiner(const Standard_Real theRadius, const Standard_Real th
 			//m_context->Activate(shape);
 			shapeAdded = true;
 		}
-		
 		m_context->Display(shape, true);
 
 
@@ -343,6 +343,21 @@ void CEngineDoc::AssertValid() const
 void CEngineDoc::Dump(CDumpContext& dc) const
 {
 	CDocument::Dump(dc);
+}
+
+void CEngineDoc::OnDrawLiner()
+{
+	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
+	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
+	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
+	//pView->AssertValid();
+	auto activeWnd = pView->GetActiveWindow();
+	
+	auto mdoc = pView->GetDocument();
+	//	this works and changes doc name TODO
+	mdoc->SetTitle(L"new title");
+	mdoc->DrawLiner(200, 10, 300, 180);
+	//DrawLiner(75, 10, 300, 180);
 }
 
 #endif //_DEBUG
