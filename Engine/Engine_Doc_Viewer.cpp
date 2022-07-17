@@ -355,8 +355,8 @@ void CEngineDoc::OnDrawLiner()
 	
 	auto mdoc = pView->GetDocument();
 	//	this works and changes doc name TODO
-	mdoc->SetTitle(L"new title");
-	mdoc->DrawLiner(200, 10, 300, 180);
+	mdoc->SetTitle(L"Chamber Liner");
+	mdoc->DrawLiner(200, 10, 300, 180, Graphic3d_NameOfMaterial_Copper);
 	//DrawLiner(75, 10, 300, 180);
 }
 
