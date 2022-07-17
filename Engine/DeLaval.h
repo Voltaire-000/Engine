@@ -16,13 +16,14 @@ public:
 	//	Attributes
 protected:
 	// TODO check if right
-	DeLavalBase		m_wndDeLaval;
-	CImageList		m_Images;
-	int				m_nMyDeLavalY;
-	int				m_nComboHeight;
-	CComboBox		m_wndPropellantCombo;
-	CButton			m_wndProfileButton;
-	CEdit			m_wndDevEdit;
+	DeLavalBase				m_wndDeLaval;
+	CImageList				m_Images;
+	int						m_nMyDeLavalY;
+	int						m_nComboHeight;
+	CComboBox				m_wndPropellantCombo;
+	CButton					m_wndProfileButton;
+	CEdit					m_wndDevEdit;
+	CMFCPropertyGridCtrl	m_wndPropertyList;
 
 	//	Overrides
 public:
@@ -42,6 +43,11 @@ protected:
 	afx_msg void OnCreateProfile();
 
 	DECLARE_MESSAGE_MAP()
+protected:
+	CFont	m_fntPropList;
+
+	void InitPropList();
+	void SetPropListFont();
 
 };
 

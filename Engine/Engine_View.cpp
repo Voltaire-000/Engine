@@ -11,8 +11,6 @@
 
 #include "Engine_Doc_Viewer.h"
 #include "Engine_View.h"
-#include "DeLaval.h"
-
 #include <Graphic3d_Camera.hxx>
 
 // CEngineView
@@ -35,7 +33,6 @@ BEGIN_MESSAGE_MAP(CEngineView, CView)
 END_MESSAGE_MAP()
 
 // CEngineView construction/destruction
-
 CEngineView::CEngineView() noexcept
 	:m_updateRequests(0),
 	m_curZoom(0.0),
@@ -55,8 +52,6 @@ BOOL CEngineView::PreCreateWindow(CREATESTRUCT& cs)
 
 	return CView::PreCreateWindow(cs);
 }
-
-// CEngineView drawing
 
 void CEngineView::update3dView()
 {

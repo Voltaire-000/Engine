@@ -58,7 +58,7 @@ void DeLaval::AdjustLayout()
 	CRect m_ComboRect;
 	m_wndPropellantCombo.GetWindowRect(m_ComboRect);
 	int m_PropellantComboHeight = m_ComboRect.Height();
-	//
+	// end combo position
 	//================================================
 	// 
 	//================================================
@@ -68,11 +68,25 @@ void DeLaval::AdjustLayout()
 		rectClient.left + ID_STYLE_MARGIN_LEFT,
 		m_PropellantComboHeight + 10,
 		ID_STYLE_RIBBON_WIDTH,
-		40,
+		ID_STYLE_MARGIN_TOP,
 		SWP_NOACTIVATE | SWP_NOZORDER);
+	CRect m_ButtonRect;
+	m_wndProfileButton.GetWindowRect(m_ButtonRect);
+	int m_ProfileButtonHeight = m_ButtonRect.Height();
+	//	end button position
+	//================================================
 	//
 	//================================================
-
+	//	Property list position
+	m_wndPropertyList.SetWindowPos(
+		nullptr,
+		rectClient.left + ID_STYLE_MARGIN_LEFT,
+		m_nComboHeight + m_PropellantComboHeight + m_ProfileButtonHeight + 10,
+		ID_STYLE_RIBBON_WIDTH,
+		250,
+		SWP_NOACTIVATE | SWP_NOZORDER);
+	// end
+	//================================================
 }
 
 //====================================================
@@ -83,13 +97,9 @@ int DeLaval::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rectDummy(0, 0, 0, 0);
 	rectDummy.SetRectEmpty();
 
-	//================================================
+	//=================================================================
+	// Creates the Propellant Combobox
 	const DWORD dwViewStyle = WS_CHILD | WS_VISIBLE | CBS_DROPDOWN | WS_BORDER | CBS_SORT | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
-	/// <summary>
-	/// Creates the Propellant Combobox
-	/// </summary>
-	/// <param name="lpCreateStruct"></param>
-	/// <returns></returns>
 	if (!m_wndPropellantCombo.Create(dwViewStyle, rectDummy, this, 2))
 	{
 		TRACE0("Failed to create DeLaval Combobox\n");
@@ -103,7 +113,7 @@ int DeLaval::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CRect rectCombo;
 	m_wndPropellantCombo.GetClientRect(&rectCombo);
-	m_nComboHeight = rectCombo.Height();
+	int m_nComboHeight = rectCombo.Height();
 	//	end combobox
 	//===================================================
 
@@ -115,7 +125,21 @@ int DeLaval::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	}
 
+	CRect rectButton;
+	m_wndProfileButton.GetClientRect(&rectButton);
+	int m_nButtonHeight = rectButton.Height();
 	//	end Button
+	//===================================================
+
+	//===================================================
+	//	Create Properties list
+	if (!m_wndPropertyList.Create(WS_VISIBLE | WS_CHILD, rectDummy, this, 4))
+	{
+		TRACE0("Failed to create property grid\n");
+		return -1;
+	}
+	InitPropList();
+	//	end Properties list
 	//===================================================
 	m_wndDeLaval.Create( WS_CHILD | WS_VISIBLE, rectDummy, this, 1);
 
@@ -153,6 +177,76 @@ void DeLaval::OnSetFocus(CWnd* pOldWnd)
 
 void DeLaval::OnCreateProfile()
 {
+
+}
+
+void DeLaval::InitPropList()
+{
+	SetPropListFont();
+
+	m_wndPropertyList.EnableHeaderCtrl(TRUE);
+	m_wndPropertyList.EnableDescriptionArea(TRUE);
+	m_wndPropertyList.SetVSDotNetLook();
+
+	//	first group and subitems
+	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("Dimensions"));
+														/// NAME // default value false	// description area text	
+	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("3D Look"), (_variant_t)false, _T("Font non-bold")));
+																	///	NAME  //						//	description area text
+	CMFCPropertyGridProperty* pProp = new CMFCPropertyGridProperty(_T("Border"), _T("Dialog Frame"), _T("One of: None, Thin, Resizable, or Dialog Frame"));
+	pProp->AddOption(_T("None"));
+	pProp->AddOption(_T("Thin"));
+	pProp->AddOption(_T("Resizable"));
+	pProp->AddOption(_T("Dialog Frame"));
+	pProp->AllowEdit(FALSE);
+
+	pGroup1->AddSubItem(pProp);
+														//	NAME  //////						//	description area text
+	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("Caption"), (_variant_t)_T("About"), _T("Specifies the text that will be displayed in the window's title bar")));
+
+	m_wndPropertyList.AddProperty(pGroup1);
+	//	end first group and subitems
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	//	second group and subitems
+	CMFCPropertyGridProperty* pSize = new CMFCPropertyGridProperty(_T("Window Size"), 0, TRUE);
+
+	pProp = new CMFCPropertyGridProperty(_T("Height"), (_variant_t)250l, _T("Specifies the window's height"));
+	pProp->EnableSpinControl(TRUE, 50, 300);
+	pSize->AddSubItem(pProp);
+
+	pProp = new CMFCPropertyGridProperty(_T("Width"), (_variant_t)150l, _T("Specifies the window's width"));
+	pProp->EnableSpinControl(TRUE, 50, 200);
+	pSize->AddSubItem(pProp);
+
+	m_wndPropertyList.AddProperty(pSize);
+	m_wndPropertyList.ExpandAll();
+
+	int pcount = m_wndPropertyList.GetPropertyCount();	//	2
+	int rowheight = m_wndPropertyList.GetRowHeight();	//	19
+	auto m0 = m_wndPropertyList.GetProperty(0);	// Dimensions caption
+	auto m1 = m_wndPropertyList.GetProperty(1)->GetSubItem(1)->GetValue();	//	Window size, and subitem value
+}
+
+void DeLaval::SetPropListFont()
+{
+	::DeleteObject(m_fntPropList.Detach());
+
+	LOGFONT lf;
+	afxGlobalData.fontRegular.GetLogFont(&lf);
+
+	NONCLIENTMETRICS info;
+	info.cbSize = sizeof(info);
+
+	afxGlobalData.GetNonClientMetrics(info);
+
+	lf.lfHeight = info.lfMenuFont.lfHeight;
+	lf.lfWeight = info.lfMenuFont.lfWeight;
+	lf.lfItalic = info.lfMenuFont.lfItalic;
+
+	m_fntPropList.CreateFontIndirectW(&lf);
+
+	m_wndPropertyList.SetFont(&m_fntPropList);
 
 }
 
