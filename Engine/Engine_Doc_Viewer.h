@@ -57,6 +57,8 @@ public:
 		const Standard_Real theAngle = 360,
 		const Graphic3d_MaterialAspect theMaterial = Graphic3d_NameOfMaterial_Aluminum);
 
+	void OnProfile();
+
 	//////////////////////////////////////////////////
 	CEngineDoc& operator<<(const TopoDS_Shape& shape)
 	{
@@ -82,7 +84,7 @@ public:
 
 // Generated message map functions
 protected:
-	afx_msg void OnProfile();
+	
 	DECLARE_MESSAGE_MAP()
 
 private:

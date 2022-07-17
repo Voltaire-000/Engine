@@ -2,8 +2,6 @@
 #include "framework.h"
 #include "DeLaval.h"
 #include "Engine_App.h"
-#include "Engine_Doc_Viewer.h"
-#include "Engine_View.h"
 
 #ifdef DEBUG
 #define new DEBUG_NEW
@@ -34,7 +32,7 @@ BEGIN_MESSAGE_MAP(DeLaval, CWnd)
 	ON_WM_PAINT()
 	ON_WM_SETFOCUS()
 	ON_WM_SETTINGCHANGE()
-	ON_BN_CLICKED(IDC_BUTTON_PROFILE, OnCreateProfile)
+	ON_COMMAND(IDC_BUTTON_PROFILE, &CEngineApp::OnAppAbout)
 END_MESSAGE_MAP()
 
 void DeLaval::AdjustLayout()
@@ -48,7 +46,7 @@ void DeLaval::AdjustLayout()
 	GetClientRect(rectClient);
 
 	//=================================================
-	//	Combo dropdown
+	//	Combo dropdown position
 	m_wndPropellantCombo.SetWindowPos(
 		nullptr,
 		rectClient.left + ID_STYLE_MARGIN_LEFT,
@@ -59,10 +57,11 @@ void DeLaval::AdjustLayout()
 	CRect m_ComboRect;
 	m_wndPropellantCombo.GetWindowRect(m_ComboRect);
 	int m_PropellantComboHeight = m_ComboRect.Height();
-	//	end combobox
+	//
 	//================================================
+	// 
 	//================================================
-	//	Edit Box
+	//	Button position
 	m_wndProfileButton.SetWindowPos(
 		nullptr,
 		rectClient.left + ID_STYLE_MARGIN_LEFT,
@@ -70,6 +69,8 @@ void DeLaval::AdjustLayout()
 		ID_STYLE_RIBBON_WIDTH,
 		40,
 		SWP_NOACTIVATE | SWP_NOZORDER);
+	//
+	//================================================
 
 }
 

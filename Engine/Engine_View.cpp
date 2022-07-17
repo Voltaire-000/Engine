@@ -253,8 +253,6 @@ void CEngineView::OnInitialUpdate()
 	RenderParams.CollectedStats = Graphic3d_RenderingParams::PerfCounters_Basic;
 
 	m_view->Redraw();
-	m_view->Invalidate();
-
 }
 
 void CEngineView::OnRButtonUp(UINT /* nFlags */, CPoint point)
