@@ -97,6 +97,15 @@ int DeLaval::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rectDummy(0, 0, 0, 0);
 	rectDummy.SetRectEmpty();
 
+	//	create main pane
+	m_wndDeLaval.Create(WS_CHILD | WS_VISIBLE, rectDummy, this, 1);
+
+	CBitmap bmp;
+	//bmp.LoadBitmap(IDB_PAGES_SMALL_HC);
+
+	m_Images.Create(16, 16, ILC_COLOR24 | ILC_MASK, 0, 0);
+	m_Images.Add(&bmp, RGB(255, 0, 255));
+
 	//=================================================================
 	// Creates the Propellant Combobox
 	const DWORD dwViewStyle = WS_CHILD | WS_VISIBLE | CBS_DROPDOWN | WS_BORDER | CBS_SORT | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
@@ -141,13 +150,6 @@ int DeLaval::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	InitPropList();
 	//	end Properties list
 	//===================================================
-	m_wndDeLaval.Create( WS_CHILD | WS_VISIBLE, rectDummy, this, 1);
-
-	CBitmap bmp;
-	//bmp.LoadBitmap(IDB_PAGES_SMALL_HC);
-
-	m_Images.Create(16, 16, ILC_COLOR24 | ILC_MASK, 0, 0);
-	m_Images.Add(&bmp, RGB(255, 0, 255));
 
 	AdjustLayout();
 	return 0;
