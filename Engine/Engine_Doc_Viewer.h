@@ -87,7 +87,7 @@ public:
 
 // Generated message map functions
 public:
-	//afx_msg void OnDrawLiner();
+
 	DECLARE_MESSAGE_MAP()
 
 private:

@@ -21,6 +21,7 @@ IMPLEMENT_DYNCREATE(CEngineDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CEngineDoc, CDocument)
 	//ON_COMMAND(ID_PROFILE, &CEngineDoc::OnDrawLiner)
+
 END_MESSAGE_MAP()
 
 
@@ -234,6 +235,23 @@ void CEngineDoc::DrawLiner(const Standard_Real theRadius, const Standard_Real th
 
 }
 
+void CEngineDoc::OnDrawLiner()
+{
+
+	//	TODO pass in values from edit box
+	//	gets the document view
+	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
+	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
+	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
+	auto activeWnd = pView->GetActiveWindow();
+	auto pDoc = pView->GetDocument();
+
+	//	this works and changes doc name TODO
+	pDoc->SetTitle(L"Chamber Liner");
+	pDoc->DrawLiner(200, 10, 300, 180, Graphic3d_NameOfMaterial_Copper);
+	//DrawLiner(75, 10, 300, 180);
+}
+
 void CEngineDoc::AddShape(const TopoDS_Shape& shape)
 {
 	m_shapes.push_back(shape);
@@ -343,23 +361,6 @@ void CEngineDoc::AssertValid() const
 void CEngineDoc::Dump(CDumpContext& dc) const
 {
 	CDocument::Dump(dc);
-}
-
-void CEngineDoc::OnDrawLiner()
-{
-	//	TODO pass in values from edit box
-
-	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
-	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
-	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
-	//pView->AssertValid();
-	auto activeWnd = pView->GetActiveWindow();
-	
-	auto mdoc = pView->GetDocument();
-	//	this works and changes doc name TODO
-	mdoc->SetTitle(L"Chamber Liner");
-	mdoc->DrawLiner(200, 10, 300, 180, Graphic3d_NameOfMaterial_Copper);
-	//DrawLiner(75, 10, 300, 180);
 }
 
 #endif //_DEBUG

@@ -46,6 +46,7 @@
 #define ID_PROFILE							4
 #define ID_ON_DRAW							5
 #define ID_STYLE_MARGIN_TOP				   40
+#define ID_TEST							42
 
 // Next default values for new objects
 // 
