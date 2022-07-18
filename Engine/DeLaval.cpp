@@ -202,8 +202,8 @@ void DeLaval::InitPropList()
 	pDimensions->AddSubItem(pTheThickness);
 
 	CMFCPropertyGridProperty* pTheLength = new CMFCPropertyGridProperty(_T("Chamber length"), (_variant_t)50l, _T("Chamber length"));
-	////pTheLength->EnableSpinControl(TRUE, 50, 300);
-	//pDimensions->AddSubItem(pTheThickness);
+	pTheLength->EnableSpinControl(TRUE, 50, 300);
+	pDimensions->AddSubItem(pTheLength);
 
 	m_wndPropertyList.AddProperty(pDimensions);
 	m_wndPropertyList.ExpandAll();
