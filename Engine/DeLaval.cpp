@@ -191,43 +191,30 @@ void DeLaval::InitPropList()
 	m_wndPropertyList.SetVSDotNetLook();
 
 	//	first group and subitems
-	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("Dimensions"));
-														/// NAME // default value false	// description area text	
-	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("3D Look"), (_variant_t)false, _T("Font non-bold")));
-																	///	NAME  //						//	description area text
-	CMFCPropertyGridProperty* pProp = new CMFCPropertyGridProperty(_T("Border"), _T("Dialog Frame"), _T("One of: None, Thin, Resizable, or Dialog Frame"));
-	pProp->AddOption(_T("None"));
-	pProp->AddOption(_T("Thin"));
-	pProp->AddOption(_T("Resizable"));
-	pProp->AddOption(_T("Dialog Frame"));
-	pProp->AllowEdit(FALSE);
+	CMFCPropertyGridProperty* pDimensions = new CMFCPropertyGridProperty(_T("Dimensions"));
 
-	pGroup1->AddSubItem(pProp);
-														//	NAME  //////						//	description area text
-	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("Caption"), (_variant_t)_T("About"), _T("Specifies the text that will be displayed in the window's title bar")));
+	CMFCPropertyGridProperty* pTheRadius = new CMFCPropertyGridProperty(_T("Radius"), (_variant_t)30l, _T("Chamber radius"));
+	pTheRadius->EnableSpinControl(TRUE, 30, 150);
+	pDimensions->AddSubItem(pTheRadius);
 
-	m_wndPropertyList.AddProperty(pGroup1);
-	//	end first group and subitems
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	//	second group and subitems
-	CMFCPropertyGridProperty* pSize = new CMFCPropertyGridProperty(_T("Window Size"), 0, TRUE);
+	CMFCPropertyGridProperty* pTheThickness = new CMFCPropertyGridProperty(_T("Wall thickness"), (_variant_t)5l, _T("ChamberWall thickness"));
+	pTheThickness->EnableSpinControl(TRUE, 5, 70);
+	pDimensions->AddSubItem(pTheThickness);
 
-	pProp = new CMFCPropertyGridProperty(_T("Height"), (_variant_t)250l, _T("Specifies the window's height"));
-	pProp->EnableSpinControl(TRUE, 50, 300);
-	pSize->AddSubItem(pProp);
+	CMFCPropertyGridProperty* pTheLength = new CMFCPropertyGridProperty(_T("Chamber length"), (_variant_t)50l, _T("Chamber length"));
+	////pTheLength->EnableSpinControl(TRUE, 50, 300);
+	//pDimensions->AddSubItem(pTheThickness);
 
-	pProp = new CMFCPropertyGridProperty(_T("Width"), (_variant_t)150l, _T("Specifies the window's width"));
-	pProp->EnableSpinControl(TRUE, 50, 200);
-	pSize->AddSubItem(pProp);
-
-	m_wndPropertyList.AddProperty(pSize);
+	m_wndPropertyList.AddProperty(pDimensions);
 	m_wndPropertyList.ExpandAll();
 
-	int pcount = m_wndPropertyList.GetPropertyCount();	//	2
-	int rowheight = m_wndPropertyList.GetRowHeight();	//	19
-	auto m0 = m_wndPropertyList.GetProperty(0);	// Dimensions caption
-	auto m1 = m_wndPropertyList.GetProperty(1)->GetSubItem(1)->GetValue();	//	Window size, and subitem value
+	//m_wndPropertyList.AddProperty(pSize);
+	//m_wndPropertyList.ExpandAll();
+
+	//int pcount = m_wndPropertyList.GetPropertyCount();	//	2
+	//int rowheight = m_wndPropertyList.GetRowHeight();	//	19
+	//auto m0 = m_wndPropertyList.GetProperty(0);	// Dimensions caption
+	//auto m1 = m_wndPropertyList.GetProperty(1)->GetSubItem(1)->GetValue();	//	Window size, and subitem value
 }
 
 void DeLaval::SetPropListFont()
