@@ -3,6 +3,7 @@
 #include "DeLaval.h"
 #include "Engine_App.h"
 #include "Engine_Doc_Viewer.h"
+#include "Engine_View.h"
 
 #ifdef DEBUG
 #define new DEBUG_NEW
@@ -33,7 +34,8 @@ BEGIN_MESSAGE_MAP(DeLaval, CWnd)
 	ON_WM_PAINT()
 	ON_WM_SETFOCUS()
 	ON_WM_SETTINGCHANGE()
-	ON_COMMAND(IDC_BUTTON_PROFILE, &CEngineDoc::OnDrawLiner)
+	//ON_COMMAND(IDC_BUTTON_PROFILE, &CEngineDoc::OnDrawLiner)
+	ON_BN_CLICKED(IDC_BUTTON_PROFILE, &DeLaval::OnCreateProfile)
 END_MESSAGE_MAP()
 
 void DeLaval::AdjustLayout()
@@ -179,7 +181,21 @@ void DeLaval::OnSetFocus(CWnd* pOldWnd)
 
 void DeLaval::OnCreateProfile()
 {
+	int pcount = m_wndPropertyList.GetPropertyCount();
+	int theRadius = m_wndPropertyList.GetProperty(0)->GetSubItem(1)->GetValue().intVal;
+	int theThickness = m_wndPropertyList.GetProperty(0)->GetSubItem(2)->GetValue().intVal;
+	auto theLength = m_wndPropertyList.GetProperty(0)->GetSubItem(3)->GetValue();
 
+	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
+	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
+	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
+	auto activeWnd = pView->GetActiveWindow();
+	auto pDoc = pView->GetDocument();
+
+	
+	//	this works and changes doc name TODO
+	//pDoc->SetTitle(L"Chamber Liner");
+	//pDoc->DrawLiner(200, 10, 300, 180, Graphic3d_NameOfMaterial_Copper);
 }
 
 void DeLaval::InitPropList()
