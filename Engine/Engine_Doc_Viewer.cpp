@@ -39,7 +39,7 @@ CEngineDoc::CEngineDoc() noexcept
 
 	//	create a new window over the existing window
 	m_context = new AIS_InteractiveContext(m_viewer);
-
+	m_context->DefaultDrawer();
 	////////////////////////////////////////////////////////////////////////////
 	//	Prs3d_Drawer test TODO
 	Handle(Prs3d_Drawer) selDrawer = new Prs3d_Drawer();
@@ -66,6 +66,8 @@ CEngineDoc::CEngineDoc() noexcept
 	selDrawer->UnFreeBoundaryAspect()->SetWidth(1.0);
 	//	Update AIS context
 	m_context->SetHighlightStyle(Prs3d_TypeOfHighlight_LocalSelected, selDrawer);
+
+	m_context->SetDefaultDrawer(selDrawer);
 	//	end Prs3d
 	///////////////////////////////////////////////////////////////////////////////
 
@@ -109,6 +111,13 @@ CEngineDoc::CEngineDoc() noexcept
 	//	End ViewCube
 	///////////////////////////////////////////////
 	
+	///////////////////////////////////////////////////
+	//	Plane test
+	//=================================================
+	m_viewer->DisplayPrivilegedPlane(true, 50);
+
+	//=================================================
+
 	///////////////////////////////////////////////
 	//	Lighting
 	//=========================================
@@ -130,7 +139,7 @@ CEngineDoc::CEngineDoc() noexcept
 	//=========================================
 	//=========================================
 	//	Positional light
-	gp_Pnt thePos(0, 0, 0);
+	gp_Pnt thePos(0, 100, 0);
 	Handle(V3d_PositionalLight)	LightPositional_1 = new V3d_PositionalLight(thePos);
 	LightPositional_1->SetIntensity(1.0);
 	m_viewer->AddLight(LightPositional_1);
