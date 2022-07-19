@@ -187,13 +187,27 @@ void DeLaval::OnCreateProfile()
 	int theThickness =	m_wndPropertyList.GetProperty(0)->GetSubItem(1)->GetValue().intVal;
 	auto theLength =	m_wndPropertyList.GetProperty(0)->GetSubItem(2)->GetValue().intVal;
 
+	auto theMaterial = m_wndPropertyList.GetProperty(0)->GetSubItem(3);
+	auto mv = theMaterial->GetValue();
+	CString cs = mv;
+
 	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
 	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
 	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
 	auto activeWnd = pView->GetActiveWindow();
 	auto pDoc = pView->GetDocument();
 
-	pDoc->DrawLiner(theRadius, theThickness, theLength, 180);
+	if (cs == "Copper")
+	{
+		pDoc->SetTitle(L"Chamber Liner");
+		pDoc->DrawLiner(theRadius, theThickness, theLength, 180, Graphic3d_NameOfMaterial_Copper);
+	}
+	else {
+		pDoc->SetTitle(L"Chamber Liner");
+		pDoc->DrawLiner(theRadius, theThickness, theLength, 180);
+	}
+
+	
 	//	this works and changes doc name TODO
 	//pDoc->SetTitle(L"Chamber Liner");
 	//pDoc->DrawLiner(200, 10, 300, 180, Graphic3d_NameOfMaterial_Copper);
@@ -222,7 +236,11 @@ void DeLaval::InitPropList()
 	pTheLength->EnableSpinControl(TRUE, 50, 300);
 	pDimensions->AddSubItem(pTheLength);
 
-	//	TODO add material property
+	CMFCPropertyGridProperty* pTheMaterial = new CMFCPropertyGridProperty(_T("Material"), _T("Select"), _T("Select Material"));
+	pTheMaterial->AddOption(_T("Chrome"));
+	pTheMaterial->AddOption(_T("Copper"));
+	pTheMaterial->AllowEdit(FALSE);
+	pDimensions->AddSubItem(pTheMaterial);
 
 	m_wndPropertyList.AddProperty(pDimensions);
 	m_wndPropertyList.ExpandAll();
