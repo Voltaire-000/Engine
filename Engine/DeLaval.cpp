@@ -197,20 +197,20 @@ void DeLaval::OnCreateProfile()
 	auto activeWnd = pView->GetActiveWindow();
 	auto pDoc = pView->GetDocument();
 
+	Graphic3d_NameOfMaterial nameOfMaterial;
+
+	//	TODO change to switch statement??
 	if (cs == "Copper")
 	{
-		pDoc->SetTitle(L"Chamber Liner");
-		pDoc->DrawLiner(theRadius, theThickness, theLength, 180, Graphic3d_NameOfMaterial_Copper);
+		nameOfMaterial = Graphic3d_NameOfMaterial_Copper;
+
 	}
 	else {
-		pDoc->SetTitle(L"Chamber Liner");
-		pDoc->DrawLiner(theRadius, theThickness, theLength, 180);
+		nameOfMaterial = Graphic3d_NameOfMaterial_Steel;
 	}
+	pDoc->SetTitle(L"Chamber Liner");
+	pDoc->DrawLiner(theRadius, theThickness, theLength, 180, nameOfMaterial);
 
-	
-	//	this works and changes doc name TODO
-	//pDoc->SetTitle(L"Chamber Liner");
-	//pDoc->DrawLiner(200, 10, 300, 180, Graphic3d_NameOfMaterial_Copper);
 }
 
 void DeLaval::InitPropList()
@@ -237,7 +237,7 @@ void DeLaval::InitPropList()
 	pDimensions->AddSubItem(pTheLength);
 
 	CMFCPropertyGridProperty* pTheMaterial = new CMFCPropertyGridProperty(_T("Material"), _T("Select"), _T("Select Material"));
-	pTheMaterial->AddOption(_T("Chrome"));
+	pTheMaterial->AddOption(_T("Steel"));
 	pTheMaterial->AddOption(_T("Copper"));
 	pTheMaterial->AllowEdit(FALSE);
 	pDimensions->AddSubItem(pTheMaterial);
