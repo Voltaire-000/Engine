@@ -271,8 +271,6 @@ void DeLaval::OnFuse()
 
 	pDoc->Fuse();
 	pDoc->SetTitle(L"Fused liner");
-	//pView->redraw3dView();
-	//pView->update3dView();
 }
 
 void DeLaval::InitPropList()
