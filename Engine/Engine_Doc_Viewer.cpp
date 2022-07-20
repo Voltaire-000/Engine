@@ -303,7 +303,7 @@ void CEngineDoc::Fuse()
 	}
 
 	const TopoDS_Shape& aResult = aBuilder.Shape();
-	m_shapes.clear();
+	//m_shapes.clear();
 
 	m_listOfShapes.Clear();
 
@@ -312,8 +312,9 @@ void CEngineDoc::Fuse()
 	Handle(AIS_Shape) shape = new AIS_Shape(aResult);
 
 	m_context->EraseAll(true);
-
+	
 	m_context->Display(shape, true);
+
 	m_context->Display(m_viewcube, true);
 }
 
