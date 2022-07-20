@@ -36,6 +36,7 @@ BEGIN_MESSAGE_MAP(DeLaval, CWnd)
 	ON_WM_SETTINGCHANGE()
 	//ON_COMMAND(IDC_BUTTON_PROFILE, &CEngineDoc::OnDrawLiner)
 	ON_BN_CLICKED(IDC_BUTTON_PROFILE, &DeLaval::OnCreateProfile)
+	ON_BN_CLICKED(IDC_BUTTON_CUT, &DeLaval::OnFuse)
 END_MESSAGE_MAP()
 
 void DeLaval::AdjustLayout()
@@ -53,7 +54,7 @@ void DeLaval::AdjustLayout()
 	m_wndPropellantCombo.SetWindowPos(
 		nullptr,
 		rectClient.left + ID_STYLE_MARGIN_LEFT,
-		rectClient.top,
+		rectClient.top + 0,
 		ID_STYLE_RIBBON_WIDTH,
 		m_nComboHeight,
 		SWP_NOACTIVATE | SWP_NOZORDER);
@@ -87,8 +88,22 @@ void DeLaval::AdjustLayout()
 		ID_STYLE_RIBBON_WIDTH,
 		250,
 		SWP_NOACTIVATE | SWP_NOZORDER);
-	// end
+	CRect m_PropertyListRect;
+	m_wndPropertyList.GetWindowRect(m_PropertyListRect);
+	int m_propertyListHeight = m_PropertyListRect.Height();
+	// end property list
 	//================================================
+	//	Boolean button position
+	m_wndBooleanButton.SetWindowPos(
+		nullptr,
+		rectClient.left + ID_STYLE_MARGIN_LEFT,
+		m_nComboHeight + m_PropellantComboHeight + m_ProfileButtonHeight + m_propertyListHeight + 10,
+		ID_STYLE_RIBBON_WIDTH,
+		ID_STYLE_MARGIN_TOP,
+		SWP_NOACTIVATE | SWP_NOZORDER);
+	//	end button Boolean
+	//================================================
+
 }
 
 //====================================================
@@ -129,8 +144,8 @@ int DeLaval::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//===================================================
 
 	//===================================================
-	//	Create Button id # 3
-	if (!m_wndProfileButton.Create(L"Make profile", WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, rectDummy, this, 3))
+	//	Create Profile Button id # 3
+	if (!m_wndProfileButton.Create(L"Make profile", WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, rectDummy, this, IDC_BUTTON_PROFILE))
 	{
 		TRACE0("Failed to create Button\n");
 		return -1;
@@ -149,10 +164,20 @@ int DeLaval::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("Failed to create property grid\n");
 		return -1;
 	}
-	InitPropList();
 	//	end Properties list
 	//===================================================
+	
+	//===================================================
+	//	create Boolean button id 6
+	if(!m_wndBooleanButton.Create(L"Cut shapes", WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, rectDummy, this, IDC_BUTTON_CUT))
+	{
+		TRACE0("Failed to create Boolean button\n");
+			return -1;
+	}
+	//	end Boolean button
+	//===================================================
 
+	InitPropList();
 	AdjustLayout();
 	return 0;
 }
@@ -191,6 +216,7 @@ void DeLaval::OnCreateProfile()
 	auto mv = theMaterial->GetValue();
 	CString cs = mv;
 
+	//	Gets the document window
 	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
 	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
 	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
@@ -211,6 +237,41 @@ void DeLaval::OnCreateProfile()
 	pDoc->SetTitle(L"Chamber Liner");
 	pDoc->DrawLiner(theRadius, theThickness, theLength, 180, nameOfMaterial);
 
+}
+
+void DeLaval::OnCutShapes()
+{
+	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
+	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
+	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
+	auto activeWnd = pView->GetActiveWindow();
+	auto pDoc = pView->GetDocument();
+
+	std::vector<TopoDS_Shape> m_list = pDoc->ShapeList();
+	TopoDS_Shape theS1(m_list[0]);
+	TopoDS_Shape theS2(m_list[1]);
+
+	//TopoDS_ListOfShape aLSObjects;
+	//aLSObjects.
+
+	pDoc->MakeCut(theS1, theS2, BOPAlgo_CUT21);
+
+	
+}
+
+void DeLaval::OnFuse()
+{
+
+	//	Gets the document window
+	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
+	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
+	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
+	auto activeWnd = pView->GetActiveWindow();
+	auto pDoc = pView->GetDocument();
+
+	pDoc->Fuse();
+	pDoc->SetTitle(L"Fused liner");
+	pView->Invalidate();
 }
 
 void DeLaval::InitPropList()

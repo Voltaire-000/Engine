@@ -1,28 +1,6 @@
 #include "pch.h"
 #include "MakeLiner.h"
 
-//#include <BRep_Tool.hxx>
-//
-//#include <GC_MakeSegment.hxx>
-//
-//#include <gp.hxx>
-//#include <gp_Pnt.hxx>
-//#include <gp_Ax1.hxx>
-//#include <gp_Ax2.hxx>
-//
-//#include <TopoDS.hxx>
-//#include <TopoDS_Face.hxx>
-//#include <TopoDS_Wire.hxx>
-//#include <TopoDS_Edge.hxx>
-//#include <TopoDS_Shape.hxx>
-//
-//#include <BRepBuilderAPI_MakeFace.hxx>
-//#include <BRepBuilderAPI_MakeWire.hxx>
-//#include <BRepBuilderAPI_MakeEdge.hxx>
-//#include <BRepPrimAPI_MakeRevol.hxx>
-//#include <BRepSweep_Revol.hxx>
-//#include <BRepLib.hxx>
-
 TopoDS_Shape MakeLiner(const Standard_Real theRadius, Standard_Real theThickness, Standard_Real theLength, Standard_Real m_angleDegrees)
 {
 	//	test points

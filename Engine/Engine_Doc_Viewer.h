@@ -6,6 +6,7 @@
 
 #include "MakeRevolve.h"
 #include "MakeLiner.h"
+//#include "MakeCut.h"
 
 class CEngineDoc : public CDocument
 {
@@ -60,6 +61,10 @@ public:
 		const Standard_Real theAngle = 360,
 		const Graphic3d_MaterialAspect theMaterial = Graphic3d_NameOfMaterial_Aluminum);
 
+	void MakeCut(const TopoDS_Shape theS1, const TopoDS_Shape theS2, BOPAlgo_Operation theOperation);
+
+	void Fuse();
+
 	void OnProfile();
 
 	//////////////////////////////////////////////////
@@ -70,6 +75,9 @@ public:
 	}
 	void AddShape(const TopoDS_Shape& shape);
 	//////////////////////////////////////////////////
+
+	std::vector<TopoDS_Shape> ShapeList();
+
 
 // Overrides
 public:
@@ -92,8 +100,8 @@ public:
 
 private:
 	//	the shapes to visulize
-	std::vector<TopoDS_Shape> m_shapes;
-
+	std::vector<TopoDS_Shape>	m_shapes;
+	TopTools_ListOfShape		m_listOfShapes;
 	//	opencascade things
 private:
 	Handle(AIS_ViewCube)		m_viewcube;

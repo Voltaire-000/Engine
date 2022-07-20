@@ -54,6 +54,9 @@
     <ClInclude Include="MakeLiner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MakeCut.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine_App.cpp">
@@ -84,6 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MakeLiner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MakeCut.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -197,6 +197,7 @@
     <ClInclude Include="Engine_View.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="MakeCut.h" />
     <ClInclude Include="MakeLiner.h" />
     <ClInclude Include="MakeRevolve.h" />
     <ClInclude Include="pch.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="Engine_Doc_Viewer.cpp" />
     <ClCompile Include="Engine_View.cpp" />
     <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="MakeCut.cpp" />
     <ClCompile Include="MakeLiner.cpp" />
     <ClCompile Include="MakeRevolve.cpp" />
     <ClCompile Include="pch.cpp">

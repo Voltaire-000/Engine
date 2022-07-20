@@ -91,6 +91,10 @@
 #include <BRepAdaptor_Surface.hxx>
 #include <BRepAdaptor_Curve.hxx>
 
+#include <BOPAlgo_Operation.hxx>
+#include <BOPAlgo_Algo.hxx>
+#include <BOPAlgo_Builder.hxx>
+
 #include <Prs3d_IsoAspect.hxx>
 #include <Prs3d_LineAspect.hxx>
 #include <Prs3d_Text.hxx>

@@ -234,6 +234,89 @@ void CEngineDoc::DrawLiner(const Standard_Real theRadius, const Standard_Real th
 
 }
 
+void CEngineDoc::MakeCut(const TopoDS_Shape theS1, const TopoDS_Shape theS2, BOPAlgo_Operation theOperation)
+{
+	//BRepAlgoAPI_BooleanOperation b_operation;
+
+	BOPAlgo_Builder aBuilder;
+	TopTools_ListOfShape aLSObjects = m_listOfShapes;
+	aBuilder.SetArguments(aLSObjects);
+	Standard_Boolean bRunParallel = Standard_True;
+	aBuilder.SetRunParallel(bRunParallel);
+	Standard_Real aFuzzyValue = 1.e-5;
+	aBuilder.SetFuzzyValue(aFuzzyValue);
+	Standard_Boolean bSafeMode = Standard_True;
+	aBuilder.SetNonDestructive(bSafeMode);
+	BOPAlgo_GlueEnum aGlue = BOPAlgo_GlueShift;
+	aBuilder.SetGlue(aGlue);
+
+	aBuilder.Perform();
+	if (aBuilder.HasErrors())
+	{
+		return;
+	}
+	if (aBuilder.HasWarnings())
+	{
+		return;
+	}
+
+	const TopoDS_Shape aResult = aBuilder.Shape();
+
+	Handle(AIS_Shape) shape = new AIS_Shape(aResult);
+
+	m_context->Display(shape, true);
+
+	//b_operation.SetArguments(aLSObjects);
+	//b_operation.SetArguments(aLSObjects);
+	//b_operation.SetOperation(BOPAlgo_CUT21);
+	//b_operation.SetTools(aLSObjects);
+	//b_operation.Build();
+	//const TopoDS_Shape& result = b_operation.Shape();
+
+
+	//theOperation = BOPAlgo_CUT21;
+	//BRepAlgoAPI_BooleanOperation(theS1, theS2);
+}
+
+void CEngineDoc::Fuse()
+{
+	BOPAlgo_Builder aBuilder;
+	TopTools_ListOfShape aLSObjects = m_listOfShapes;
+	aBuilder.SetArguments(aLSObjects);
+	Standard_Boolean bRunParallel = Standard_True;
+	aBuilder.SetRunParallel(bRunParallel);
+	Standard_Real aFuzzyValue = 1.e-5;
+	aBuilder.SetFuzzyValue(aFuzzyValue);
+	Standard_Boolean bSafeMode = Standard_False;
+	aBuilder.SetNonDestructive(bSafeMode);
+	BOPAlgo_GlueEnum aGlue = BOPAlgo_GlueShift;
+	aBuilder.SetGlue(aGlue);
+
+	aBuilder.Perform();
+	if (aBuilder.HasErrors())
+	{
+		return;
+	}
+	if (aBuilder.HasWarnings())
+	{
+		return;
+	}
+
+	const TopoDS_Shape& aResult = aBuilder.Shape();
+	m_shapes.clear();
+
+	m_listOfShapes.Clear();
+
+	AddShape(aResult);
+
+	Handle(AIS_Shape) shape = new AIS_Shape(aResult);
+
+	m_context->EraseAll(true);
+
+	m_context->Display(shape, true);
+	m_context->Display(m_viewcube, true);
+}
+
 void CEngineDoc::OnDrawLiner()
 {
 
@@ -253,7 +336,14 @@ void CEngineDoc::OnDrawLiner()
 
 void CEngineDoc::AddShape(const TopoDS_Shape& shape)
 {
+	m_listOfShapes.Append(shape);
 	m_shapes.push_back(shape);
+}
+
+std::vector<TopoDS_Shape> CEngineDoc::ShapeList()
+{
+
+	return m_shapes;
 }
 
 BOOL CEngineDoc::OnNewDocument()
