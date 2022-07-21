@@ -57,6 +57,7 @@
 #include <AIS_Point.hxx>
 #include <AIS_ViewCube.hxx>
 #include <AIS_ViewController.hxx>
+#include <AIS_TextLabel.hxx>
 
 #include <Aspect_Background.hxx>
 #include <Aspect_TypeOfLine.hxx>
@@ -64,43 +65,60 @@
 #include <Aspect_Window.hxx>
 #include <Aspect_SkydomeBackground.hxx>
 
-#include <BRep_Builder.hxx>
 #include <BRep_Tool.hxx>
-#include <BRepBuilderAPI.hxx>
+#include <BRepTools.hxx>
+
+#include <BRepAlgoAPI_Algo.hxx>
 #include <BRepAlgoAPI_Fuse.hxx>
 #include <BRepAlgoAPI_BooleanOperation.hxx>
 #include <BRepAlgoAPI_Cut.hxx>
-#include <BRepTools.hxx>
-
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <BRepBuilderAPI_Transform.hxx>
-#include <BRepPrimAPI_MakeCone.hxx>
-#include <BRepPrimAPI_MakeRevol.hxx>
-#include <BRepFilletAPI_MakeFillet.hxx>
-#include <BRepBuilderAPI_Copy.hxx>
-#include <BRepBuilderAPI_MakePolygon.hxx>
-#include <BRepLib.hxx>
-#include <BRepOffsetAPI_MakeThickSolid.hxx>
-#include <BRepOffsetAPI_ThruSections.hxx>
-#include <BRepPrimAPI_MakeCylinder.hxx>
-#include <BRepPrimAPI_MakePrism.hxx>
-#include <BRepPrimAPI_MakeTorus.hxx>
+#include <BRepAlgoAPI_Common.hxx>
 #include <BRepAlgoAPI_Section.hxx>
-#include <BRepPrimAPI_MakeSphere.hxx>
-#include <BRepFeat_SplitShape.hxx>
-#include <BRepAdaptor_Surface.hxx>
-#include <BRepAdaptor_Curve.hxx>
+#include <BRepAlgoAPI_Splitter.hxx>
 
 #include <BOPAlgo_Operation.hxx>
 #include <BOPAlgo_Algo.hxx>
 #include <BOPAlgo_Builder.hxx>
 
+#include <BRep_Builder.hxx>
+#include <BRepBuilderAPI.hxx>
+#include <BRepBuilderAPI_MakeEdge.hxx>
+#include <BRepBuilderAPI_MakeFace.hxx>
+#include <BRepBuilderAPI_MakeWire.hxx>
+#include <BRepBuilderAPI_MakeVertex.hxx>
+#include <BRepBuilderAPI_Transform.hxx>
+#include <BRepBuilderAPI_Copy.hxx>
+#include <BRepBuilderAPI_MakePolygon.hxx>
+
+#include <BRepPrimAPI_MakeCone.hxx>
+#include <BRepPrimAPI_MakeRevol.hxx>
+#include <BRepPrimAPI_MakeCylinder.hxx>
+#include <BRepPrimAPI_MakePrism.hxx>
+#include <BRepPrimAPI_MakeTorus.hxx>
+#include <BRepPrimAPI_MakeSphere.hxx>
+#include <BRepPrimAPI_MakeBox.hxx>
+#include <BRepPrimAPI_MakeHalfSpace.hxx>
+#include <BRepPrimAPI_MakeOneAxis.hxx>
+#include <BRepPrimAPI_MakeRevolution.hxx>
+#include <BRepPrimAPI_MakeSweep.hxx>
+#include <BRepPrimAPI_MakeWedge.hxx>
+
+#include <BRepFilletAPI_MakeFillet.hxx>
+
+#include <BRepLib.hxx>
+#include <BRepOffsetAPI_MakeThickSolid.hxx>
+#include <BRepOffsetAPI_ThruSections.hxx>
+
+#include <BRepAlgoAPI_Section.hxx>
+
+#include <BRepFeat_SplitShape.hxx>
+#include <BRepAdaptor_Surface.hxx>
+#include <BRepAdaptor_Curve.hxx>
+
 #include <Prs3d_IsoAspect.hxx>
 #include <Prs3d_LineAspect.hxx>
 #include <Prs3d_Text.hxx>
+#include <Prs3d_TextAspect.hxx>
 #include <Prs3d_PointAspect.hxx>
 
 #include <DsgPrs_LengthPresentation.hxx>

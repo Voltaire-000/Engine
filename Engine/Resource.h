@@ -2,9 +2,13 @@
 // Microsoft Visual C++ generated include file.
 // Used by Engine.rc
 //
-#define IDC_BUTTON_PROFILE               3
-#define IDC_BUTTON_CUT					 6
+#define IDC_BUTTON_PROFILE              3
+#define ID_PROFILE                      4
+#define ID_ON_DRAW                      5
+#define IDC_BUTTON_CUT                  6
 #define ID_STYLE_MARGIN_LEFT            10
+#define ID_STYLE_MARGIN_TOP             40
+#define ID_TEST                         42
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
 #define IDP_DRIVER_INIT_FAILED          101
@@ -38,16 +42,14 @@
 #define IDS_SHORTCUTS                   240
 #define IDS_DELAVAL                     241
 #define IDS_OUTLOOKBAR                  242
+#define IDS_PROPERTIES_PANE             243
+#define IDS_PROPERTY_PANE               243
 #define ID_STYLE_RIBBON_WIDTH           250
 #define IDS_EDIT_MENU                   306
 #define IDR_RIBBON1                     310
 #define IDR_TOOLBAR1                    311
 #define ID_BUTTON2                      32771
 #define ID_BUTTONFront                  40006
-#define ID_PROFILE							4
-#define ID_ON_DRAW							5
-#define ID_STYLE_MARGIN_TOP				   40
-#define ID_TEST							42
 
 // Next default values for new objects
 // 

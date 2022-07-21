@@ -200,6 +200,7 @@
     <ClInclude Include="MakeCut.h" />
     <ClInclude Include="MakeLiner.h" />
     <ClInclude Include="MakeRevolve.h" />
+    <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="MakeCut.cpp" />
     <ClCompile Include="MakeLiner.cpp" />
     <ClCompile Include="MakeRevolve.cpp" />
+    <ClCompile Include="OutputWnd.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
