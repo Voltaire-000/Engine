@@ -25,7 +25,7 @@ public:
 	{ 
 		return m_context;
 	}
-	//	TODO context or object??
+
 	const Handle(AIS_InteractiveContext)& GetInteractiveContext()const
 	{
 		return m_context;

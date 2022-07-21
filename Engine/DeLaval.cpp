@@ -248,7 +248,7 @@ void DeLaval::OnCut()
 	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
 	auto activeWnd = pView->GetActiveWindow();
 	auto pDoc = pView->GetDocument();
-
+	
 	pDoc->MakeCut();
 	pDoc->SetTitle(L"Cut chamber");
 	

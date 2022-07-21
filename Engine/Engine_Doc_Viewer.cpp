@@ -236,60 +236,17 @@ void CEngineDoc::DrawLiner(const Standard_Real theRadius, const Standard_Real th
 
 void CEngineDoc::MakeCut()
 {
-	BRepAlgoAPI_BooleanOperation b_operation;
-	TopTools_ListOfShape theLS = m_listOfShapes;
-	b_operation.SetArguments(theLS);
+	TopoDS_Shape S1 = m_shapes.at(0);
+	TopoDS_Shape S2 = m_shapes.at(1);
+	BRepAlgoAPI_Cut cut(S1, S2);
+	cut.Build();
+	TopoDS_Shape aResult = cut.Shape();
 
-	Standard_Boolean bRunParallel = Standard_True;
-	b_operation.SetRunParallel(bRunParallel);
-	Standard_Real aFuzzyValue = 1.e-5;
-	b_operation.SetFuzzyValue(aFuzzyValue);
-	Standard_Boolean bSafeMode = Standard_False;
-	b_operation.SetNonDestructive(bSafeMode);
+	Handle(AIS_Shape) shape = new AIS_Shape(aResult);
 
-	b_operation.SetOperation(BOPAlgo_CUT21);
+	//m_context->Erase(true);
+	m_context->Display(shape, true);
 
-	b_operation.SetTools(theLS);
-	b_operation.Build();
-
-	if (b_operation.HasErrors())
-	{
-		return;
-	}
-	if (b_operation.HasWarnings())
-	{
-		return;
-	}
-
-	//const TopoDS_Shape& aResult = b_operation.Shape();
-	Handle(AIS_InteractiveObject) aResult = new AIS_Shape(b_operation.Shape());
-
-	//Handle(AIS_Shape) aPrevShape = new AIS_Shape(b_operation.Shape());
-
-	if (b_operation.IsDone())
-	{
-		Handle(AIS_Shape) aNewShape = new AIS_Shape(b_operation.Shape());
-		m_context->EraseAll(Standard_True);
-		//m_context->Erase(aNewShape, Standard_True);
-		aResult = aNewShape;
-		m_context->Display(aNewShape, Standard_True);
-	}
-
-	
-
-	//m_listOfShapes.Clear();
-	//AddShape(aResult);
-
-	//Handle(AIS_Shape) shape = new AIS_Shape(aResult);
-	//
-	//m_context->EraseAll(true);
-	////m_context->Erase(aResult);
-
-	//m_context->Display(shape, true);
-	//m_context->Display(m_viewcube, true);
-
-	//theOperation = BOPAlgo_CUT21;
-	//BRepAlgoAPI_BooleanOperation(theS1, theS2);
 }
 
 void CEngineDoc::Fuse()

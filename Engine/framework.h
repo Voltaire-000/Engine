@@ -69,6 +69,7 @@
 #include <BRepBuilderAPI.hxx>
 #include <BRepAlgoAPI_Fuse.hxx>
 #include <BRepAlgoAPI_BooleanOperation.hxx>
+#include <BRepAlgoAPI_Cut.hxx>
 #include <BRepTools.hxx>
 
 #include <BRepBuilderAPI_MakeEdge.hxx>
