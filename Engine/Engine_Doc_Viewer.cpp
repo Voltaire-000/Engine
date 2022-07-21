@@ -234,32 +234,59 @@ void CEngineDoc::DrawLiner(const Standard_Real theRadius, const Standard_Real th
 
 }
 
-void CEngineDoc::MakeCut(const TopoDS_Shape theS1, const TopoDS_Shape theS2, BOPAlgo_Operation theOperation)
+void CEngineDoc::MakeCut()
 {
 	BRepAlgoAPI_BooleanOperation b_operation;
+	TopTools_ListOfShape theLS = m_listOfShapes;
+	b_operation.SetArguments(theLS);
 
-	TopTools_ListOfShape aLSObjects = m_listOfShapes;
+	Standard_Boolean bRunParallel = Standard_True;
+	b_operation.SetRunParallel(bRunParallel);
+	Standard_Real aFuzzyValue = 1.e-5;
+	b_operation.SetFuzzyValue(aFuzzyValue);
+	Standard_Boolean bSafeMode = Standard_False;
+	b_operation.SetNonDestructive(bSafeMode);
 
 	b_operation.SetOperation(BOPAlgo_CUT21);
-	b_operation.SetArguments(aLSObjects);
 
-	b_operation.SetTools(m_listOfShapes);
-
+	b_operation.SetTools(theLS);
 	b_operation.Build();
 
-	const TopoDS_Shape aResult = b_operation.Shape();
+	if (b_operation.HasErrors())
+	{
+		return;
+	}
+	if (b_operation.HasWarnings())
+	{
+		return;
+	}
 
-	m_shapes.clear();
+	//const TopoDS_Shape& aResult = b_operation.Shape();
+	Handle(AIS_InteractiveObject) aResult = new AIS_Shape(b_operation.Shape());
 
-	m_listOfShapes.Clear();
+	//Handle(AIS_Shape) aPrevShape = new AIS_Shape(b_operation.Shape());
 
-	AddShape(aResult);
+	if (b_operation.IsDone())
+	{
+		Handle(AIS_Shape) aNewShape = new AIS_Shape(b_operation.Shape());
+		m_context->EraseAll(Standard_True);
+		//m_context->Erase(aNewShape, Standard_True);
+		aResult = aNewShape;
+		m_context->Display(aNewShape, Standard_True);
+	}
 
-	Handle(AIS_Shape) shape = new AIS_Shape(aResult);
+	
 
-	m_context->EraseAll(true);
+	//m_listOfShapes.Clear();
+	//AddShape(aResult);
 
-	m_context->Display(shape, true);
+	//Handle(AIS_Shape) shape = new AIS_Shape(aResult);
+	//
+	//m_context->EraseAll(true);
+	////m_context->Erase(aResult);
+
+	//m_context->Display(shape, true);
+	//m_context->Display(m_viewcube, true);
 
 	//theOperation = BOPAlgo_CUT21;
 	//BRepAlgoAPI_BooleanOperation(theS1, theS2);
@@ -290,7 +317,6 @@ void CEngineDoc::Fuse()
 	}
 
 	const TopoDS_Shape& aResult = aBuilder.Shape();
-	m_shapes.clear();
 
 	m_listOfShapes.Clear();
 

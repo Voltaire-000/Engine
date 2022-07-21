@@ -1,8 +1,12 @@
 #pragma once
 
-class BooleanOperations
-{
-	void OnCut();
-	void OnFuse();
-};
+//class BooleanOperations : CEngineDoc
+//{
+//public:
+//	void OnCut();
+//	void OnFuse();
+//
+//private:
+//	TopTools_ListOfShape		m_listOfShapes;
+//};
 

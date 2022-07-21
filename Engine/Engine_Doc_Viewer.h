@@ -25,6 +25,7 @@ public:
 	{ 
 		return m_context;
 	}
+	//	TODO context or object??
 	const Handle(AIS_InteractiveContext)& GetInteractiveContext()const
 	{
 		return m_context;
@@ -61,7 +62,7 @@ public:
 		const Standard_Real theAngle = 360,
 		const Graphic3d_MaterialAspect theMaterial = Graphic3d_NameOfMaterial_Aluminum);
 
-	void MakeCut(const TopoDS_Shape theS1, const TopoDS_Shape theS2, BOPAlgo_Operation theOperation);
+	void MakeCut();
 
 	void Fuse();
 

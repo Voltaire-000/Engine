@@ -189,7 +189,6 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BooleanOperations.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="DeLaval.h" />
     <ClInclude Include="DeLavalBase.h" />
@@ -206,7 +205,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BooleanOperations.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="DeLaval.cpp" />
     <ClCompile Include="DeLavalBase.cpp" />

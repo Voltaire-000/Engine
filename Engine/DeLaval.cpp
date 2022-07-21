@@ -4,6 +4,7 @@
 #include "Engine_App.h"
 #include "Engine_Doc_Viewer.h"
 #include "Engine_View.h"
+#include "BooleanOperations.h"
 
 #ifdef DEBUG
 #define new DEBUG_NEW
@@ -36,7 +37,8 @@ BEGIN_MESSAGE_MAP(DeLaval, CWnd)
 	ON_WM_SETTINGCHANGE()
 	//ON_COMMAND(IDC_BUTTON_PROFILE, &CEngineDoc::OnDrawLiner)
 	ON_BN_CLICKED(IDC_BUTTON_PROFILE, &DeLaval::OnCreateProfile)
-	ON_BN_CLICKED(IDC_BUTTON_CUT, &DeLaval::OnFuse)
+	ON_BN_CLICKED(IDC_BUTTON_CUT, &DeLaval::OnCut)
+	//ON_BN_CLICKED(IDC_BUTTON_CUT, &DeLaval::OnFuse)
 END_MESSAGE_MAP()
 
 void DeLaval::AdjustLayout()
@@ -239,7 +241,7 @@ void DeLaval::OnCreateProfile()
 
 }
 
-void DeLaval::OnCutShapes()
+void DeLaval::OnCut()
 {
 	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
 	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
@@ -247,15 +249,8 @@ void DeLaval::OnCutShapes()
 	auto activeWnd = pView->GetActiveWindow();
 	auto pDoc = pView->GetDocument();
 
-	std::vector<TopoDS_Shape> m_list = pDoc->ShapeList();
-	TopoDS_Shape theS1(m_list[0]);
-	TopoDS_Shape theS2(m_list[1]);
-
-	//TopoDS_ListOfShape aLSObjects;
-	//aLSObjects.
-
-	pDoc->MakeCut(theS1, theS2, BOPAlgo_CUT21);
-
+	pDoc->MakeCut();
+	pDoc->SetTitle(L"Cut chamber");
 	
 }
 

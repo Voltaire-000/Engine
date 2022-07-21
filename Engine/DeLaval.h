@@ -42,7 +42,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	afx_msg void OnCreateProfile();
-	afx_msg void OnCutShapes();
+	afx_msg void OnCut();
 	afx_msg void OnFuse();
 
 	DECLARE_MESSAGE_MAP()
