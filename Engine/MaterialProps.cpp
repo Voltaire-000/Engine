@@ -68,6 +68,20 @@ void CMaterialPropsWnd::OnSetFocus(CWnd* pOldWnd)
 	//	TODO
 }
 
+void CMaterialPropsWnd::OnPaint()
+{
+	//	TODO not working
+	CPaintDC dc(this);
+
+	CRect rectWnd;
+	rectWnd = GetPaneRect();
+	//m_wndToolBar.GetPaneRect();
+	ScreenToClient(rectWnd);
+
+	rectWnd.InflateRect(1, 200);
+	dc.Draw3dRect(rectWnd, ::GetSysColor(COLOR_3DSHADOW), ::GetSysColor(COLOR_3DSHADOW));
+}
+
 void CMaterialPropsWnd::AdjustLayout()
 {
 	if (GetSafeHwnd() == nullptr)
