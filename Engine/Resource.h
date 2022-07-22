@@ -39,6 +39,7 @@
 #define ID_VIEW_APPLOOK_OFF_2007_AQUA   218
 #define ID_VIEW_APPLOOK_WINDOWS_7       219
 #define ID_VIEW_NAVIGATION              220
+#define ID_VIEW_MATPROPERTIES			221
 #define IDS_SHORTCUTS                   240
 #define IDS_DELAVAL                     241
 #define IDS_OUTLOOKBAR                  242

@@ -1,7 +1,7 @@
 #pragma once
 #include <afxdockablepane.h>
 
-class CMatToolBar : public CMFCToolBar
+class CMatPropsToolBar : public CMFCToolBar
 {
     virtual void OnUpdateCmdUI(CFrameWnd* /*pTarget*/, BOOL bDisableIfNoHndler)
     {
@@ -11,18 +11,18 @@ class CMatToolBar : public CMFCToolBar
     virtual BOOL AllowShowOnList() const { return FALSE; }
 };
 
-class CMaterialProps :
+class CMaterialPropsWnd :
     public CDockablePane
 {
 public:
-    CMaterialProps() noexcept;
-    virtual ~CMaterialProps();
+    CMaterialPropsWnd() noexcept;
+    virtual ~CMaterialPropsWnd();
 
     void AdjustLayout();
     void OnChangeVisualStyle();
 
 protected:
-    CMatToolBar m_wndToolBar;
+    CMatPropsToolBar m_wndToolBar;
 
     //  Overrides
 public:
@@ -33,7 +33,6 @@ protected:
     afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
     afx_msg void OnSize(UINT nType, int cx, int cy);
     afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
-    afx_msg void OnPaint();
     afx_msg void OnSetFocus(CWnd* pOldWnd);
 
     DECLARE_MESSAGE_MAP()

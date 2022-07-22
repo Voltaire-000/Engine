@@ -124,12 +124,16 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 	//	create docking windows
-	//if (!CreateDockingWindows())
-	//{
-	//	TRACE0("Failed to create docking windows\n");
-	//	return -1;
-	//}
+	// TODO
+	if (!CreateDockingWindows())
+	{
+		TRACE0("Failed to create docking windows\n");
+		return -1;
+	}
 	
+	m_wndMatProperties.EnableDocking(CBRS_ALIGN_ANY);
+	DockPane(&m_wndMatProperties);
+
 	// set the visual manager and style based on persisted value
 	OnApplicationLook(theApp.m_nAppLook);
 
@@ -315,21 +319,21 @@ void CMainFrame::OnUpdateApplicationLook(CCmdUI* pCmdUI)
 }
 
 //	properties window TODO
-//BOOL CMainFrame::CreateDockingWindows()
-//{
-//	BOOL bNameValid;
-//	//	Create the Properties window
-//	CString strPropertiesWnd;
-//	bNameValid = strPropertiesWnd.LoadStringW(IDS_PROPERTIES_PANE);
-//	ASSERT(bNameValid);
-//	if (!m_wndProperties.Create(strPropertiesWnd, this, CRect(0, 0, 200, 200), TRUE, ID_VIEW_PROPERTIESWND, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
-//	{
-//		TRACE0("Failed to create Properties window\n");
-//		return FALSE;
-//	}
-//
-//	return TRUE;
-//}
+BOOL CMainFrame::CreateDockingWindows()
+{
+	BOOL bNameValid;
+	//	Create the MaterialProperties window
+	CString strMatPropertiesWnd;
+	bNameValid = strMatPropertiesWnd.LoadStringW(IDS_PROPERTIES_PANE);
+	ASSERT(bNameValid);
+	if (!m_wndMatProperties.Create(strMatPropertiesWnd, this, CRect(0, 0, 200, 200), TRUE, ID_VIEW_MATPROPERTIES, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
+	{
+		TRACE0("Failed to create Properties window\n");
+		return FALSE;
+	}
+
+	return TRUE;
+}
 
 //	properties window TODO
 //void CMainFrame::SetDockingWindowIcons(BOOL bHiColorIcons)

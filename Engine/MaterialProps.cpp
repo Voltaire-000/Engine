@@ -5,18 +5,18 @@
 //	TODO add class ViewMenuButton here
 
 
-CMaterialProps::CMaterialProps() noexcept
+CMaterialPropsWnd::CMaterialPropsWnd() noexcept
 {
 
 }
 
-CMaterialProps::~CMaterialProps()
+CMaterialPropsWnd::~CMaterialPropsWnd()
 {
 }
 
 //========================================
 //	Message map
-BEGIN_MESSAGE_MAP(CMaterialProps, CDockablePane)
+BEGIN_MESSAGE_MAP(CMaterialPropsWnd, CDockablePane)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_CONTEXTMENU()
@@ -24,7 +24,7 @@ BEGIN_MESSAGE_MAP(CMaterialProps, CDockablePane)
 	ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 //========================================
-int CMaterialProps::OnCreate(LPCREATESTRUCT lpCreateStruct)
+int CMaterialPropsWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CDockablePane::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -39,42 +39,36 @@ int CMaterialProps::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//
 	m_wndToolBar.Create(this, AFX_DEFAULT_TOOLBAR_STYLE, IDR_MAT_TOOLBAR);
 	m_wndToolBar.LoadToolBar(IDR_MAT_TOOLBAR, 0, 0, TRUE /*Is locked*/);
-
-	OnChangeVisualStyle();
-
 	m_wndToolBar.SetPaneStyle(m_wndToolBar.GetPaneStyle() | CBRS_TOOLTIPS | CBRS_FLYBY);
 	m_wndToolBar.SetPaneStyle(m_wndToolBar.GetPaneStyle() & ~(CBRS_GRIPPER | CBRS_SIZE_DYNAMIC | CBRS_BORDER_TOP | CBRS_BORDER_BOTTOM | CBRS_BORDER_LEFT | CBRS_BORDER_RIGHT));
-
 	m_wndToolBar.SetOwner(this);
 
 	//	All commands will be routed via this control, not via the parent frame;
 	m_wndToolBar.SetRouteCommandsViaFrame(FALSE);
 
+	AdjustDockingLayout();
 	return 0;
 }
 
-void CMaterialProps::OnSize(UINT nType, int cx, int cy)
+void CMaterialPropsWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CDockablePane::OnSize(nType, cx, cy);
 	AdjustLayout();
 }
 
-void CMaterialProps::OnContextMenu(CWnd* pWnd, CPoint point)
+void CMaterialPropsWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	//	TODO
 }
 
-void CMaterialProps::OnPaint()
+void CMaterialPropsWnd::OnSetFocus(CWnd* pOldWnd)
 {
+	CDockablePane::OnSetFocus(pOldWnd);
+	m_wndToolBar.SetFocus();
 	//	TODO
 }
 
-void CMaterialProps::OnSetFocus(CWnd* pOldWnd)
-{
-	//	TODO
-}
-
-void CMaterialProps::AdjustLayout()
+void CMaterialPropsWnd::AdjustLayout()
 {
 	if (GetSafeHwnd() == nullptr)
 	{
@@ -93,12 +87,12 @@ void CMaterialProps::AdjustLayout()
 		SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
-void CMaterialProps::OnChangeVisualStyle()
+void CMaterialPropsWnd::OnChangeVisualStyle()
 {
 	//m_wndToolBar.LoadBitmapEx(theApp.m_bHiColorIcons ? IDB_TODO_A : IDB_TODO_B, 0, 0, TRUE);
 }
 
-BOOL CMaterialProps::PreTranslateMessage(MSG* pMsg)
+BOOL CMaterialPropsWnd::PreTranslateMessage(MSG* pMsg)
 {
 	return CDockablePane::PreTranslateMessage(pMsg);
 }

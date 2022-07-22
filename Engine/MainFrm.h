@@ -5,6 +5,7 @@
 #pragma once
 
 #include "DeLaval.h"
+#include "MaterialProps.h"
 
 class COutlookBar : public CMFCOutlookBar
 {
@@ -44,6 +45,7 @@ protected:  // control bar embedded members
 	CMFCToolBarImages	m_UserImages;
 	COutlookBar			m_wndNavigationBar;
 	
+	CMaterialPropsWnd	m_wndMatProperties;
 	DeLaval				m_wndDeLaval;
 
 
@@ -57,7 +59,7 @@ protected:
 	afx_msg void OnUpdateApplicationLook(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()
 
-	//BOOL CreateDockingWindows();
+	BOOL CreateDockingWindows();
 
 	//void SetDockingWindowIcons(BOOL bHiColorIcons);
 	BOOL CreateOutlookBar(CMFCOutlookBar& bar, UINT uiID, DeLaval& delaval, int nInitialWidth);
