@@ -40,16 +40,18 @@
 #define ID_VIEW_APPLOOK_WINDOWS_7       219
 #define ID_VIEW_NAVIGATION              220
 #define ID_VIEW_MATPROPERTIES			221
+#define ID_VIEW_SCENE_PROPERTIES		222
 #define IDS_SHORTCUTS                   240
 #define IDS_DELAVAL                     241
 #define IDS_OUTLOOKBAR                  242
 #define IDS_PROPERTIES_PANE             243
-#define IDS_PROPERTY_PANE               243
+#define IDS_SCENE_PANE					244
 #define ID_STYLE_RIBBON_WIDTH           250
 #define IDS_EDIT_MENU                   306
 #define IDR_RIBBON1                     310
 #define IDR_TOOLBAR1                    311
 #define IDR_MAT_TOOLBAR					312
+#define IDR_SCENE_TOOLBAR				313
 #define ID_BUTTON2                      32771
 #define ID_BUTTONFront                  40006
 

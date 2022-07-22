@@ -134,6 +134,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndMatProperties.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_wndMatProperties);
 
+	m_wndSceneProperties.EnableDocking(CBRS_ALIGN_ANY);
+	DockPane(&m_wndSceneProperties);
+
 	// set the visual manager and style based on persisted value
 	OnApplicationLook(theApp.m_nAppLook);
 
@@ -327,6 +330,16 @@ BOOL CMainFrame::CreateDockingWindows()
 	bNameValid = strMatPropertiesWnd.LoadStringW(IDS_PROPERTIES_PANE);
 	ASSERT(bNameValid);
 	if (!m_wndMatProperties.Create(strMatPropertiesWnd, this, CRect(0, 0, 200, 200), TRUE, ID_VIEW_MATPROPERTIES, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
+	{
+		TRACE0("Failed to create Properties window\n");
+		return FALSE;
+	}
+
+	//	Create the Scene properties window
+	CString strScenePropertiesWnd;
+	bNameValid = strScenePropertiesWnd.LoadStringW(IDS_SCENE_PANE);
+	ASSERT(bNameValid);
+	if (!m_wndSceneProperties.Create(strScenePropertiesWnd, this, CRect(0, 0, 200, 200), TRUE, ID_VIEW_SCENE_PROPERTIES, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
 	{
 		TRACE0("Failed to create Properties window\n");
 		return FALSE;

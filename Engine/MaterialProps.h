@@ -19,10 +19,17 @@ public:
     virtual ~CMaterialPropsWnd();
 
     void AdjustLayout();
-    void OnChangeVisualStyle();
+
+public:
+    void SetVSDotNetLook(BOOL bSet)
+    {
+        m_wndMaterialProperties.SetVSDotNetLook(bSet);
+        m_wndMaterialProperties.SetGroupNameFullWidth(bSet);
+    }
 
 protected:
-    CMatPropsToolBar m_wndToolBar;
+    CMatPropsToolBar        m_wndToolBar;
+    CMFCPropertyGridCtrl    m_wndMaterialProperties;
 
     //  Overrides
 public:
@@ -30,11 +37,10 @@ public:
 
 protected:
     //  Messages
-    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-    afx_msg void OnSize(UINT nType, int cx, int cy);
-    afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
-    afx_msg void OnSetFocus(CWnd* pOldWnd);
-    afx_msg void OnPaint();
+    afx_msg int     OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg void    OnSize(UINT nType, int cx, int cy);
+    afx_msg void    OnContextMenu(CWnd* pWnd, CPoint point);
+    afx_msg void    OnSetFocus(CWnd* pOldWnd);
 
     DECLARE_MESSAGE_MAP()
 };

@@ -6,6 +6,7 @@
 
 #include "DeLaval.h"
 #include "MaterialProps.h"
+#include "SceneProperties.h"
 
 class COutlookBar : public CMFCOutlookBar
 {
@@ -45,6 +46,7 @@ protected:  // control bar embedded members
 	CMFCToolBarImages	m_UserImages;
 	COutlookBar			m_wndNavigationBar;
 	
+	CScenePropertiesWnd	m_wndSceneProperties;
 	CMaterialPropsWnd	m_wndMatProperties;
 	DeLaval				m_wndDeLaval;
 

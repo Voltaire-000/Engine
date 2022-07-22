@@ -60,6 +60,9 @@
     <ClInclude Include="MaterialProps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SceneProperties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine_App.cpp">
@@ -96,6 +99,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MaterialProps.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneProperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -20,7 +20,6 @@ BEGIN_MESSAGE_MAP(CMaterialPropsWnd, CDockablePane)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_CONTEXTMENU()
-	ON_WM_PAINT()
 	ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 //========================================
@@ -34,6 +33,18 @@ int CMaterialPropsWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	//	Create views
 	//const DWORD dwViewStyle = WS_CHILD | WS_VISIBLE | TVS_HASBUTTONS | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
+
+	if (!m_wndMaterialProperties.Create(WS_VISIBLE | WS_CHILD, rectDummy, this, 2))
+	{
+		TRACE0("Failed to create Material properties pane\n");
+			return -1;
+	}
+
+	m_wndMaterialProperties.EnableHeaderCtrl(FALSE);
+	m_wndMaterialProperties.EnableDescriptionArea(TRUE);
+
+	m_wndMaterialProperties.SetVSDotNetLook(TRUE);
+	//InitMaterialPropertiesList();
 
 	// Load images for toolbar
 	//
@@ -64,27 +75,13 @@ void CMaterialPropsWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 void CMaterialPropsWnd::OnSetFocus(CWnd* pOldWnd)
 {
 	CDockablePane::OnSetFocus(pOldWnd);
-	m_wndToolBar.SetFocus();
+	m_wndMaterialProperties.SetFocus();
 	//	TODO
-}
-
-void CMaterialPropsWnd::OnPaint()
-{
-	//	TODO not working
-	CPaintDC dc(this);
-
-	CRect rectWnd;
-	rectWnd = GetPaneRect();
-	//m_wndToolBar.GetPaneRect();
-	ScreenToClient(rectWnd);
-
-	rectWnd.InflateRect(1, 200);
-	dc.Draw3dRect(rectWnd, ::GetSysColor(COLOR_3DSHADOW), ::GetSysColor(COLOR_3DSHADOW));
 }
 
 void CMaterialPropsWnd::AdjustLayout()
 {
-	if (GetSafeHwnd() == nullptr)
+	if (GetSafeHwnd() == nullptr || (AfxGetMainWnd() != nullptr && AfxGetMainWnd()->IsIconic()))
 	{
 		return;
 	}
@@ -99,12 +96,19 @@ void CMaterialPropsWnd::AdjustLayout()
 		rectClient.Width(),
 		cyTlb,
 		SWP_NOACTIVATE | SWP_NOZORDER);
+
+	m_wndMaterialProperties.SetWindowPos(nullptr,
+		rectClient.left,
+		rectClient.top ,
+		rectClient.Width(),
+		rectClient.Height(),
+		SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
-void CMaterialPropsWnd::OnChangeVisualStyle()
-{
-	//m_wndToolBar.LoadBitmapEx(theApp.m_bHiColorIcons ? IDB_TODO_A : IDB_TODO_B, 0, 0, TRUE);
-}
+//void CMaterialPropsWnd::OnChangeVisualStyle()
+//{
+//	//m_wndToolBar.LoadBitmapEx(theApp.m_bHiColorIcons ? IDB_TODO_A : IDB_TODO_B, 0, 0, TRUE);
+//}
 
 BOOL CMaterialPropsWnd::PreTranslateMessage(MSG* pMsg)
 {
