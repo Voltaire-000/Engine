@@ -48,6 +48,7 @@
 #define IDS_EDIT_MENU                   306
 #define IDR_RIBBON1                     310
 #define IDR_TOOLBAR1                    311
+#define IDR_MAT_TOOLBAR					312
 #define ID_BUTTON2                      32771
 #define ID_BUTTONFront                  40006
 
