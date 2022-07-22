@@ -238,14 +238,15 @@ void CEngineDoc::MakeCut()
 {
 	TopoDS_Shape S1 = m_shapes.at(0);
 	TopoDS_Shape S2 = m_shapes.at(1);
-	BRepAlgoAPI_Cut cut(S1, S2);
+	BRepAlgoAPI_Cut cut(S2, S1);
 	cut.Build();
 	TopoDS_Shape aResult = cut.Shape();
 
 	Handle(AIS_Shape) shape = new AIS_Shape(aResult);
 
-	//m_context->Erase(true);
+	m_context->EraseAll(true);
 	m_context->Display(shape, true);
+	m_context->Display(m_viewcube, true);
 
 }
 
