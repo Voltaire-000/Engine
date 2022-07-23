@@ -74,10 +74,14 @@ public:
 		this->AddShape(shape);
 		return *this;
 	}
-	void AddShape(const TopoDS_Shape& shape);
+
+	void AddShape(const TopoDS_Shape& shape,
+		const Graphic3d_MaterialAspect theMaterial = Graphic3d_NameOfMaterial_Aluminum);
 	//////////////////////////////////////////////////
 
 	std::vector<TopoDS_Shape> ShapeList();
+
+	void AdjustSelectionStyle(const Handle(AIS_InteractiveContext)& m_context);
 
 
 // Overrides

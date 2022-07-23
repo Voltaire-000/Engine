@@ -214,9 +214,9 @@ void DeLaval::OnCreateProfile()
 	int theThickness =	m_wndPropertyList.GetProperty(0)->GetSubItem(1)->GetValue().intVal;
 	auto theLength =	m_wndPropertyList.GetProperty(0)->GetSubItem(2)->GetValue().intVal;
 
-	auto theMaterial = m_wndPropertyList.GetProperty(0)->GetSubItem(3);
-	auto mv = theMaterial->GetValue();
-	CString cs = mv;
+	auto selectedMaterial = m_wndPropertyList.GetProperty(0)->GetSubItem(3);
+	auto materialValue = selectedMaterial->GetValue();
+	CString strMaterialName = materialValue;
 
 	//	Gets the document window
 	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
@@ -225,19 +225,19 @@ void DeLaval::OnCreateProfile()
 	auto activeWnd = pView->GetActiveWindow();
 	auto pDoc = pView->GetDocument();
 
-	Graphic3d_NameOfMaterial nameOfMaterial;
+	Graphic3d_NameOfMaterial theMaterial;
 
 	//	TODO change to switch statement??
-	if (cs == "Copper")
+	if (strMaterialName == "Copper")
 	{
-		nameOfMaterial = Graphic3d_NameOfMaterial_Copper;
+		theMaterial = Graphic3d_NameOfMaterial_Copper;
 
 	}
 	else {
-		nameOfMaterial = Graphic3d_NameOfMaterial_Steel;
+		theMaterial = Graphic3d_NameOfMaterial_Steel;
 	}
 	pDoc->SetTitle(L"Chamber Liner");
-	pDoc->DrawLiner(theRadius, theThickness, theLength, 180, nameOfMaterial);
+	pDoc->DrawLiner(theRadius, theThickness, theLength, 180, theMaterial);
 
 }
 

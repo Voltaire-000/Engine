@@ -39,38 +39,7 @@ CEngineDoc::CEngineDoc() noexcept
 
 	//	create a new window over the existing window
 	m_context = new AIS_InteractiveContext(m_viewer);
-	m_context->DefaultDrawer();
-	////////////////////////////////////////////////////////////////////////////
-	//	Prs3d_Drawer test TODO
-	Handle(Prs3d_Drawer) selDrawer = new Prs3d_Drawer();
-	//
-	selDrawer->SetLink(m_context->DefaultDrawer());
-	selDrawer->SetFaceBoundaryDraw(true);
-	selDrawer->SetDisplayMode(1);	//	Shaded
-	selDrawer->SetTransparency(0.5f);
-	selDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
-	selDrawer->SetColor(Quantity_NOC_GOLD);
-	selDrawer->SetBasicFillAreaAspect(new Graphic3d_AspectFillArea3d());
-
-	//	Adjust fill area aspect
-	const Handle(Graphic3d_AspectFillArea3d)& fillArea = selDrawer->BasicFillAreaAspect();
-	//
-	fillArea->SetInteriorColor(Quantity_NOC_GOLD);
-	fillArea->SetBackInteriorColor(Quantity_NOC_GOLD);
-	//
-	fillArea->ChangeFrontMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
-	fillArea->ChangeFrontMaterial().SetTransparency(0.4f);
-	fillArea->ChangeBackMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
-	fillArea->ChangeBackMaterial().SetTransparency(0.4f);
-
-	selDrawer->UnFreeBoundaryAspect()->SetWidth(1.0);
-	//	Update AIS context
-	m_context->SetHighlightStyle(Prs3d_TypeOfHighlight_LocalSelected, selDrawer);
-
-	m_context->SetDefaultDrawer(selDrawer);
-	//	end Prs3d
-	///////////////////////////////////////////////////////////////////////////////
-
+	//m_context->DefaultDrawer();
 
 	//=============================================================================
 	//	Projection type
@@ -154,14 +123,14 @@ CEngineDoc::CEngineDoc() noexcept
 	/////////////////////////////////////////////
 
 	m_context->SetDisplayMode(AIS_Shaded, true);
+	//m_context->SetDisplayMode(AIS_WireFrame, true);
 	m_context->SetAutomaticHilight(Standard_True);
 
 	/////////////////////////////////////////////
-	m_shapes;
 	// 
 	//	Set selection modes
-	m_context->Activate(4, true);
-	m_context->Activate(2, true);
+	//m_context->Activate(4, true);
+	//m_context->Activate(2, true);
 	m_context->Activate(m_viewcube);
 	//
 	/////////////////////////////////////////////
@@ -220,7 +189,7 @@ void CEngineDoc::DrawLiner(const Standard_Real theRadius, const Standard_Real th
 		{
 			shape->SetMaterial(theMaterial);
 
-			AddShape(liner);
+			AddShape(liner, theMaterial);
 
 			//m_context->SetDisplayMode(AIS_Shaded, true);
 			//m_context->SetAutomaticHilight(Standard_True);
@@ -229,13 +198,15 @@ void CEngineDoc::DrawLiner(const Standard_Real theRadius, const Standard_Real th
 			//m_context->Activate(shape);
 			shapeAdded = true;
 		}
-		m_context->Display(shape, true);
+		//m_context->Display(shape, true);
 
 
 }
 
 void CEngineDoc::MakeCut()
 {
+	BOOL shapeAdded = false;
+
 	TopoDS_Shape S1 = m_shapes.at(0);
 	TopoDS_Shape S2 = m_shapes.at(1);
 	BRepAlgoAPI_Cut cut(S2, S1);
@@ -245,8 +216,17 @@ void CEngineDoc::MakeCut()
 	Handle(AIS_Shape) shape = new AIS_Shape(aResult);
 
 	m_context->EraseAll(true);
-	m_context->Display(shape, true);
-	m_context->Display(m_viewcube, true);
+
+	if (!shapeAdded)
+	{
+		AddShape(aResult);
+
+		shapeAdded = true;
+	}
+
+	
+	//m_context->Display(shape, true);
+	//m_context->Display(m_viewcube, true);
 
 }
 
@@ -306,10 +286,21 @@ void CEngineDoc::OnDrawLiner()
 	//DrawLiner(75, 10, 300, 180);
 }
 
-void CEngineDoc::AddShape(const TopoDS_Shape& shape)
+void CEngineDoc::AddShape(const TopoDS_Shape& shape, const Graphic3d_MaterialAspect theMaterial)
 {
 	m_listOfShapes.Append(shape);
 	m_shapes.push_back(shape);
+
+	for (auto sh : m_shapes)
+	{
+		Handle(AIS_Shape) shape = new AIS_Shape(sh);
+		m_context->Display(shape, true);
+		m_context->SetDisplayMode(shape, AIS_Shaded, true);
+		AdjustSelectionStyle(m_context);
+	}
+	
+	m_context->Activate(2, true);
+	m_context->Display(m_viewcube, true);
 }
 
 std::vector<TopoDS_Shape> CEngineDoc::ShapeList()
@@ -318,11 +309,44 @@ std::vector<TopoDS_Shape> CEngineDoc::ShapeList()
 	return m_shapes;
 }
 
+void CEngineDoc::AdjustSelectionStyle(const Handle(AIS_InteractiveContext)& m_context)
+{
+	////////////////////////////////////////////////////////////////////////////
+//	Prs3d_Drawer test TODO
+	Handle(Prs3d_Drawer) selDrawer = new Prs3d_Drawer();
+	//
+	selDrawer->SetLink(m_context->DefaultDrawer());
+	selDrawer->SetFaceBoundaryDraw(true);
+	selDrawer->SetDisplayMode(1);	//	Shaded
+	selDrawer->SetTransparency(0.5f);
+	selDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
+	selDrawer->SetColor(Quantity_NOC_GOLD);
+	selDrawer->SetBasicFillAreaAspect(new Graphic3d_AspectFillArea3d());
+
+	//	Adjust fill area aspect
+	const Handle(Graphic3d_AspectFillArea3d)& fillArea = selDrawer->BasicFillAreaAspect();
+	//
+	fillArea->SetInteriorColor(Quantity_NOC_GOLD);
+	fillArea->SetBackInteriorColor(Quantity_NOC_GOLD);
+	//
+	fillArea->ChangeFrontMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
+	fillArea->ChangeFrontMaterial().SetTransparency(0.4f);
+	fillArea->ChangeBackMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
+	fillArea->ChangeBackMaterial().SetTransparency(0.4f);
+
+	selDrawer->UnFreeBoundaryAspect()->SetWidth(1.0);
+	//	Update AIS context
+	m_context->SetHighlightStyle(Prs3d_TypeOfHighlight_LocalSelected, selDrawer);
+
+	m_context->SetDefaultDrawer(selDrawer);
+	//	end Prs3d
+	///////////////////////////////////////////////////////////////////////////////
+}
+
 BOOL CEngineDoc::OnNewDocument()
 {
 	if (!CDocument::OnNewDocument())
 		return FALSE;
-
 	// TODO: add reinitialization code here
 	// (SDI documents will reuse this document)
 
