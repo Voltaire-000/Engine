@@ -182,23 +182,31 @@ void CEngineDoc::DrawLiner(const Standard_Real theRadius, const Standard_Real th
 	//	TODO inherit from BRepBuilderAPI_MakeShape() ?? Probably not needed
 
 		TopoDS_Shape liner = MakeLiner(theRadius, theThickness, theLength, theAngle);
-
+		
 		Handle(AIS_Shape) shape = new AIS_Shape(liner);
 
+		auto matShape = shape->Material();
+		
 		if (!shapeAdded)
 		{
 			shape->SetMaterial(theMaterial);
 
-			AddShape(liner, theMaterial);
+			auto xmat = shape->Material();
+
+			//	TODO should be adding an AIS_Shape here not a TopoDS_Shape
+			
+			//AddShape(liner);
+			AddAISshape(shape->Shape());
+			//AddShape(shape);
 
 			//m_context->SetDisplayMode(AIS_Shaded, true);
 			//m_context->SetAutomaticHilight(Standard_True);
 			//m_context->Activate(4, true);
 			//m_context->Activate(2, true);
 			//m_context->Activate(shape);
-			shapeAdded = true;
+			//shapeAdded = true;
 		}
-		//m_context->Display(shape, true);
+		m_context->Display(shape, true);
 
 
 }
@@ -207,26 +215,46 @@ void CEngineDoc::MakeCut()
 {
 	BOOL shapeAdded = false;
 
-	TopoDS_Shape S1 = m_shapes.at(0);
-	TopoDS_Shape S2 = m_shapes.at(1);
+	//TopoDS_Shape S1 = m_shapes.at(0);
+	//TopoDS_Shape S2 = m_shapes.at(1);
+
+	TopoDS_Shape S1 = m_AISshapes.at(0).Shape();
+	TopoDS_Shape S2 = m_AISshapes.at(1).Shape();
+
+	//Handle(AIS_Shape) S1shape = new AIS_Shape(S1);
+	//auto S1Matname = S1shape->Material();
+
+	auto S1MatName = m_AISshapes.at(1).Material();
+	
 	BRepAlgoAPI_Cut cut(S2, S1);
 	cut.Build();
 	TopoDS_Shape aResult = cut.Shape();
-
+	
 	Handle(AIS_Shape) shape = new AIS_Shape(aResult);
 
-	m_context->EraseAll(true);
+	//shape->SetMaterial(S1MatName);
 
-	if (!shapeAdded)
-	{
-		AddShape(aResult);
-
-		shapeAdded = true;
-	}
-
+	auto xmat = shape->Material();
 	
-	//m_context->Display(shape, true);
-	//m_context->Display(m_viewcube, true);
+	//auto matname = shape->Material();
+	shape->SetMaterial(xmat);
+
+	//if (!shapeAdded)
+	//{
+	//	AddShape(aResult);
+
+	//	shapeAdded = true;
+	//}
+	
+	//AddShape(aResult);
+	AddAISshape(shape->Shape());
+
+	//auto mShapeList = ShapeList();
+
+	//m_context->Erase(, true);
+	m_context->EraseAll(true);
+	m_context->Display(shape, true);
+	m_context->Display(m_viewcube, true);
 
 }
 
@@ -269,43 +297,55 @@ void CEngineDoc::Fuse()
 	m_context->Display(m_viewcube, true);
 }
 
-void CEngineDoc::OnDrawLiner()
+//void CEngineDoc::OnDrawLiner()
+//{
+//
+//	//	TODO pass in values from edit box
+//	//	gets the document view
+//	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
+//	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
+//	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
+//	auto activeWnd = pView->GetActiveWindow();
+//	auto pDoc = pView->GetDocument();
+//
+//	//	this works and changes doc name TODO
+//	pDoc->SetTitle(L"Chamber Liner");
+//	pDoc->DrawLiner(200, 10, 300, 180, Graphic3d_NameOfMaterial_Copper);
+//	//DrawLiner(75, 10, 300, 180);
+//}
+
+void CEngineDoc::AddShape(const TopoDS_Shape& shape)
 {
-
-	//	TODO pass in values from edit box
-	//	gets the document view
-	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
-	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
-	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
-	auto activeWnd = pView->GetActiveWindow();
-	auto pDoc = pView->GetDocument();
-
-	//	this works and changes doc name TODO
-	pDoc->SetTitle(L"Chamber Liner");
-	pDoc->DrawLiner(200, 10, 300, 180, Graphic3d_NameOfMaterial_Copper);
-	//DrawLiner(75, 10, 300, 180);
-}
-
-void CEngineDoc::AddShape(const TopoDS_Shape& shape, const Graphic3d_MaterialAspect theMaterial)
-{
-	m_listOfShapes.Append(shape);
 	m_shapes.push_back(shape);
+	auto shapeslist = ShapeList();
 
 	for (auto sh : m_shapes)
 	{
 		Handle(AIS_Shape) shape = new AIS_Shape(sh);
 		m_context->Display(shape, true);
 		m_context->SetDisplayMode(shape, AIS_Shaded, true);
-		AdjustSelectionStyle(m_context);
+		//AdjustSelectionStyle(m_context);
 	}
-	
+
 	m_context->Activate(2, true);
-	m_context->Display(m_viewcube, true);
+	//m_context->Display(m_viewcube, true);
+}
+
+void CEngineDoc::AddAISshape(AIS_Shape theShape)
+{
+	m_AISshapes.push_back(theShape);
+
+	for (auto aisShape : m_AISshapes)
+	{
+		Handle(AIS_Shape) shape = new AIS_Shape(aisShape);
+		m_context->Display(shape, true);
+		m_context->SetDisplayMode(shape, AIS_Shaded, true);
+
+	}
 }
 
 std::vector<TopoDS_Shape> CEngineDoc::ShapeList()
 {
-
 	return m_shapes;
 }
 

@@ -190,6 +190,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ChildFrm.h" />
+    <ClInclude Include="CuttingTool.h" />
     <ClInclude Include="DeLaval.h" />
     <ClInclude Include="DeLavalBase.h" />
     <ClInclude Include="Engine_App.h" />
@@ -208,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp" />
+    <ClCompile Include="CuttingTool.cpp" />
     <ClCompile Include="DeLaval.cpp" />
     <ClCompile Include="DeLavalBase.cpp" />
     <ClCompile Include="Engine_App.cpp" />

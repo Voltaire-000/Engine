@@ -54,7 +54,7 @@ public:
 
 	void DrawRevolve(Standard_Real theAngle);
 
-	void OnDrawLiner();
+	//void OnDrawLiner();
 
 	void DrawLiner(const Standard_Real theRadius,
 		const Standard_Real theThickness,
@@ -75,8 +75,10 @@ public:
 		return *this;
 	}
 
-	void AddShape(const TopoDS_Shape& shape,
-		const Graphic3d_MaterialAspect theMaterial = Graphic3d_NameOfMaterial_Aluminum);
+	void AddShape(const TopoDS_Shape& shape);
+
+	void AddAISshape(AIS_Shape theShape);
+	
 	//////////////////////////////////////////////////
 
 	std::vector<TopoDS_Shape> ShapeList();
@@ -106,6 +108,7 @@ public:
 private:
 	//	the shapes to visulize
 	std::vector<TopoDS_Shape>	m_shapes;
+	std::vector<AIS_Shape>		m_AISshapes;
 	TopTools_ListOfShape		m_listOfShapes;
 	//	opencascade things
 private:
