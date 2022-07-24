@@ -299,9 +299,7 @@ void CEngineDoc::Fuse()
 	Handle(AIS_Shape) shape = new AIS_Shape(aResult);
 
 	m_context->EraseAll(true);
-	
 	m_context->Display(shape, true);
-
 	m_context->Display(m_viewcube, true);
 }
 
@@ -325,17 +323,19 @@ void CEngineDoc::Fuse()
 void CEngineDoc::AddShape(const TopoDS_Shape& shape)
 {
 	m_shapes.push_back(shape);
-	auto shapeslist = ShapeList();
+	//auto shapeslist = ShapeList();
 
 	for (auto sh : m_shapes)
 	{
 		Handle(AIS_Shape) shape = new AIS_Shape(sh);
 		m_context->Display(shape, true);
 		m_context->SetDisplayMode(shape, AIS_Shaded, true);
-		//AdjustSelectionStyle(m_context);
+		
 	}
-
+	//	this adds edges visibility
+	AdjustSelectionStyle(m_context);
 	m_context->Activate(2, true);
+	
 	//m_context->Display(m_viewcube, true);
 }
 
@@ -343,15 +343,22 @@ void CEngineDoc::AddAISshape(AIS_Shape theShape)
 {
 	m_AISshapes.push_back(theShape);
 
+	m_context->Activate(2, true);
+
 	//auto zmat = theShape.Material();
 
-	//for (auto aisShape : m_AISshapes)
-	//{
-	//	Handle(AIS_Shape) shape = new AIS_Shape(aisShape);
-	//	m_context->Display(shape, true);
-	//	m_context->SetDisplayMode(shape, AIS_Shaded, true);
+	for (auto aisShape : m_AISshapes)
+	{
+		Handle(AIS_Shape) shape = new AIS_Shape(aisShape);
+		m_context->Display(shape, true);
+		m_context->SetDisplayMode(shape, AIS_Shaded, true);
+	}
+	//	this adds edges visibility
+	AdjustSelectionStyle(m_context);
+	m_context->Activate(2, true);
+	//	viewcube needs to be redisplayed to get selection
+	m_context->Display(m_viewcube, true);
 
-	//}
 }
 
 std::vector<TopoDS_Shape> CEngineDoc::ShapeList()
@@ -384,7 +391,7 @@ void CEngineDoc::AdjustSelectionStyle(const Handle(AIS_InteractiveContext)& m_co
 	fillArea->ChangeBackMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
 	fillArea->ChangeBackMaterial().SetTransparency(0.4f);
 
-	selDrawer->UnFreeBoundaryAspect()->SetWidth(1.0);
+	selDrawer->UnFreeBoundaryAspect()->SetWidth(2.0);
 	//	Update AIS context
 	m_context->SetHighlightStyle(Prs3d_TypeOfHighlight_LocalSelected, selDrawer);
 
