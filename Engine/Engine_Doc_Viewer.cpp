@@ -261,6 +261,7 @@ void CEngineDoc::MakeCut()
 
 	//m_context->Erase(, true);
 	m_context->EraseAll(true);
+	m_context->Activate(2, true);
 	m_context->Display(shape, true);
 	m_context->Display(m_viewcube, true);
 
