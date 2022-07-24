@@ -39,6 +39,8 @@ TopoDS_Shape MakeLiner(const Standard_Real theRadius, Standard_Real theThickness
 	Standard_Real angle = m_convert*M_PI;
 	TopoDS_Shape revolve1 = BRepPrimAPI_MakeRevol(myFaceProfile, axis, angle);
 	
+	//	TODO return AIS_Shape instead of TopoDS_Shape
+	//	set material here
 	Handle(AIS_Shape) shape = new AIS_Shape(revolve1);
 	
 	//	TODO start at origin with points list

@@ -335,6 +335,8 @@ void CEngineDoc::AddAISshape(AIS_Shape theShape)
 {
 	m_AISshapes.push_back(theShape);
 
+	auto zmat = theShape.Material();
+
 	for (auto aisShape : m_AISshapes)
 	{
 		Handle(AIS_Shape) shape = new AIS_Shape(aisShape);
