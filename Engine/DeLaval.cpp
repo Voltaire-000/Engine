@@ -250,7 +250,7 @@ void DeLaval::OnCut()
 	
 	pDoc->MakeCut();
 	pDoc->SetTitle(L"Cut chamber");
-	
+
 }
 
 void DeLaval::OnFuse()

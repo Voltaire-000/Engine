@@ -183,6 +183,13 @@ void CEngineDoc::DrawLiner(const Standard_Real theRadius, const Standard_Real th
 
 		TopoDS_Shape liner = MakeLiner(theRadius, theThickness, theLength, theAngle);
 		
+		//BRepPrimAPI_MakeCylinder cyl(30, 60);
+		//cyl.Build();
+		//TopoDS_Shape resultCyl = cyl.Shape();
+		//Handle(AIS_Shape) cylShape = new AIS_Shape(resultCyl);
+		//cylShape->SetMaterial(theMaterial);
+		
+
 		Handle(AIS_Shape) shape = new AIS_Shape(liner);
 
 		auto matShape = shape->Material();
@@ -207,6 +214,7 @@ void CEngineDoc::DrawLiner(const Standard_Real theRadius, const Standard_Real th
 			//shapeAdded = true;
 		}
 		m_context->Display(shape, true);
+		//m_context->Display(cylShape, true);
 
 
 }
@@ -237,7 +245,7 @@ void CEngineDoc::MakeCut()
 	auto xmat = shape->Material();
 	
 	//auto matname = shape->Material();
-	shape->SetMaterial(xmat);
+	shape->SetMaterial(Graphic3d_NameOfMaterial_Copper);
 
 	//if (!shapeAdded)
 	//{
@@ -248,7 +256,7 @@ void CEngineDoc::MakeCut()
 	
 	//AddShape(aResult);
 	AddAISshape(shape->Shape());
-
+	
 	//auto mShapeList = ShapeList();
 
 	//m_context->Erase(, true);
@@ -335,15 +343,15 @@ void CEngineDoc::AddAISshape(AIS_Shape theShape)
 {
 	m_AISshapes.push_back(theShape);
 
-	auto zmat = theShape.Material();
+	//auto zmat = theShape.Material();
 
-	for (auto aisShape : m_AISshapes)
-	{
-		Handle(AIS_Shape) shape = new AIS_Shape(aisShape);
-		m_context->Display(shape, true);
-		m_context->SetDisplayMode(shape, AIS_Shaded, true);
+	//for (auto aisShape : m_AISshapes)
+	//{
+	//	Handle(AIS_Shape) shape = new AIS_Shape(aisShape);
+	//	m_context->Display(shape, true);
+	//	m_context->SetDisplayMode(shape, AIS_Shaded, true);
 
-	}
+	//}
 }
 
 std::vector<TopoDS_Shape> CEngineDoc::ShapeList()
