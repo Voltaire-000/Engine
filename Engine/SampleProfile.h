@@ -7,7 +7,7 @@ class CSampleProfile
 {
 public:
 	CSampleProfile()noexcept;
-	virtual CSampleProfile();
+	virtual ~CSampleProfile();
 
 	TopoDS_Shape MkProfile(const Standard_Real Rc,
 		const Standard_Real L_cyl,

@@ -5,7 +5,7 @@ CSampleProfile::CSampleProfile() noexcept
 {
 }
 
-CSampleProfile::CSampleProfile()
+CSampleProfile::~CSampleProfile()
 {
 }
 
