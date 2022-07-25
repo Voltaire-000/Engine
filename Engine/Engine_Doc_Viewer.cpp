@@ -13,6 +13,7 @@
 #include "Engine_View.h"
 
 #include <propkey.h>
+using namespace std;
 
 // CEngineDoc
 //	Creates the Viewer
@@ -111,12 +112,14 @@ CEngineDoc::CEngineDoc() noexcept
 	gp_Pnt thePos(0, 100, 0);
 	Handle(V3d_PositionalLight)	LightPositional_1 = new V3d_PositionalLight(thePos);
 	LightPositional_1->SetIntensity(1.0);
+	//LightPositional_1->SetCastShadows(TRUE);	//	setting this will cause crash
 	m_viewer->AddLight(LightPositional_1);
 	m_viewer->SetLightOn(LightPositional_1);
 	//=========================================
 	//	Ambient light
 	Handle(V3d_AmbientLight) LightAmb = new V3d_AmbientLight();
 	LightAmb->SetIntensity(2.0);
+	//LightAmb->SetCastShadows(TRUE);	// setting this will cause crash
 	m_viewer->AddLight(LightAmb);
 	m_viewer->SetLightOn(LightAmb);
 	//	end Lighting
@@ -356,6 +359,51 @@ void CEngineDoc::AddAISshape(AIS_Shape theShape)
 		m_context->Display(shape, true);
 		m_context->SetDisplayMode(shape, AIS_Shaded, true);
 	}
+
+	//	TODO iter test
+	m_viewer->ActiveLights();
+	for (V3d_ListOfLightIterator aLightIter(m_viewer->ActiveLightIterator()); aLightIter.More(); aLightIter.Next())
+	{
+		Handle(V3d_Light) aCurrentLight = aLightIter.Value();
+		bool toSkip = false;
+	std:string aType = "UnKnown";
+		unsigned int aImageTexture = 0;
+
+		switch (aCurrentLight->Type())
+		{
+		case V3d_AMBIENT:
+		{
+			toSkip = true;
+			break;
+		}
+		case V3d_DIRECTIONAL:
+		{
+			aType = ("Directional");
+			//aImageTexture = 
+			break;
+		}
+		case V3d_POSITIONAL:
+		{
+			aType = ("Positional");
+			//aImageTexture = 
+			break;
+		}
+		case V3d_SPOT:
+		{
+			toSkip = true;
+			break;
+		}
+		default:
+			break;
+		}
+	if (toSkip)
+	{
+		continue;
+	}
+
+	}
+
+
 	//	this adds edges visibility
 	AdjustSelectionStyle(m_context);
 	m_context->Activate(2, true);
