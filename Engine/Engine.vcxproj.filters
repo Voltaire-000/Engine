@@ -66,6 +66,9 @@
     <ClInclude Include="CuttingTool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SampleProfile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine_App.cpp">
@@ -108,6 +111,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CuttingTool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleProfile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
