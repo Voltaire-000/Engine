@@ -347,6 +347,9 @@ void CEngineDoc::AddShape(const TopoDS_Shape& shape)
 
 void CEngineDoc::AddAISshape(AIS_Shape theShape)
 {
+	//	TODO
+	//TopoDS_ListIteratorOfListOfShape aShapeIter
+
 	m_AISshapes.push_back(theShape);
 
 	m_context->Activate(2, true);
