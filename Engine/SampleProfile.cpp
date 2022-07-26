@@ -87,6 +87,10 @@ TopoDS_Shape CSampleProfile::Mk2Profile()
 	gp_Pnt aPnt2(Rc, yOrigin, Lc + Le);
 	gp_Pnt aPnt3(Rc, yOrigin, (Lc + Le) - L_cyl);	/*start of R2 radius*/
 
+	//	TODO working profile need to work on Fillet radius
+	//	HACK
+	//	Alert
+
 	//	begin radius 101.7
 
 	gp_Pnt aPnt4(Rc - 20, yOrigin, aPnt3.Z() - 20);
