@@ -6,6 +6,7 @@
 
 #include "MakeRevolve.h"
 #include "MakeLiner.h"
+#include "SampleProfile.h"
 //#include "MakeCut.h"
 
 class CEngineDoc : public CDocument
@@ -61,6 +62,8 @@ public:
 		const Standard_Real theLength,
 		const Standard_Real theAngle = 360,
 		const Graphic3d_MaterialAspect theMaterial = Graphic3d_NameOfMaterial_Aluminum);
+
+	void DrawSampleProfile();
 
 	void MakeCut();
 

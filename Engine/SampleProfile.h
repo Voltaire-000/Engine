@@ -24,11 +24,7 @@ public:
 		const Standard_Real Wt,
 		const Standard_Real L_Star = 500);
 
-	TopoDS_Shape Mk2Profile(const Standard_Real Rc,
-		const Standard_Real L_cyl,
-		const Standard_Real Lc,
-		const Standard_Real Le
-		);
+	TopoDS_Shape Mk2Profile();
 
 };
 

@@ -267,6 +267,19 @@ void DeLaval::OnFuse()
 	pDoc->SetTitle(L"Fused liner");
 }
 
+void DeLaval::OnSample()
+{
+	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
+	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
+	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
+	auto activeWnd = pView->GetActiveWindow();
+	auto pDoc = pView->GetDocument();
+
+	pDoc->DrawSampleProfile();
+	pDoc->SetTitle(L"Test profile");
+
+}
+
 void DeLaval::InitPropList()
 {
 	SetPropListFont();

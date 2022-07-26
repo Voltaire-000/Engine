@@ -222,6 +222,19 @@ void CEngineDoc::DrawLiner(const Standard_Real theRadius, const Standard_Real th
 
 }
 
+void CEngineDoc::DrawSampleProfile()
+{
+	auto mx = new CSampleProfile();
+	//CSampleProfile::Mk2Profile(Rc, L_cyl, Lc, Le);
+	TopoDS_Shape delavalShape = mx->Mk2Profile();
+
+	Handle(AIS_Shape) shape = new AIS_Shape(delavalShape);
+	AddAISshape(shape->Shape());
+	m_context->Display(shape, true);
+}
+
+
+
 void CEngineDoc::MakeCut()
 {
 	BOOL shapeAdded = false;

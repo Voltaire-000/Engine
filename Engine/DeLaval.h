@@ -45,6 +45,8 @@ protected:
 	afx_msg void OnCut();
 	afx_msg void OnFuse();
 
+	afx_msg void OnSample();
+
 	DECLARE_MESSAGE_MAP()
 protected:
 	CFont	m_fntPropList;
