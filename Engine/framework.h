@@ -213,6 +213,7 @@
 
 #include <Geom2d_Ellipse.hxx>
 #include <Geom2d_TrimmedCurve.hxx>
+#include <Geom2d_BoundedCurve.hxx>
 
 #include <GeomAbs_CurveType.hxx>
 #include <GeomAdaptor_Curve.hxx>
