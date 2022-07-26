@@ -73,6 +73,7 @@ TopoDS_Shape CSampleProfile::MkProfile(const Standard_Real Rc,
 
 TopoDS_Shape CSampleProfile::Mk2Profile()
 {
+
 	Standard_Real Rc = 328.32/2;
 	Standard_Real L_cyl = 369.04;
 	Standard_Real Lc = 528.99;
@@ -86,6 +87,12 @@ TopoDS_Shape CSampleProfile::Mk2Profile()
 	gp_Pnt aPnt1(xOrigin, yOrigin, Lc + Le);
 	gp_Pnt aPnt2(Rc, yOrigin, Lc + Le);
 	gp_Pnt aPnt3(Rc, yOrigin, (Lc + Le) - L_cyl);	/*start of R2 radius*/
+
+	Standard_Real aRadius = 101.7;
+	Standard_Real cx = Cos(45);	// returns 0.5253 assumes radians center of radius x
+	Standard_Real cy = Sin(45);	// returns 0.8509 assumes radians center of radius y
+	Standard_Real mx_convert = (0.5253 * (M_PI / 180));
+	Standard_Real angleDegrees = mx_convert * M_PI;
 
 	//	TODO working profile need to work on Fillet radius
 	//	HACK
@@ -127,7 +134,7 @@ TopoDS_Shape CSampleProfile::Mk2Profile()
 	//	start the revolve
 	Standard_Real m_convert = (180 * (M_PI / 180)) / M_PI;
 	Standard_Real angle = m_convert * M_PI;
-
+	
 	//TopoDS_Shape revolve1 = BRepPrimAPI_MakeRevol(faceProfile, axis, angle);
 	TopoDS_Shape revolve1 = BRepPrimAPI_MakeRevol(zFace, axis, angle);
 
