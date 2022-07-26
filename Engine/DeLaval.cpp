@@ -35,7 +35,7 @@ BEGIN_MESSAGE_MAP(DeLaval, CWnd)
 	ON_WM_PAINT()
 	ON_WM_SETFOCUS()
 	ON_WM_SETTINGCHANGE()
-	ON_BN_CLICKED(IDC_BUTTON_PROFILE, &DeLaval::OnCreateProfile)
+	ON_BN_CLICKED(IDC_BUTTON_PROFILE, &DeLaval::OnSample)
 	ON_BN_CLICKED(IDC_BUTTON_CUT, &DeLaval::OnCut)
 	//ON_BN_CLICKED(IDC_BUTTON_CUT, &DeLaval::OnFuse)
 END_MESSAGE_MAP()
@@ -275,8 +275,9 @@ void DeLaval::OnSample()
 	auto activeWnd = pView->GetActiveWindow();
 	auto pDoc = pView->GetDocument();
 
-	pDoc->DrawSampleProfile();
 	pDoc->SetTitle(L"Test profile");
+	pDoc->DrawSampleProfile();
+	
 
 }
 
