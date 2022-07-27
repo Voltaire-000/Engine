@@ -78,6 +78,7 @@ TopoDS_Shape CSampleProfile::Mk2Profile()
 	Standard_Real L_cyl = 369.04;
 	Standard_Real Lc = 528.99;
 	Standard_Real Le = 1322.07;
+	Standard_Real Rt = 114.0;
 	//	Origin
 	Standard_Real xOrigin = 0;
 	Standard_Real yOrigin = 0;
@@ -88,11 +89,21 @@ TopoDS_Shape CSampleProfile::Mk2Profile()
 	gp_Pnt aPnt2(Rc, yOrigin, Lc + Le);
 	gp_Pnt aPnt3(Rc, yOrigin, (Lc + Le) - L_cyl);	/*start of R2 radius*/
 
-	Standard_Real aRadius = 101.7;
-	Standard_Real cx = Cos(45);	// returns 0.5253 assumes radians center of radius x
-	Standard_Real cy = Sin(45);	// returns 0.8509 assumes radians center of radius y
-	Standard_Real mx_convert = (0.5253 * (M_PI / 180));
-	Standard_Real angleDegrees = mx_convert * M_PI;
+	//gp_Pnt aPnt4(Rc - 20, yOrigin, aPnt3.Z() - 20);
+	gp_Pnt aPnt4(115.883, yOrigin, 1553.912);
+
+	//gp_Pnt aPnt5(xOrigin, yOrigin, aPnt3.Z() - 20);
+	gp_Pnt aPnt5(Rt, yOrigin, 1380.32);
+
+	gp_Pnt aPnt6(xOrigin, yOrigin, 1380.32);
+
+	//gp_Pnt aPnt6()
+
+	//Standard_Real aRadius = 101.7;
+	//Standard_Real cx = Cos(45);	// returns 0.5253 assumes radians center of radius x
+	//Standard_Real cy = Sin(45);	// returns 0.8509 assumes radians center of radius y
+	//Standard_Real mx_convert = (0.5253 * (M_PI / 180));
+	//Standard_Real angleDegrees = mx_convert * M_PI;
 
 	//	TODO working profile need to work on Fillet radius
 	//	HACK
@@ -100,17 +111,19 @@ TopoDS_Shape CSampleProfile::Mk2Profile()
 
 	//	begin radius 101.7
 
-	gp_Pnt aPnt4(Rc - 20, yOrigin, aPnt3.Z() - 20);
-	gp_Pnt aPnt5(xOrigin, yOrigin, aPnt3.Z() - 20);
-
 	//GC_MakeArcOfCircle
 	//	end points
 	//	make segments from points
 	Handle(Geom_TrimmedCurve) aSegment1 = GC_MakeSegment(aPnt1, aPnt2);
 	Handle(Geom_TrimmedCurve) aSegment2 = GC_MakeSegment(aPnt2, aPnt3);
-	Handle(Geom_TrimmedCurve) aSegment3 = GC_MakeSegment(aPnt3, aPnt4);
-	Handle(Geom_TrimmedCurve) aSegment4 = GC_MakeSegment(aPnt4, aPnt5);
-	Handle(Geom_TrimmedCurve) aSegment5 = GC_MakeSegment(aPnt5, aPnt1);
+	// make arc here from aPnt3 to aPn4 to aPnt5
+	Handle(Geom_TrimmedCurve) aArcOfCircle = GC_MakeArcOfCircle(aPnt3, aPnt4, aPnt5);
+
+	//Handle(Geom_TrimmedCurve) aSegment3 = GC_MakeSegment(aPnt3, aPnt4);
+	//Handle(Geom_TrimmedCurve) aSegment4 = GC_MakeSegment(aPnt4, aPnt5);
+	//Handle(Geom_TrimmedCurve) aSegment5 = GC_MakeSegment(aPnt5, aPnt1);
+
+
 
 	//	profile: define the topology, make edges
 	TopoDS_Edge anEdge1 = BRepBuilderAPI_MakeEdge(aSegment1);
