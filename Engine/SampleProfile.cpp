@@ -121,21 +121,21 @@ TopoDS_Shape CSampleProfile::Mk2Profile()
 
 	//Handle(Geom_TrimmedCurve) aSegment3 = GC_MakeSegment(aPnt3, aPnt4);
 	//Handle(Geom_TrimmedCurve) aSegment4 = GC_MakeSegment(aPnt4, aPnt5);
-	//Handle(Geom_TrimmedCurve) aSegment5 = GC_MakeSegment(aPnt5, aPnt1);
-	Handle(Geom_TrimmedCurve) aSegment4 = GC_MakeSegment(aPnt5, aPnt6);
-	Handle(Geom_TrimmedCurve) aSegment5 = GC_MakeSegment(aPnt6, aPnt1);
+	Handle(Geom_TrimmedCurve) aSegment5 = GC_MakeSegment(aPnt5, aPnt1);
+	//Handle(Geom_TrimmedCurve) aSegment4 = GC_MakeSegment(aPnt5, aPnt6);
+	//Handle(Geom_TrimmedCurve) aSegment5 = GC_MakeSegment(aPnt6, aPnt1);
 
 	//	profile: define the topology, make edges
 	TopoDS_Edge anEdge1 = BRepBuilderAPI_MakeEdge(aSegment1);
 	TopoDS_Edge anEdge2 = BRepBuilderAPI_MakeEdge(aSegment2);
 	//TopoDS_Edge anEdge3 = BRepBuilderAPI_MakeEdge(aSegment3);
 	TopoDS_Edge anEdge3 = BRepBuilderAPI_MakeEdge(aSegmentCircle);
-	TopoDS_Edge anEdge4 = BRepBuilderAPI_MakeEdge(aSegment4);
+	//TopoDS_Edge anEdge4 = BRepBuilderAPI_MakeEdge(aSegment4);
 
 	TopoDS_Edge anEdge5 = BRepBuilderAPI_MakeEdge(aSegment5);
 	//	make wire
-	TopoDS_Wire aWire = BRepBuilderAPI_MakeWire(anEdge1, anEdge2, anEdge3, anEdge4);
-	TopoDS_Wire lastWire = BRepBuilderAPI_MakeWire(anEdge4, anEdge5);
+	TopoDS_Wire aWire = BRepBuilderAPI_MakeWire(anEdge1, anEdge2, anEdge3, anEdge5);
+	//TopoDS_Wire lastWire = BRepBuilderAPI_MakeWire(anEdge4, anEdge5);
 
 	//	Z axis revolve
 	gp_Ax1 axis = gp::OZ();
@@ -143,7 +143,7 @@ TopoDS_Shape CSampleProfile::Mk2Profile()
 	//	make face
 	TopoDS_Face faceProfile = BRepBuilderAPI_MakeFace(aWire);
 
-	TopoDS_Face zFace = BRepBuilderAPI_MakeFace(faceProfile, lastWire);
+	TopoDS_Face zFace = BRepBuilderAPI_MakeFace(faceProfile);
 
 	//	start the revolve
 	Standard_Real m_convert = (180 * (M_PI / 180)) / M_PI;
