@@ -148,10 +148,16 @@ TopoDS_Shape CSampleProfile::Mk2Profile()
 
 	//	make face
 	TopoDS_Face faceProfile = BRepBuilderAPI_MakeFace(aWire);
-	BRepFilletAPI_MakeFillet2d mkFillet(faceProfile);
-	TopoDS_Vertex V = BRepBuilderAPI_MakeVertex(aPnt3);
+	BRepFilletAPI_MakeFillet2d mkFillet;
+	auto mkStatus = mkFillet.Status();
+	BRepFilletAPI_MakeFillet mk3Fillet();
 	
-	mkFillet.AddFillet(V, 50);
+
+	TopoDS_Vertex V = BRepBuilderAPI_MakeVertex(aPnt3);
+	mkFillet.Init(faceProfile);
+	
+	mkFillet.AddFillet(V, 200);
+	mkFillet.Build();
 
 
 	//TopoDS_Face zFace = BRepBuilderAPI_MakeFace(faceProfile, lastWire);
