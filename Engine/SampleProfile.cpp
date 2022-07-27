@@ -117,7 +117,7 @@ TopoDS_Shape CSampleProfile::Mk2Profile()
 	Handle(Geom_TrimmedCurve) aSegment1 = GC_MakeSegment(aPnt1, aPnt2);
 	Handle(Geom_TrimmedCurve) aSegment2 = GC_MakeSegment(aPnt2, aPnt3);
 	// make arc here from aPnt3 to aPn4 to aPnt5
-	Handle(Geom_TrimmedCurve) aArcOfCircle = GC_MakeArcOfCircle(aPnt3, aPnt4, aPnt5);
+	Handle(Geom_TrimmedCurve) aSegmentCircle = GC_MakeArcOfCircle(aPnt3, aPnt4, aPnt5);
 
 	//Handle(Geom_TrimmedCurve) aSegment3 = GC_MakeSegment(aPnt3, aPnt4);
 	//Handle(Geom_TrimmedCurve) aSegment4 = GC_MakeSegment(aPnt4, aPnt5);
@@ -129,7 +129,7 @@ TopoDS_Shape CSampleProfile::Mk2Profile()
 	TopoDS_Edge anEdge1 = BRepBuilderAPI_MakeEdge(aSegment1);
 	TopoDS_Edge anEdge2 = BRepBuilderAPI_MakeEdge(aSegment2);
 	//TopoDS_Edge anEdge3 = BRepBuilderAPI_MakeEdge(aSegment3);
-	TopoDS_Edge anEdge3 = BRepBuilderAPI_MakeEdge(aArcOfCircle);
+	TopoDS_Edge anEdge3 = BRepBuilderAPI_MakeEdge(aSegmentCircle);
 	TopoDS_Edge anEdge4 = BRepBuilderAPI_MakeEdge(aSegment4);
 
 	TopoDS_Edge anEdge5 = BRepBuilderAPI_MakeEdge(aSegment5);

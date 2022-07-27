@@ -219,6 +219,8 @@
 #include <GeomAdaptor_Curve.hxx>
 #include <GeomTools_Curve2dSet.hxx>
 
+#include <GC_MakeArcOfCircle.hxx>
+
 #include <TopExp_Explorer.hxx>
 #include <TopoDS.hxx>
 #include <TopoDS_Edge.hxx>
