@@ -122,13 +122,14 @@ TopoDS_Shape CSampleProfile::Mk2Profile()
 	//Handle(Geom_TrimmedCurve) aSegment3 = GC_MakeSegment(aPnt3, aPnt4);
 	//Handle(Geom_TrimmedCurve) aSegment4 = GC_MakeSegment(aPnt4, aPnt5);
 	//Handle(Geom_TrimmedCurve) aSegment5 = GC_MakeSegment(aPnt5, aPnt1);
-
-
+	Handle(Geom_TrimmedCurve) aSegment4 = GC_MakeSegment(aPnt5, aPnt6);
+	Handle(Geom_TrimmedCurve) aSegment5 = GC_MakeSegment(aPnt6, aPnt1);
 
 	//	profile: define the topology, make edges
 	TopoDS_Edge anEdge1 = BRepBuilderAPI_MakeEdge(aSegment1);
 	TopoDS_Edge anEdge2 = BRepBuilderAPI_MakeEdge(aSegment2);
-	TopoDS_Edge anEdge3 = BRepBuilderAPI_MakeEdge(aSegment3);
+	//TopoDS_Edge anEdge3 = BRepBuilderAPI_MakeEdge(aSegment3);
+	TopoDS_Edge anEdge3 = BRepBuilderAPI_MakeEdge(aArcOfCircle);
 	TopoDS_Edge anEdge4 = BRepBuilderAPI_MakeEdge(aSegment4);
 
 	TopoDS_Edge anEdge5 = BRepBuilderAPI_MakeEdge(aSegment5);
