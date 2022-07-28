@@ -21,7 +21,7 @@ TopoDS_Shape C2dFillet::MkFilletProfile()
 	gp_Pnt2d aPnt4(xOrigin, aPnt3.Y());
 
 	//gp_Ax2d axis = gp::OY2d();
-	gp_Ax1 axis = gp::OZ();
+	gp_Ax1 axis = gp::OY();
 
 	//	make the segments
 	Handle(Geom2d_TrimmedCurve) aSegment1 = GCE2d_MakeSegment(aPnt1, aPnt2);
