@@ -27,7 +27,7 @@ TopoDS_Shape C2dFillet::MkFilletProfile()
 	Handle(Geom2d_TrimmedCurve) aSegment1 = GCE2d_MakeSegment(aPnt1, aPnt2);
 	Handle(Geom2d_TrimmedCurve) aSegment2 = GCE2d_MakeSegment(aPnt2, aPnt3);
 	Handle(Geom2d_TrimmedCurve) aSegment3 = GCE2d_MakeSegment(aPnt3, aPnt4);
-	Handle(Geom2d_TrimmedCurve) aSegment4 = GCE2d_MakeSegment(aPnt4, aPnt4);
+	Handle(Geom2d_TrimmedCurve) aSegment4 = GCE2d_MakeSegment(aPnt4, aPnt1);
 
 	//	make the edges
 	TopoDS_Edge anEdge1 = BRepBuilderAPI_MakeEdge2d(aSegment1);
