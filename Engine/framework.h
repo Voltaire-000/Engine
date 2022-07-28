@@ -89,6 +89,7 @@
 #include <BRepBuilderAPI_Transform.hxx>
 #include <BRepBuilderAPI_Copy.hxx>
 #include <BRepBuilderAPI_MakePolygon.hxx>
+#include <BRepBuilderAPI_MakeEdge2d.hxx>
 
 #include <BRepPrimAPI_MakeCone.hxx>
 #include <BRepPrimAPI_MakeRevol.hxx>
