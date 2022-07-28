@@ -20,7 +20,8 @@ TopoDS_Shape C2dFillet::MkFilletProfile()
 	gp_Pnt2d aPnt3(aPnt2.X(), yOrigin + 100);
 	gp_Pnt2d aPnt4(xOrigin, aPnt3.Y());
 
-	gp_Ax2d axis = gp::OY2d();
+	//gp_Ax2d axis = gp::OY2d();
+	gp_Ax1 axis = gp::OZ();
 
 	//	make the segments
 	Handle(Geom2d_TrimmedCurve) aSegment1 = GCE2d_MakeSegment(aPnt1, aPnt2);
@@ -43,7 +44,7 @@ TopoDS_Shape C2dFillet::MkFilletProfile()
 	//	start revolve
 	Standard_Real m_convert = (180 * (M_PI / 180)) / M_PI;
 	Standard_Real angle = m_convert * M_PI;
-	//TopoDS_Shape revolve = BRepPrimAPI_MakeRevol(faceProfile, axis, angle);
+	TopoDS_Shape revolve = BRepPrimAPI_MakeRevol(faceProfile, axis, angle);
 
-	return TopoDS_Shape();
+	return revolve;
 }

@@ -35,7 +35,7 @@ BEGIN_MESSAGE_MAP(DeLaval, CWnd)
 	ON_WM_PAINT()
 	ON_WM_SETFOCUS()
 	ON_WM_SETTINGCHANGE()
-	ON_BN_CLICKED(IDC_BUTTON_PROFILE, &DeLaval::OnSample)
+	ON_BN_CLICKED(IDC_BUTTON_PROFILE, &DeLaval::On2dFillet)
 	ON_BN_CLICKED(IDC_BUTTON_CUT, &DeLaval::OnCut)
 	//ON_BN_CLICKED(IDC_BUTTON_CUT, &DeLaval::OnFuse)
 END_MESSAGE_MAP()
@@ -279,6 +279,18 @@ void DeLaval::OnSample()
 	pDoc->DrawSampleProfile();
 	
 
+}
+
+void DeLaval::On2dFillet()
+{
+	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
+	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
+	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
+	auto activeWnd = pView->GetActiveWindow();
+	auto pDoc = pView->GetDocument();
+
+	pDoc->SetTitle(L"Fillet test");
+	pDoc->DrawFillet();
 }
 
 void DeLaval::InitPropList()

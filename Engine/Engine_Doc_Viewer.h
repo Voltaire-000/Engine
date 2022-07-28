@@ -7,6 +7,8 @@
 #include "MakeRevolve.h"
 #include "MakeLiner.h"
 #include "SampleProfile.h"
+#include "2dFillet.h"
+
 //#include "MakeCut.h"
 
 class CEngineDoc : public CDocument
@@ -64,6 +66,8 @@ public:
 		const Graphic3d_MaterialAspect theMaterial = Graphic3d_NameOfMaterial_Aluminum);
 
 	void DrawSampleProfile();
+
+	void DrawFillet();
 
 	void MakeCut();
 

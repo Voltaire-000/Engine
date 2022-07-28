@@ -1,4 +1,8 @@
 #pragma once
+#include <Standard_Macro.hxx>
+#include <TopoDS_Shape.hxx>
+
+
 class C2dFillet
 {
 public:

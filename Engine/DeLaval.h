@@ -47,6 +47,8 @@ protected:
 
 	afx_msg void OnSample();
 
+	afx_msg void On2dFillet();
+
 	DECLARE_MESSAGE_MAP()
 protected:
 	CFont	m_fntPropList;

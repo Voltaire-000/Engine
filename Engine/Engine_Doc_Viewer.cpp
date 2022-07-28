@@ -233,7 +233,15 @@ void CEngineDoc::DrawSampleProfile()
 	m_context->Display(shape, true);
 }
 
+void CEngineDoc::DrawFillet()
+{
+	auto liner = new C2dFillet();
+	TopoDS_Shape revolveShape = liner->MkFilletProfile();
 
+	Handle(AIS_Shape) shape = new AIS_Shape(revolveShape);
+	AddAISshape(shape->Shape());
+	m_context->Display(shape, true);
+}
 
 void CEngineDoc::MakeCut()
 {
