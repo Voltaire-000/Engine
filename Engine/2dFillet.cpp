@@ -21,7 +21,7 @@ TopoDS_Shape C2dFillet::MkFilletProfile()
 	gp_Pnt2d aPnt4(xOrigin, aPnt3.Y());
 
 	//gp_Ax2d axis = gp::OY2d();
-	gp_Ax1 axis = gp::OY();
+	gp_Ax1 axis = gp::OX();
 
 	//	make the segments
 	Handle(Geom2d_TrimmedCurve) aSegment1 = GCE2d_MakeSegment(aPnt1, aPnt2);
@@ -41,10 +41,31 @@ TopoDS_Shape C2dFillet::MkFilletProfile()
 	//	make face
 	TopoDS_Face faceProfile = BRepBuilderAPI_MakeFace(aWire);
 
+	//	make fillet
+	//BRepFilletAPI_MakeFillet2d mkFillet;
+	//mkFillet.Init(faceProfile);
+	//auto mkStatus = mkFillet.Status();
+	
+	
+	//mkFillet.AddChamfer(anEdge2, anEdge3, 30, 10);
+
+
+	//mkFillet.Build();
+	//mkFillet.Check();	// not done error
+
 	//	start revolve
 	Standard_Real m_convert = (180 * (M_PI / 180)) / M_PI;
 	Standard_Real angle = m_convert * M_PI;
 	TopoDS_Shape revolve = BRepPrimAPI_MakeRevol(faceProfile, axis, angle);
 
+	BRepFilletAPI_MakeFillet mkFillet(revolve);
+	TopExp_Explorer anEdgeExplorer(revolve, TopAbs_EDGE);
+	while (anEdgeExplorer.More())
+	{
+		TopoDS_Edge anEdge = TopoDS::Edge(anEdgeExplorer.Current());
+		mkFillet.Add(20, anEdge);
+		anEdgeExplorer.Next();
+	}
+	revolve = mkFillet.Shape();
 	return revolve;
 }
