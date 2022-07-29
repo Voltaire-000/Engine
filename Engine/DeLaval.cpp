@@ -35,7 +35,8 @@ BEGIN_MESSAGE_MAP(DeLaval, CWnd)
 	ON_WM_PAINT()
 	ON_WM_SETFOCUS()
 	ON_WM_SETTINGCHANGE()
-	ON_BN_CLICKED(IDC_BUTTON_PROFILE, &DeLaval::OnCreateProfile)
+	//ON_BN_CLICKED(IDC_BUTTON_PROFILE, &DeLaval::OnCreateProfile)
+	ON_BN_CLICKED(IDC_BUTTON_PROFILE, &DeLaval::OnSketchCircle)
 	ON_BN_CLICKED(IDC_BUTTON_CUT, &DeLaval::OnCut)
 	//ON_BN_CLICKED(IDC_BUTTON_CUT, &DeLaval::OnFuse)
 END_MESSAGE_MAP()
@@ -291,6 +292,18 @@ void DeLaval::On2dFillet()
 
 	pDoc->SetTitle(L"Fillet test");
 	pDoc->DrawFillet();
+}
+
+void DeLaval::OnSketchCircle()
+{
+	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
+	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
+	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
+	auto activeWnd = pView->GetActiveWindow();
+	auto pDoc = pView->GetDocument();
+
+	pDoc->SetTitle(L"Sketch of Circle");
+	pDoc->DrawCircle();
 }
 
 void DeLaval::InitPropList()

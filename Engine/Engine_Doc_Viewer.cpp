@@ -243,6 +243,25 @@ void CEngineDoc::DrawFillet()
 	m_context->Display(shape, true);
 }
 
+void CEngineDoc::DrawCircle()
+{
+	Standard_Real theX = 0;
+	Standard_Real theY = 0;
+	Standard_Real theZ = 0;
+	Standard_Real radius = 50;
+
+	gp_Dir theDir(0, 1, 0);	//	draws on the Y plane
+
+	gp_Pnt point(theX, theY, theZ);
+	gp_Circ circle(gp_Ax2(point, theDir), radius);
+	BRepBuilderAPI_MakeEdge makeEdge(circle);
+	Handle(AIS_Shape) shape = new AIS_Shape(TopoDS_Edge());
+	shape->Set(makeEdge.Edge());
+
+	m_context->Display(shape, true);
+
+}
+
 void CEngineDoc::MakeCut()
 {
 	BOOL shapeAdded = false;

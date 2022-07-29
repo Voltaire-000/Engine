@@ -48,6 +48,7 @@ protected:
 	afx_msg void OnSample();
 
 	afx_msg void On2dFillet();
+	afx_msg void OnSketchCircle();
 
 	DECLARE_MESSAGE_MAP()
 protected:

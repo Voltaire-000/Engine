@@ -8,6 +8,7 @@
 #include "MakeLiner.h"
 #include "SampleProfile.h"
 #include "2dFillet.h"
+//#include "SketchCircle.h"
 
 //#include "MakeCut.h"
 
@@ -68,6 +69,8 @@ public:
 	void DrawSampleProfile();
 
 	void DrawFillet();
+
+	void DrawCircle();
 
 	void MakeCut();
 
