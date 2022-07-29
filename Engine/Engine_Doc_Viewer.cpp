@@ -259,8 +259,11 @@ void CEngineDoc::DrawCircle()
 
 	TopoDS_Wire aWire = BRepBuilderAPI_MakeWire(makeEdge.Edge());
 
+	TopoDS_Face aFace = BRepBuilderAPI_MakeFace(aWire);
+
 	//shape->SetShape(makeEdge.Edge());
-	shape->SetShape(aWire);
+	//shape->SetShape(aWire);
+	shape->SetShape(aFace);
 
 	m_context->Display(shape, true);
 
