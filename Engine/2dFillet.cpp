@@ -31,10 +31,13 @@ TopoDS_Shape C2dFillet::MkFilletProfile()
 
 	//	make the edges
 	TopoDS_Edge anEdge1 = BRepBuilderAPI_MakeEdge2d(aSegment1);
+	auto mEdge1 = anEdge1.TShape();
 	TopoDS_Edge anEdge2 = BRepBuilderAPI_MakeEdge2d(aSegment2);
+	auto mEdge2 = anEdge2.TShape();
 	TopoDS_Edge anEdge3 = BRepBuilderAPI_MakeEdge2d(aSegment3);
+	auto mEdge3 = anEdge3.TShape();
 	TopoDS_Edge anEdge4 = BRepBuilderAPI_MakeEdge2d(aSegment4);
-
+	auto mEdge4 = anEdge4.TShape();
 	//	make wire
 	TopoDS_Wire aWire = BRepBuilderAPI_MakeWire(anEdge1, anEdge2, anEdge3, anEdge4);
 
@@ -49,11 +52,6 @@ TopoDS_Shape C2dFillet::MkFilletProfile()
 	BRepFilletAPI_MakeFillet mkFillet(revolve);
 	TopExp_Explorer anEdgeExplorer(revolve, TopAbs_EDGE);
 
-	//TopExp_Explorer aVertexExplorer(faceProfile, TopAbs_VERTEX);
-	//TopoDS_Vertex aVertex1 = TopoDS::Vertex(aVertexExplorer.Current());
-	//aVertexExplorer.Next();
-	//TopoDS_Vertex aVertex2 = TopoDS::Vertex(aVertexExplorer.Current());
-
 	//	Fillet the edge
 	
 	//while (anEdgeExplorer.More())
@@ -63,18 +61,24 @@ TopoDS_Shape C2dFillet::MkFilletProfile()
 	//	//anEdgeExplorer.Next();
 	//}
 
-	TopoDS_Edge anEdge = TopoDS::Edge(anEdgeExplorer.Current());
+
+	TopoDS_Edge anEdge_1 = TopoDS::Edge(anEdgeExplorer.Current());
 	anEdgeExplorer.Next();
-	anEdge = TopoDS::Edge(anEdgeExplorer.Current());
+	TopoDS_Edge anEdge_2 = TopoDS::Edge(anEdgeExplorer.Current());
 	anEdgeExplorer.Next();
-	anEdge = TopoDS::Edge(anEdgeExplorer.Current());
+	TopoDS_Edge anEdge_3 = TopoDS::Edge(anEdgeExplorer.Current());
 	anEdgeExplorer.Next();
-	anEdge = TopoDS::Edge(anEdgeExplorer.Current());
+	TopoDS_Edge anEdge_4 = TopoDS::Edge(anEdgeExplorer.Current());	// same as edge1
 	anEdgeExplorer.Next();
-	anEdge = TopoDS::Edge(anEdgeExplorer.Current());
+	TopoDS_Edge anEdge_5 = TopoDS::Edge(anEdgeExplorer.Current());
 	anEdgeExplorer.Next();
-	anEdge = TopoDS::Edge(anEdgeExplorer.Current());
-	mkFillet.Add(20, anEdge);
+	TopoDS_Edge anEdge_6 = TopoDS::Edge(anEdgeExplorer.Current());
+	anEdgeExplorer.Next();
+	TopoDS_Edge anEdge_7 = TopoDS::Edge(anEdgeExplorer.Current());
+
+	mkFillet.Add(20, anEdge_1);
+	mkFillet.Add(20, anEdge_6);
+	mkFillet.Add(20, anEdge_5);
 
 	revolve = mkFillet.Shape();
 	return revolve;

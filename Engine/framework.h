@@ -119,6 +119,16 @@
 #include <BRepFilletAPI_MakeFillet2d.hxx>
 #include <BRepFilletAPI_MakeFillet.hxx>
 
+#include <ChFi2d.hxx>
+#include <ChFi2d_Builder.hxx>
+#include <ChFi2d_ChamferAPI.hxx>
+#include <ChFi2d_ConstructionError.hxx>
+#include <ChFi2d_FilletAlgo.hxx>
+#include <ChFi2d_FilletAPI.hxx>
+
+#include <DBRep.hxx>
+#include <DBRep_Edge.hxx>
+
 #include <Prs3d_IsoAspect.hxx>
 #include <Prs3d_LineAspect.hxx>
 #include <Prs3d_Text.hxx>
