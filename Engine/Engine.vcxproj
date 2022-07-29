@@ -207,6 +207,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SampleProfile.h" />
     <ClInclude Include="SceneProperties.h" />
+    <ClInclude Include="SketchCircle.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +232,7 @@
     </ClCompile>
     <ClCompile Include="SampleProfile.cpp" />
     <ClCompile Include="SceneProperties.cpp" />
+    <ClCompile Include="SketchCircle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Engine.rc" />

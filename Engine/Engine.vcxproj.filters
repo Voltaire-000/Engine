@@ -72,6 +72,9 @@
     <ClInclude Include="2dFillet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SketchCircle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine_App.cpp">
@@ -120,6 +123,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="2dFillet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SketchCircle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
