@@ -256,7 +256,7 @@ void CEngineDoc::DrawCircle()
 	gp_Circ circle(gp_Ax2(point, theDir), radius);
 	BRepBuilderAPI_MakeEdge makeEdge(circle);
 	Handle(AIS_Shape) shape = new AIS_Shape(TopoDS_Edge());
-	shape->Set(makeEdge.Edge());
+	shape->SetShape(makeEdge.Edge());
 
 	m_context->Display(shape, true);
 
