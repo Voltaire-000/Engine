@@ -41,21 +41,6 @@ TopoDS_Shape C2dFillet::MkFilletProfile()
 	//	make face
 	TopoDS_Face faceProfile = BRepBuilderAPI_MakeFace(aWire);
 
-	// get vertex from face
-
-
-	//	make fillet
-	//BRepFilletAPI_MakeFillet2d mkFillet;
-	//mkFillet.Init(faceProfile);
-	//auto mkStatus = mkFillet.Status();
-	
-	
-	//mkFillet.AddChamfer(anEdge2, anEdge3, 30, 10);
-
-
-	//mkFillet.Build();
-	//mkFillet.Check();	// not done error
-
 	//	start revolve
 	Standard_Real m_convert = (180 * (M_PI / 180)) / M_PI;
 	Standard_Real angle = m_convert * M_PI;
@@ -63,12 +48,14 @@ TopoDS_Shape C2dFillet::MkFilletProfile()
 
 	BRepFilletAPI_MakeFillet mkFillet(revolve);
 	TopExp_Explorer anEdgeExplorer(revolve, TopAbs_EDGE);
-	TopExp_Explorer aVertexExplorer(faceProfile, TopAbs_VERTEX);
 
-	TopoDS_Vertex aVertex1 = TopoDS::Vertex(aVertexExplorer.Current());
-	aVertexExplorer.Next();
-	TopoDS_Vertex aVertex2 = TopoDS::Vertex(aVertexExplorer.Current());
+	//TopExp_Explorer aVertexExplorer(faceProfile, TopAbs_VERTEX);
+	//TopoDS_Vertex aVertex1 = TopoDS::Vertex(aVertexExplorer.Current());
+	//aVertexExplorer.Next();
+	//TopoDS_Vertex aVertex2 = TopoDS::Vertex(aVertexExplorer.Current());
 
+	//	Fillet the edge
+	
 	//while (anEdgeExplorer.More())
 	//{
 	//	TopoDS_Edge anEdge = TopoDS::Edge(anEdgeExplorer.Current());
@@ -90,7 +77,5 @@ TopoDS_Shape C2dFillet::MkFilletProfile()
 	mkFillet.Add(20, anEdge);
 
 	revolve = mkFillet.Shape();
-
-
 	return revolve;
 }
