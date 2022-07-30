@@ -257,15 +257,32 @@ void CEngineDoc::DrawCircle()
 	//TopoDS_Face aFace = BRepBuilderAPI_MakeFace(aWire);
 	//shape->SetShape(aFace);
 
-	gp_Pnt centerPoint_2(centerPoint_1.X() + 25, 0, 0);
-	gp_Circ circle_2(gp_Ax2(centerPoint_2, theDir_1), 25);
-	
+	gp_Pnt centerPoint_2(centerPoint_1.X() + 0, 0, 0);
+	gp_Circ circle_2(gp_Ax2(centerPoint_2, theDir_1), 20);
 	BRepBuilderAPI_MakeEdge makeEdge_2(circle_2);
 	Handle(AIS_Shape) shape_2 = new AIS_Shape(TopoDS_Edge());
+
+	// make points for lines
+	gp_Pnt aVertLinePnt1(10, 0, 0);
+	gp_Pnt aVertLinePnt2(10, 0, 40);
+
+	gp_Pnt aHorzLinePnt1(0, 0, -10);
+	gp_Pnt aHorzLinePnt2(-40, 0, -10);
+	//	make segments
+	// GC_MakeArcOdCircle
+	Handle(Geom_TrimmedCurve) aSegment1 = GC_MakeSegment(aVertLinePnt1, aVertLinePnt2);
+	Handle(Geom_TrimmedCurve) aSegment2 = GC_MakeSegment(aHorzLinePnt1, aHorzLinePnt2);
+	//	make edges
+	TopoDS_Edge anEdge1 = BRepBuilderAPI_MakeEdge(aSegment1);
+	TopoDS_Edge anEdge2 = BRepBuilderAPI_MakeEdge(aSegment2);
+	//	make wire
+	TopoDS_Wire aLineWire = BRepBuilderAPI_MakeWire(anEdge1, anEdge2);
+	Handle(AIS_Shape) shape_lines = new AIS_Shape(TopoDS_Edge());
 
 
 	shape_1->SetShape(makeEdge_1.Edge());
 	shape_2->SetShape(makeEdge_2.Edge());
+	shape_lines->SetShape(aLineWire);
 	m_context->Display(shape_1, true);
 	m_context->Display(shape_2, true);
 
