@@ -2,9 +2,9 @@
 
 #include <Standard_Macro.hxx>
 #include <TopoDS_Shape.hxx>
+#include <gp_Circ.hxx>
+#include <gp_Pnt.hxx>
 
-//TopoDS_Shape MakeCircle()
-//
-//TopoDS_Shape MakeCircle(const Standard_Real theX,
-//	const Standard_Real theY,
-//	const Standard_Real theZ);
+
+
+//gp_Circ MakeCircle(gp_Ax2(gp_Pnt(centerPoint), gp_Dir(theDir)), Standard_Real radius);

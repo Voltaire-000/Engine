@@ -245,27 +245,29 @@ void CEngineDoc::DrawFillet()
 
 void CEngineDoc::DrawCircle()
 {
-	Standard_Real theX = 0;
-	Standard_Real theY = 0;
-	Standard_Real theZ = 0;
-	Standard_Real radius = 200;
+	gp_Pnt centerPoint_1(0, 0, 0);
+	gp_Dir theDir_1(0, 1, 0);	// draws on the Y plane
+	Standard_Real radius_1 = 100;
+	gp_Circ circle_1(gp_Ax2(centerPoint_1, theDir_1), radius_1);
+	BRepBuilderAPI_MakeEdge makeEdge_1(circle_1);
+	Handle(AIS_Shape) shape_1 = new AIS_Shape(TopoDS_Edge());
 
-	gp_Dir theDir(0, 1, 0);	//	draws on the Y plane
-
-	gp_Pnt point(theX, theY, theZ);
-	gp_Circ circle(gp_Ax2(point, theDir), radius);
-	BRepBuilderAPI_MakeEdge makeEdge(circle);
-	Handle(AIS_Shape) shape = new AIS_Shape(TopoDS_Edge());
-
-	TopoDS_Wire aWire = BRepBuilderAPI_MakeWire(makeEdge.Edge());
-
-	TopoDS_Face aFace = BRepBuilderAPI_MakeFace(aWire);
-
-	//shape->SetShape(makeEdge.Edge());
+	//TopoDS_Wire aWire = BRepBuilderAPI_MakeWire(makeEdge_1.Edge());
 	//shape->SetShape(aWire);
-	shape->SetShape(aFace);
+	//TopoDS_Face aFace = BRepBuilderAPI_MakeFace(aWire);
+	//shape->SetShape(aFace);
 
-	m_context->Display(shape, true);
+	gp_Pnt centerPoint_2(centerPoint_1.X() + 25, 0, 0);
+	gp_Circ circle_2(gp_Ax2(centerPoint_2, theDir_1), 25);
+	
+	BRepBuilderAPI_MakeEdge makeEdge_2(circle_2);
+	Handle(AIS_Shape) shape_2 = new AIS_Shape(TopoDS_Edge());
+
+
+	shape_1->SetShape(makeEdge_1.Edge());
+	shape_2->SetShape(makeEdge_2.Edge());
+	m_context->Display(shape_1, true);
+	m_context->Display(shape_2, true);
 
 }
 
