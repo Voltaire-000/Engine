@@ -80,9 +80,10 @@ CEngineDoc::CEngineDoc() noexcept
 	const Handle(Prs3d_Drawer)& cDrawer = m_viewcube->Attributes();
 	cDrawer->SetDatumAspect(new Prs3d_DatumAspect());
 	const Handle(Prs3d_DatumAspect)& aDatumAspect = cDrawer->DatumAspect();
-	aDatumAspect->TextAspect(Prs3d_DatumParts_XAxis)->SetColor(Quantity_NOC_RED);
+	aDatumAspect->TextAspect(Prs3d_DatumParts_XAxis)->SetColor(Quantity_NOC_WHITE);
 	aDatumAspect->TextAspect(Prs3d_DatumParts_YAxis)->SetColor(Quantity_NOC_GREEN);
 	aDatumAspect->TextAspect(Prs3d_DatumParts_ZAxis)->SetColor(Quantity_NOC_BLUE);
+	m_viewcube->SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_TriedronPers, Aspect_TOTP_RIGHT_UPPER, Graphic3d_Vec2i(100, 100)));
 
 
 	m_context->Display(m_viewcube, true);
@@ -324,6 +325,12 @@ void CEngineDoc::DrawCircle()
 	alabel.SetDisplayType(Aspect_TODT_NORMAL);
 	alabel.SetFont(Font_NOF_ASCII_MONO);
 
+	//Brep font
+	Font_BRepFont aBRepFont("C:\Windows\Fonts\cour.ttf", 20);
+	Font_BRepTextBuilder aTextBuilder;
+	TopoDS_Shape Text_Shape = aTextBuilder.Perform(aBRepFont, NCollection_String("my text"));
+	Handle(AIS_Shape) ais_shape_text = new AIS_Shape(Text_Shape);
+
 	Handle(PrsDim_RadiusDimension) theCircle_1Radius = new PrsDim_RadiusDimension(circle_1);
 	Handle(PrsDim_RadiusDimension) theShape_LinesRadius = new PrsDim_RadiusDimension(anArc1);
 	Handle(Prs3d_DimensionAspect) theDimensionAspect = new Prs3d_DimensionAspect();
@@ -346,6 +353,7 @@ void CEngineDoc::DrawCircle()
 	
 	//Prs3d_Text::Draw(aPresentation(), aTextAspect, aString, centerPoint_1);
 
+	m_context->Display(ais_shape_text, true);
 	m_context->Display(shape_1, true);
 	//m_context->Display(shape_2, true);
 	m_context->Display(shape_lines, true);
