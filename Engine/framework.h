@@ -134,15 +134,25 @@
 #include <DBRep.hxx>
 #include <DBRep_Edge.hxx>
 
+#include <Graphic3d_GraphicDriver.hxx>
+#include <Graphic3d_Group.hxx>
+#include <Graphic3d_AspectText3d.hxx>
+#include <Graphic3d_Text.hxx>
+
 #include <Prs3d_IsoAspect.hxx>
 #include <Prs3d_LineAspect.hxx>
 #include <Prs3d_Text.hxx>
 #include <Prs3d_TextAspect.hxx>
 #include <Prs3d_PointAspect.hxx>
+#include <Prs3d_BasicAspect.hxx>
+#include <Prs3d_DatumAspect.hxx>
+#include <Prs3d_Presentation.hxx>
 
 #include <PrsDim.hxx>
 #include <PrsDim_DiameterDimension.hxx>
 #include <PrsDim_RadiusDimension.hxx>
+
+#include <PrsMgr_PresentationManager.hxx>
 
 #include <DsgPrs_LengthPresentation.hxx>
 #include <GCPnts_TangentialDeflection.hxx>
@@ -269,4 +279,3 @@
 #include <Interface_Static.hxx>
 
 #include <OpenGl_GraphicDriver.hxx>
-#include <Graphic3d_GraphicDriver.hxx>
