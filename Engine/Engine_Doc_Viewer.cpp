@@ -287,9 +287,34 @@ void CEngineDoc::DrawCircle()
 	Handle(AIS_Shape) shape_lines = new AIS_Shape(TopoDS_Edge());
 
 	//	Dimensions test
+
+	//Font_NListOfSystemFont fontlist;
+	//auto mxx = fontlist.Size();
+	//Handle(Font_NOF_ASCII_MONO)
+	// 
+	//Font_SystemFont sysfont();
+	//auto mname = sysfont().FontName();
+	//Font_FTLibrary ftfont();	TODO external error
+	//auto mtrue = ftfont().IsValid();
+
+	//Font_FTFont ffont();	// TODO external error
+	//auto mbool = ffont().IsValid();
+
 	Handle(Prs3d_TextAspect) aTextAspect = new Prs3d_TextAspect();
 	aTextAspect->SetHeight(25);
-	aTextAspect->SetFont("mono");
+	aTextAspect->SetFont(Font_NOF_ASCII_MONO);
+	aTextAspect->SetColor(Quantity_NOC_CYAN);
+
+	AIS_TextLabel alabel;
+	Handle(Font_TextFormatter) tform = new Font_TextFormatter();
+	
+	TCollection_ExtendedString aString(L"Test");
+	alabel.SetTextFormatter(tform);
+	alabel.SetText(aString);
+	alabel.SetContext(m_context);
+	alabel.SetPosition(centerPoint_1);
+	alabel.SetDisplayType(Aspect_TODT_NORMAL);
+	alabel.SetFont(Font_NOF_ASCII_MONO);
 
 	Handle(PrsDim_RadiusDimension) theCircle_1Radius = new PrsDim_RadiusDimension(circle_1);
 	Handle(PrsDim_RadiusDimension) theShape_LinesRadius = new PrsDim_RadiusDimension(anArc1);
@@ -310,13 +335,16 @@ void CEngineDoc::DrawCircle()
 	shape_1->SetShape(makeEdge_1.Edge());
 	shape_2->SetShape(makeEdge_2.Edge());
 	shape_lines->SetShape(arcWire1);
+	
+	//Prs3d_Text::Draw(aPresentation(), aTextAspect, aString, centerPoint_1);
 
 	m_context->Display(shape_1, true);
 	//m_context->Display(shape_2, true);
 	m_context->Display(shape_lines, true);
-
 	m_context->Display(theCircle_1Radius, true);
 	m_context->Display(theShape_LinesRadius, true);
+
+
 
 }
 

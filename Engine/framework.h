@@ -134,10 +134,24 @@
 #include <DBRep.hxx>
 #include <DBRep_Edge.hxx>
 
+#include <Font_FontAspect.hxx>
+#include <Font_FontMgr.hxx>
+#include <Font_FTFont.hxx>
+#include <Font_FTLibrary.hxx>
+#include <Font_BRepFont.hxx>
+#include <Font_NameOfFont.hxx>
+#include <Font_NListOfSystemFont.hxx>
+#include <Font_SystemFont.hxx>
+#include <Font_TextFormatter.hxx>
+#include <Font_BRepTextBuilder.hxx>
+#include <Font_UnicodeSubset.hxx>
+
 #include <Graphic3d_GraphicDriver.hxx>
 #include <Graphic3d_Group.hxx>
 #include <Graphic3d_AspectText3d.hxx>
 #include <Graphic3d_Text.hxx>
+#include <Graphic3d_Structure.hxx>
+#include <Graphic3d_StructureManager.hxx>
 
 #include <Prs3d_IsoAspect.hxx>
 #include <Prs3d_LineAspect.hxx>
@@ -192,6 +206,7 @@
 #include <StdPrs_PoleCurve.hxx>
 
 #include <TCollection_AsciiString.hxx>
+#include <TCollection_ExtendedString.hxx>
 
 #include <TColgp_Array1OfPnt2d.hxx>
 #include <TColgp_HArray1OfPnt2d.hxx>
