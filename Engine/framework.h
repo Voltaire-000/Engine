@@ -58,6 +58,10 @@
 #include <AIS_ViewCube.hxx>
 #include <AIS_ViewController.hxx>
 #include <AIS_TextLabel.hxx>
+#include <AIS_LengthDimension.hxx>
+#include <AIS_AngleDimension.hxx>
+#include <AIS_DiameterDimension.hxx>
+#include <AIS_RadiusDimension.hxx>
 
 #include <Aspect_Background.hxx>
 #include <Aspect_TypeOfLine.hxx>

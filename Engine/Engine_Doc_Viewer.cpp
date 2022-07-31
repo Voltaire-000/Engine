@@ -287,6 +287,8 @@ void CEngineDoc::DrawCircle()
 	Handle(AIS_Shape) shape_lines = new AIS_Shape(TopoDS_Edge());
 
 
+
+
 	shape_1->SetShape(makeEdge_1.Edge());
 	shape_2->SetShape(makeEdge_2.Edge());
 	shape_lines->SetShape(arcWire1);
