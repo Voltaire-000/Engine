@@ -286,15 +286,17 @@ void CEngineDoc::DrawCircle()
 
 	Handle(AIS_Shape) shape_lines = new AIS_Shape(TopoDS_Edge());
 
-
-
-
+	Handle(PrsDim_RadiusDimension) theCircle_1Radius = new PrsDim_RadiusDimension(circle_1);
+	
+	
 	shape_1->SetShape(makeEdge_1.Edge());
 	shape_2->SetShape(makeEdge_2.Edge());
 	shape_lines->SetShape(arcWire1);
 	m_context->Display(shape_1, true);
 	//m_context->Display(shape_2, true);
 	m_context->Display(shape_lines, true);
+
+	m_context->Display(theCircle_1Radius, true);
 
 }
 

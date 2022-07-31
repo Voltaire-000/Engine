@@ -62,6 +62,7 @@
 #include <AIS_AngleDimension.hxx>
 #include <AIS_DiameterDimension.hxx>
 #include <AIS_RadiusDimension.hxx>
+#include <AIS_Dimension.hxx>
 
 #include <Aspect_Background.hxx>
 #include <Aspect_TypeOfLine.hxx>
@@ -138,6 +139,10 @@
 #include <Prs3d_Text.hxx>
 #include <Prs3d_TextAspect.hxx>
 #include <Prs3d_PointAspect.hxx>
+
+#include <PrsDim.hxx>
+#include <PrsDim_DiameterDimension.hxx>
+#include <PrsDim_RadiusDimension.hxx>
 
 #include <DsgPrs_LengthPresentation.hxx>
 #include <GCPnts_TangentialDeflection.hxx>
