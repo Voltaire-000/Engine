@@ -71,11 +71,12 @@ CEngineDoc::CEngineDoc() noexcept
 
 	////////////////////////////////////////////////
 	// ViewCube
-	m_viewcube = new AIS_ViewCube();
-	m_viewcube->SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_TriedronPers, Aspect_TOTP_RIGHT_UPPER, Graphic3d_Vec2i(100, 100)));
-	Standard_Real theValue = 70;
-	m_viewcube->SetSize(theValue);
-	m_viewcube->SetColor(Quantity_NOC_SLATEGRAY4);
+	//m_viewcube = new AIS_ViewCube();
+	//m_viewcube->SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_TriedronPers, Aspect_TOTP_RIGHT_UPPER, Graphic3d_Vec2i(100, 100)));
+	//Standard_Real theValue = 70;
+	//m_viewcube->SetSize(theValue);
+	//m_viewcube->SetColor(Quantity_NOC_SLATEGRAY4);
+
 
 	m_context->Display(m_viewcube, true);
 	//	End ViewCube
