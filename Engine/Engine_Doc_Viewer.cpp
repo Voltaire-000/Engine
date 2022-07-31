@@ -76,6 +76,13 @@ CEngineDoc::CEngineDoc() noexcept
 	//Standard_Real theValue = 70;
 	//m_viewcube->SetSize(theValue);
 	//m_viewcube->SetColor(Quantity_NOC_SLATEGRAY4);
+	m_viewcube = new AIS_ViewCube();
+	const Handle(Prs3d_Drawer)& cDrawer = m_viewcube->Attributes();
+	cDrawer->SetDatumAspect(new Prs3d_DatumAspect());
+	const Handle(Prs3d_DatumAspect)& aDatumAspect = cDrawer->DatumAspect();
+	aDatumAspect->TextAspect(Prs3d_DatumParts_XAxis)->SetColor(Quantity_NOC_RED);
+	aDatumAspect->TextAspect(Prs3d_DatumParts_YAxis)->SetColor(Quantity_NOC_GREEN);
+	aDatumAspect->TextAspect(Prs3d_DatumParts_ZAxis)->SetColor(Quantity_NOC_BLUE);
 
 
 	m_context->Display(m_viewcube, true);
