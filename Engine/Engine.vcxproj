@@ -93,12 +93,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\OCCT\deps\VTK-6.1.0-vc14-64\include\vtk-6.1;C:\OCCT\deps\tcltk-86-64\include;C:\OCCT\deps\freetype-2.5.5-vc14-64\include;C:\OCCT\install\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\OCCT\install\inc;C:\OCCT\deps\freetype-2.5.5-vc14-64\include;C:\OCCT\deps\VTK-6.1.0-vc14-64\include\vtk-6.1;C:\OCCT\deps\tcltk-86-64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>C:\OCCT\deps\VTK-6.1.0-vc14-64\lib;C:\OCCT\deps\tcltk-86-64\lib;C:\OCCT\deps\freetype-2.5.5-vc14-64\lib;C:\OCCT\install\win64\vc14\lib;C:\OCCT\install\win64\vc14\libd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>TKOpenGl.lib;TKernel.lib;TKGeomBase.lib;TKTopAlgo.lib;TKOffset.lib;TKBool.lib;TKPrim.lib;TKFillet.lib;TKMath.lib;TKService.lib;TKV3d.lib;TKBrep.lib;TKIGES.lib;TKSTL.lib;TKVRML.lib;TKSTEP.lib;TKG3d.lib;TKG2d.lib;TKXSBase.lib;TKShHealing.lib;TKBO.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>TKOpenGl.lib;TKernel.lib;TKGeomBase.lib;TKTopAlgo.lib;TKOffset.lib;TKBool.lib;TKPrim.lib;TKFillet.lib;TKMath.lib;TKService.lib;TKV3d.lib;TKBrep.lib;TKIGES.lib;TKSTL.lib;TKVRML.lib;TKSTEP.lib;TKG3d.lib;TKG2d.lib;TKXSBase.lib;TKShHealing.lib;TKBO.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -168,14 +168,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\OCCT\deps\VTK-6.1.0-vc14-64\include\vtk-6.1;C:\OCCT\deps\tcltk-86-64\include;C:\OCCT\deps\freetype-2.5.5-vc14-64\include;C:\OCCT\install\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\OCCT\install\inc;C:\OCCT\deps\freetype-2.5.5-vc14-64\include;C:\OCCT\deps\VTK-6.1.0-vc14-64\include\vtk-6.1;C:\OCCT\deps\tcltk-86-64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>C:\OCCT\deps\VTK-6.1.0-vc14-64\lib;C:\OCCT\deps\tcltk-86-64\lib;C:\OCCT\deps\freetype-2.5.5-vc14-64\lib;C:\OCCT\install\win64\vc14\lib;C:\OCCT\install\win64\vc14\libd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>TKOpenGl.lib;TKernel.lib;TKGeomBase.lib;TKTopAlgo.lib;TKOffset.lib;TKBool.lib;TKPrim.lib;TKFillet.lib;TKMath.lib;TKService.lib;TKV3d.lib;TKBrep.lib;TKIGES.lib;TKSTL.lib;TKVRML.lib;TKSTEP.lib;TKG3d.lib;TKG2d.lib;TKXSBase.lib;TKShHealing.lib;TKBO.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>TKOpenGl.lib;TKernel.lib;TKGeomBase.lib;TKTopAlgo.lib;TKOffset.lib;TKBool.lib;TKPrim.lib;TKFillet.lib;TKMath.lib;TKService.lib;TKV3d.lib;TKBrep.lib;TKIGES.lib;TKSTL.lib;TKVRML.lib;TKSTEP.lib;TKG3d.lib;TKG2d.lib;TKXSBase.lib;TKShHealing.lib;TKBO.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>

@@ -2,6 +2,7 @@
 // EngineDoc.cpp : implementation of the CEngineDoc class
 //
 
+
 #include "pch.h"
 // SHARED_HANDLERS can be defined in an ATL project implementing preview, thumbnail
 // and search filter handlers and allows sharing of document code with that project.
@@ -13,6 +14,7 @@
 #include "Engine_View.h"
 
 #include <propkey.h>
+
 using namespace std;
 
 // CEngineDoc
@@ -71,20 +73,11 @@ CEngineDoc::CEngineDoc() noexcept
 
 	////////////////////////////////////////////////
 	// ViewCube
-	//m_viewcube = new AIS_ViewCube();
-	//m_viewcube->SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_TriedronPers, Aspect_TOTP_RIGHT_UPPER, Graphic3d_Vec2i(100, 100)));
-	//Standard_Real theValue = 70;
-	//m_viewcube->SetSize(theValue);
-	//m_viewcube->SetColor(Quantity_NOC_SLATEGRAY4);
 	m_viewcube = new AIS_ViewCube();
-	const Handle(Prs3d_Drawer)& cDrawer = m_viewcube->Attributes();
-	cDrawer->SetDatumAspect(new Prs3d_DatumAspect());
-	const Handle(Prs3d_DatumAspect)& aDatumAspect = cDrawer->DatumAspect();
-	aDatumAspect->TextAspect(Prs3d_DatumParts_XAxis)->SetColor(Quantity_NOC_WHITE);
-	aDatumAspect->TextAspect(Prs3d_DatumParts_YAxis)->SetColor(Quantity_NOC_GREEN);
-	aDatumAspect->TextAspect(Prs3d_DatumParts_ZAxis)->SetColor(Quantity_NOC_BLUE);
 	m_viewcube->SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_TriedronPers, Aspect_TOTP_RIGHT_UPPER, Graphic3d_Vec2i(100, 100)));
-
+	Standard_Real theValue = 70;
+	m_viewcube->SetSize(theValue);
+	m_viewcube->SetColor(Quantity_NOC_SLATEGRAY4);
 
 	m_context->Display(m_viewcube, true);
 	//	End ViewCube
@@ -296,19 +289,6 @@ void CEngineDoc::DrawCircle()
 	Handle(AIS_Shape) shape_lines = new AIS_Shape(TopoDS_Edge());
 
 	//	Dimensions test
-
-	//Font_NListOfSystemFont fontlist;
-	//auto mxx = fontlist.Size();
-	//Handle(Font_NOF_ASCII_MONO)
-	// 
-	//Font_SystemFont sysfont();
-	//auto mname = sysfont().FontName();
-	//Font_FTLibrary ftfont();	TODO external error
-	//auto mtrue = ftfont().IsValid();
-
-	//Font_FTFont ffont();	// TODO external error
-	//auto mbool = ffont().IsValid();
-
 	Handle(Prs3d_TextAspect) aTextAspect = new Prs3d_TextAspect();
 	aTextAspect->SetHeight(25);
 	aTextAspect->SetFont(Font_NOF_ASCII_MONO);
@@ -327,9 +307,12 @@ void CEngineDoc::DrawCircle()
 
 	//Brep font
 	Font_BRepFont aBRepFont("C:\Windows\Fonts\cour.ttf", 20);
+	aBRepFont.FTFont();
 	Font_BRepTextBuilder aTextBuilder;
 	TopoDS_Shape Text_Shape = aTextBuilder.Perform(aBRepFont, NCollection_String("my text"));
+
 	Handle(AIS_Shape) ais_shape_text = new AIS_Shape(Text_Shape);
+	// end brep test
 
 	Handle(PrsDim_RadiusDimension) theCircle_1Radius = new PrsDim_RadiusDimension(circle_1);
 	Handle(PrsDim_RadiusDimension) theShape_LinesRadius = new PrsDim_RadiusDimension(anArc1);
@@ -353,7 +336,7 @@ void CEngineDoc::DrawCircle()
 	
 	//Prs3d_Text::Draw(aPresentation(), aTextAspect, aString, centerPoint_1);
 
-	m_context->Display(ais_shape_text, true);
+	//m_context->Display(ais_shape_text, true);
 	m_context->Display(shape_1, true);
 	//m_context->Display(shape_2, true);
 	m_context->Display(shape_lines, true);
