@@ -13,6 +13,9 @@
 #include "Engine_Doc_Viewer.h"
 #include "Engine_View.h"
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 #include <propkey.h>
 
 using namespace std;
