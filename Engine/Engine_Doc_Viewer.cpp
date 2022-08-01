@@ -79,17 +79,39 @@ CEngineDoc::CEngineDoc() noexcept
 	m_viewcube = new AIS_ViewCube();
 	m_viewcube->SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_TriedronPers, Aspect_TOTP_RIGHT_UPPER, Graphic3d_Vec2i(100, 100)));
 	Standard_Real theValue = 70;
-	m_viewcube->SetSize(theValue);
-	m_viewcube->SetColor(Quantity_NOC_SLATEGRAY4);
+	m_viewcube->SetSize(55);
+	m_viewcube->SetColor(Quantity_NOC_GRAY75);
+	m_viewcube->SetFontHeight(12);
 
 	m_context->Display(m_viewcube, true);
 	//	End ViewCube
 	///////////////////////////////////////////////
+
+	//============================================
+	//	Show triedron
+	auto axis = new Geom_Axis2Placement(gp::XOY());
+	m_triedron = new AIS_Trihedron(axis);
+	m_triedron->SetDatumDisplayMode(Prs3d_DM_WireFrame);
+	m_triedron->SetDrawArrows(true);
+	m_triedron->Attributes()->DatumAspect()->LineAspect(Prs3d_DP_XAxis)->SetWidth(2.5);
+	m_triedron->Attributes()->DatumAspect()->LineAspect(Prs3d_DP_YAxis)->SetWidth(2.5);
+	m_triedron->Attributes()->DatumAspect()->LineAspect(Prs3d_DP_ZAxis)->SetWidth(2.5);
+	m_triedron->SetDatumPartColor(Prs3d_DP_XAxis, Quantity_NOC_RED2);
+	m_triedron->SetDatumPartColor(Prs3d_DP_YAxis, Quantity_NOC_GREEN2);
+	m_triedron->SetDatumPartColor(Prs3d_DP_ZAxis, Quantity_NOC_BLUE2);
+	m_triedron->SetLabel(Prs3d_DP_XAxis, "X");
+	m_triedron->SetLabel(Prs3d_DP_YAxis, "Y");
+	m_triedron->SetLabel(Prs3d_DP_ZAxis, "Z");
+	m_triedron->SetSize(60);
+	m_triedron->SetInfiniteState(true);
+	m_context->Display(m_triedron, Standard_False);
+	//	end triedron
+	//=============================================
 	
 	///////////////////////////////////////////////////
 	//	Plane test
 	//=================================================
-	m_viewer->DisplayPrivilegedPlane(true, 50);
+	//m_viewer->DisplayPrivilegedPlane(true, 50);
 
 	//=================================================
 

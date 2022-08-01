@@ -51,6 +51,7 @@ public:
 protected:
 	Handle(AIS_InteractiveContext)	m_context;
 	Handle(V3d_Viewer)				m_viewer;
+	Handle(AIS_Trihedron)			m_triedron;
 
 // Operations
 public:
