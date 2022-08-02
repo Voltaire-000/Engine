@@ -68,7 +68,7 @@
 #include <Aspect_TypeOfLine.hxx>
 #include <Aspect_WidthOfLine.hxx>
 #include <Aspect_Window.hxx>
-#include <Aspect_SkydomeBackground.hxx>
+//#include <Aspect_SkydomeBackground.hxx>
 
 #include <BRep_Tool.hxx>
 #include <BRepTools.hxx>
@@ -161,10 +161,13 @@
 #include <Prs3d_BasicAspect.hxx>
 #include <Prs3d_DatumAspect.hxx>
 #include <Prs3d_Presentation.hxx>
+#include <Prs3d_DimensionAspect.hxx>
+#include <Prs3d_Drawer.hxx>
 
 #include <PrsDim.hxx>
 #include <PrsDim_DiameterDimension.hxx>
 #include <PrsDim_RadiusDimension.hxx>
+#include <PrsDim_Dimension.hxx>
 
 #include <PrsMgr_PresentationManager.hxx>
 

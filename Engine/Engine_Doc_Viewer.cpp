@@ -13,8 +13,8 @@
 #include "Engine_Doc_Viewer.h"
 #include "Engine_View.h"
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
+//#include <ft2build.h>
+//#include FT_FREETYPE_H
 
 #include <propkey.h>
 
@@ -81,7 +81,7 @@ CEngineDoc::CEngineDoc() noexcept
 	Standard_Real theValue = 70;
 	m_viewcube->SetSize(55);
 	m_viewcube->SetColor(Quantity_NOC_GRAY75);
-	m_viewcube->SetFontHeight(12);
+	//m_viewcube->SetFontHeight(12);
 
 	m_context->Display(m_viewcube, true);
 	//	End ViewCube
@@ -89,22 +89,22 @@ CEngineDoc::CEngineDoc() noexcept
 
 	//============================================
 	//	Show triedron
-	auto axis = new Geom_Axis2Placement(gp::XOY());
-	m_triedron = new AIS_Trihedron(axis);
-	m_triedron->SetDatumDisplayMode(Prs3d_DM_WireFrame);
-	m_triedron->SetDrawArrows(true);
-	m_triedron->Attributes()->DatumAspect()->LineAspect(Prs3d_DP_XAxis)->SetWidth(2.5);
-	m_triedron->Attributes()->DatumAspect()->LineAspect(Prs3d_DP_YAxis)->SetWidth(2.5);
-	m_triedron->Attributes()->DatumAspect()->LineAspect(Prs3d_DP_ZAxis)->SetWidth(2.5);
-	m_triedron->SetDatumPartColor(Prs3d_DP_XAxis, Quantity_NOC_RED2);
-	m_triedron->SetDatumPartColor(Prs3d_DP_YAxis, Quantity_NOC_GREEN2);
-	m_triedron->SetDatumPartColor(Prs3d_DP_ZAxis, Quantity_NOC_BLUE2);
-	m_triedron->SetLabel(Prs3d_DP_XAxis, "X");
-	m_triedron->SetLabel(Prs3d_DP_YAxis, "Y");
-	m_triedron->SetLabel(Prs3d_DP_ZAxis, "Z");
-	m_triedron->SetSize(60);
-	m_triedron->SetInfiniteState(true);
-	m_context->Display(m_triedron, Standard_False);
+	//auto axis = new Geom_Axis2Placement(gp::XOY());
+	//m_triedron = new AIS_Trihedron(axis);
+	//m_triedron->SetDatumDisplayMode(Prs3d_DM_WireFrame);
+	//m_triedron->SetDrawArrows(true);
+	//m_triedron->Attributes()->DatumAspect()->LineAspect(Prs3d_DP_XAxis)->SetWidth(2.5);
+	//m_triedron->Attributes()->DatumAspect()->LineAspect(Prs3d_DP_YAxis)->SetWidth(2.5);
+	//m_triedron->Attributes()->DatumAspect()->LineAspect(Prs3d_DP_ZAxis)->SetWidth(2.5);
+	//m_triedron->SetDatumPartColor(Prs3d_DP_XAxis, Quantity_NOC_RED2);
+	//m_triedron->SetDatumPartColor(Prs3d_DP_YAxis, Quantity_NOC_GREEN2);
+	//m_triedron->SetDatumPartColor(Prs3d_DP_ZAxis, Quantity_NOC_BLUE2);
+	//m_triedron->SetLabel(Prs3d_DP_XAxis, "X");
+	//m_triedron->SetLabel(Prs3d_DP_YAxis, "Y");
+	//m_triedron->SetLabel(Prs3d_DP_ZAxis, "Z");
+	//m_triedron->SetSize(60);
+	//m_triedron->SetInfiniteState(true);
+	//m_context->Display(m_triedron, Standard_False);
 	//	end triedron
 	//=============================================
 	
@@ -260,15 +260,15 @@ void CEngineDoc::DrawSampleProfile()
 	m_context->Display(shape, true);
 }
 
-void CEngineDoc::DrawFillet()
-{
-	auto liner = new C2dFillet();
-	TopoDS_Shape revolveShape = liner->MkFilletProfile();
-
-	Handle(AIS_Shape) shape = new AIS_Shape(revolveShape);
-	AddAISshape(shape->Shape());
-	m_context->Display(shape, true);
-}
+//void CEngineDoc::DrawFillet()
+//{
+//	auto liner = new C2dFillet();
+//	TopoDS_Shape revolveShape = liner->MkFilletProfile();
+//
+//	Handle(AIS_Shape) shape = new AIS_Shape(revolveShape);
+//	AddAISshape(shape->Shape());
+//	m_context->Display(shape, true);
+//}
 
 void CEngineDoc::DrawCircle()
 {
@@ -314,24 +314,24 @@ void CEngineDoc::DrawCircle()
 	Handle(AIS_Shape) shape_lines = new AIS_Shape(TopoDS_Edge());
 
 	//	Dimensions test
-	Handle(Prs3d_TextAspect) aTextAspect = new Prs3d_TextAspect();
-	aTextAspect->SetHeight(25);
-	aTextAspect->SetFont(Font_NOF_ASCII_MONO);
-	aTextAspect->SetColor(Quantity_NOC_CYAN);
+	//Handle(Prs3d_TextAspect) aTextAspect = new Prs3d_TextAspect();
+	//aTextAspect->SetHeight(25);
+	//aTextAspect->SetFont(Font_NOF_ASCII_MONO);
+	//aTextAspect->SetColor(Quantity_NOC_CYAN);
 
-	AIS_TextLabel alabel;
-	Handle(Font_TextFormatter) tform = new Font_TextFormatter();
-	
-	TCollection_ExtendedString aString(L"Test");
-	alabel.SetTextFormatter(tform);
-	alabel.SetText(aString);
-	alabel.SetContext(m_context);
-	alabel.SetPosition(centerPoint_1);
-	alabel.SetDisplayType(Aspect_TODT_NORMAL);
-	alabel.SetFont(Font_NOF_ASCII_MONO);
+	//AIS_TextLabel alabel;
+	//Handle(Font_TextFormatter) tform = new Font_TextFormatter();
+	//
+	//TCollection_ExtendedString aString(L"Test");
+	//alabel.SetTextFormatter(tform);
+	//alabel.SetText(aString);
+	//alabel.SetContext(m_context);
+	//alabel.SetPosition(centerPoint_1);
+	//alabel.SetDisplayType(Aspect_TODT_NORMAL);
+	//alabel.SetFont(Font_NOF_ASCII_MONO);
 
 	//Brep font
-	Font_BRepFont aBRepFont("C:\Windows\Fonts\cour.ttf", 20);
+	Font_BRepFont aBRepFont("C:\\Windows\\Fonts\\cour.ttf", 20);
 	aBRepFont.FTFont();
 	Font_BRepTextBuilder aTextBuilder;
 	TopoDS_Shape Text_Shape = aTextBuilder.Perform(aBRepFont, NCollection_String("my text"));
@@ -341,19 +341,19 @@ void CEngineDoc::DrawCircle()
 
 	Handle(PrsDim_RadiusDimension) theCircle_1Radius = new PrsDim_RadiusDimension(circle_1);
 	Handle(PrsDim_RadiusDimension) theShape_LinesRadius = new PrsDim_RadiusDimension(anArc1);
-	Handle(Prs3d_DimensionAspect) theDimensionAspect = new Prs3d_DimensionAspect();
-	theDimensionAspect->SetTextAspect(aTextAspect);
-	theDimensionAspect->MakeArrows3d(false);
-	theDimensionAspect->MakeUnitsDisplayed(true);
+	//Handle(Prs3d_DimensionAspect) theDimensionAspect = new Prs3d_DimensionAspect();
+	////theDimensionAspect->SetTextAspect(aTextAspect);
+	//theDimensionAspect->MakeArrows3d(false);
+	//theDimensionAspect->MakeUnitsDisplayed(true);
 
 	//theDimensionAspect->MakeText3d(true);	//	this crashes with bounding box void TODO
 
 	Standard_Real anArc1Radius = theShape_LinesRadius->GetValue(); //	returns 20 as expected
 	
-	theShape_LinesRadius->SetDimensionAspect(theDimensionAspect);
+	//theShape_LinesRadius->SetDimensionAspect(theDimensionAspect);
 	theShape_LinesRadius->SetTextPosition(aVertLinePnt1);
 	theShape_LinesRadius->SetFlyout(50);
-	auto mx = theShape_LinesRadius->DimensionAspect();
+	//auto mx = theShape_LinesRadius->DimensionAspect();
 
 	shape_1->SetShape(makeEdge_1.Edge());
 	shape_2->SetShape(makeEdge_2.Edge());
@@ -481,7 +481,7 @@ void CEngineDoc::AddShape(const TopoDS_Shape& shape)
 	m_shapes.push_back(shape);
 	//auto shapeslist = ShapeList();
 
-	for (auto sh : m_shapes)
+	for (TopoDS_Shape sh : m_shapes)
 	{
 		Handle(AIS_Shape) shape = new AIS_Shape(sh);
 		m_context->Display(shape, true);
@@ -506,7 +506,7 @@ void CEngineDoc::AddAISshape(AIS_Shape theShape)
 
 	//auto zmat = theShape.Material();
 
-	for (auto aisShape : m_AISshapes)
+	for (AIS_Shape aisShape : m_AISshapes)
 	{
 		Handle(AIS_Shape) shape = new AIS_Shape(aisShape);
 		m_context->Display(shape, true);
@@ -519,7 +519,7 @@ void CEngineDoc::AddAISshape(AIS_Shape theShape)
 	{
 		Handle(V3d_Light) aCurrentLight = aLightIter.Value();
 		bool toSkip = false;
-	std:string aType = "UnKnown";
+	std::string aType = "UnKnown";
 		unsigned int aImageTexture = 0;
 
 		switch (aCurrentLight->Type())
@@ -574,32 +574,32 @@ void CEngineDoc::AdjustSelectionStyle(const Handle(AIS_InteractiveContext)& m_co
 {
 	////////////////////////////////////////////////////////////////////////////
 //	Prs3d_Drawer test TODO
-	Handle(Prs3d_Drawer) selDrawer = new Prs3d_Drawer();
-	//
-	selDrawer->SetLink(m_context->DefaultDrawer());
-	selDrawer->SetFaceBoundaryDraw(true);
-	selDrawer->SetDisplayMode(1);	//	Shaded
-	selDrawer->SetTransparency(0.5f);
-	selDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
-	selDrawer->SetColor(Quantity_NOC_GOLD);
-	selDrawer->SetBasicFillAreaAspect(new Graphic3d_AspectFillArea3d());
+	//Handle(Prs3d_Drawer) selDrawer = new Prs3d_Drawer();
+	////
+	//selDrawer->SetLink(m_context->DefaultDrawer());
+	//selDrawer->SetFaceBoundaryDraw(true);
+	//selDrawer->SetDisplayMode(1);	//	Shaded
+	//selDrawer->SetTransparency(0.5f);
+	//selDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
+	//selDrawer->SetColor(Quantity_NOC_GOLD);
+	//selDrawer->SetBasicFillAreaAspect(new Graphic3d_AspectFillArea3d());
 
-	//	Adjust fill area aspect
-	const Handle(Graphic3d_AspectFillArea3d)& fillArea = selDrawer->BasicFillAreaAspect();
-	//
-	fillArea->SetInteriorColor(Quantity_NOC_GOLD);
-	fillArea->SetBackInteriorColor(Quantity_NOC_GOLD);
-	//
-	fillArea->ChangeFrontMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
-	fillArea->ChangeFrontMaterial().SetTransparency(0.4f);
-	fillArea->ChangeBackMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
-	fillArea->ChangeBackMaterial().SetTransparency(0.4f);
+	////	Adjust fill area aspect
+	//const Handle(Graphic3d_AspectFillArea3d)& fillArea = selDrawer->BasicFillAreaAspect();
+	////
+	//fillArea->SetInteriorColor(Quantity_NOC_GOLD);
+	//fillArea->SetBackInteriorColor(Quantity_NOC_GOLD);
+	////
+	//fillArea->ChangeFrontMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
+	//fillArea->ChangeFrontMaterial().SetTransparency(0.4f);
+	//fillArea->ChangeBackMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
+	//fillArea->ChangeBackMaterial().SetTransparency(0.4f);
 
-	selDrawer->UnFreeBoundaryAspect()->SetWidth(2.0);
-	//	Update AIS context
-	m_context->SetHighlightStyle(Prs3d_TypeOfHighlight_LocalSelected, selDrawer);
+	////selDrawer->UnFreeBoundaryAspect()->SetWidth(2.0);
+	////	Update AIS context
+	//m_context->SetHighlightStyle(Prs3d_TypeOfHighlight_LocalSelected, selDrawer);
 
-	m_context->SetDefaultDrawer(selDrawer);
+	//m_context->SetDefaultDrawer(selDrawer);
 	//	end Prs3d
 	///////////////////////////////////////////////////////////////////////////////
 }

@@ -192,19 +192,19 @@ void CEngineView::OnInitialUpdate()
 
 	//=============================================================================
 	//	Sky Dome
-	BOOL skyDomeOn = false;
-	if (skyDomeOn)
-	{
-		gp_Dir theSunDirection;
-		gp_XYZ theXYZ(-300, 100, 0);
-		theSunDirection.SetXYZ(theXYZ);
-		Standard_ShortReal theCloudiness = 0.08;
-		Standard_ShortReal theTime = 8;
-		Standard_ShortReal theFogginess = 0.8;
-		Standard_Integer theSize = 1800;
-		const Aspect_SkydomeBackground theAspect = Aspect_SkydomeBackground(theSunDirection, theCloudiness, theTime, theFogginess, theSize);
-		m_view->SetBackgroundSkydome(theAspect, true);
-	}
+	//BOOL skyDomeOn = false;
+	//if (skyDomeOn)
+	//{
+	//	gp_Dir theSunDirection;
+	//	gp_XYZ theXYZ(-300, 100, 0);
+	//	theSunDirection.SetXYZ(theXYZ);
+	//	Standard_ShortReal theCloudiness = 0.08;
+	//	Standard_ShortReal theTime = 8;
+	//	Standard_ShortReal theFogginess = 0.8;
+	//	Standard_Integer theSize = 1800;
+	//	const Aspect_SkydomeBackground theAspect = Aspect_SkydomeBackground(theSunDirection, theCloudiness, theTime, theFogginess, theSize);
+	//	m_view->SetBackgroundSkydome(theAspect, true);
+	//}
 	//============================================================================
 
 	//	have to turn off background color to see skydome

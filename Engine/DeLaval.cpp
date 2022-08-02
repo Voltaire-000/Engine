@@ -282,17 +282,17 @@ void DeLaval::OnSample()
 
 }
 
-void DeLaval::On2dFillet()
-{
-	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
-	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
-	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
-	auto activeWnd = pView->GetActiveWindow();
-	auto pDoc = pView->GetDocument();
-
-	pDoc->SetTitle(L"Fillet test");
-	pDoc->DrawFillet();
-}
+//void DeLaval::On2dFillet()
+//{
+//	CMDIFrameWndEx* pMainWndEx = (CMDIFrameWndEx*)AfxGetMainWnd();
+//	CFrameWnd* pChild = pMainWndEx->MDIGetActive();
+//	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
+//	auto activeWnd = pView->GetActiveWindow();
+//	auto pDoc = pView->GetDocument();
+//
+//	pDoc->SetTitle(L"Fillet test");
+//	pDoc->DrawFillet();
+//}
 
 void DeLaval::OnSketchCircle()
 {
