@@ -48,6 +48,19 @@ CEngineApp::CEngineApp() noexcept
 
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
+
+}
+
+// The one and only CEngineApp object
+
+CEngineApp theApp;
+
+
+// CEngineApp initialization
+
+BOOL CEngineApp::InitApplication()
+{
+
 	static Handle(Aspect_DisplayConnection) displayConnection;
 	if (displayConnection.IsNull())
 		displayConnection = new Aspect_DisplayConnection();
@@ -62,17 +75,7 @@ CEngineApp::CEngineApp() noexcept
 			AfxMessageBox(IDP_DRIVER_INIT_FAILED);
 		}
 	}
-}
 
-// The one and only CEngineApp object
-
-CEngineApp theApp;
-
-
-// CEngineApp initialization
-
-BOOL CEngineApp::InitApplication()
-{
 	// InitCommonControlsEx() is required on Windows XP if an application
 	// manifest specifies use of ComCtl32.dll version 6 or later to enable
 	// visual styles.  Otherwise, any window creation will fail.
