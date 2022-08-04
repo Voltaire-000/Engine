@@ -16,6 +16,7 @@ public:
 	//	Attributes
 protected:
 	// TODO check if right
+	// fix incomplete type DeLaval
 	DeLavalBase				m_wndDeLaval;
 	CImageList				m_Images;
 	int						m_nMyDeLavalY;

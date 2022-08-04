@@ -314,19 +314,9 @@ void CEngineDoc::DrawCircle()
 
 	Handle(PrsDim_RadiusDimension) theCircle_1Radius = new PrsDim_RadiusDimension(circle_1);
 	Handle(PrsDim_RadiusDimension) theShape_LinesRadius = new PrsDim_RadiusDimension(anArc1);
-	//Handle(Prs3d_DimensionAspect) theDimensionAspect = new Prs3d_DimensionAspect();
-	////theDimensionAspect->SetTextAspect(aTextAspect);
-	//theDimensionAspect->MakeArrows3d(false);
-	//theDimensionAspect->MakeUnitsDisplayed(true);
 
-	//theDimensionAspect->MakeText3d(true);	//	this crashes with bounding box void TODO
-
-	Standard_Real anArc1Radius = theShape_LinesRadius->GetValue(); //	returns 20 as expected
-
-	//theShape_LinesRadius->SetDimensionAspect(theDimensionAspect);
 	theShape_LinesRadius->SetTextPosition(aVertLinePnt1);
 	theShape_LinesRadius->SetFlyout(50);
-	//auto mx = theShape_LinesRadius->DimensionAspect();
 
 	shape_1->SetShape(makeEdge_1.Edge());
 	shape_2->SetShape(makeEdge_2.Edge());
@@ -340,9 +330,6 @@ void CEngineDoc::DrawCircle()
 	m_context->Display(shape_lines, true);
 	m_context->Display(theCircle_1Radius, true);
 	m_context->Display(theShape_LinesRadius, true);
-
-
-
 }
 
 void CEngineDoc::MakeCut()
