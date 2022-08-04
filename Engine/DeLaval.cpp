@@ -168,13 +168,13 @@ int DeLaval::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 	//	end Properties list
 	//===================================================
-	
+
 	//===================================================
 	//	create Boolean button id 6
-	if(!m_wndBooleanButton.Create(L"Cut shapes", WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, rectDummy, this, IDC_BUTTON_CUT))
+	if (!m_wndBooleanButton.Create(L"Cut shapes", WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, rectDummy, this, IDC_BUTTON_CUT))
 	{
 		TRACE0("Failed to create Boolean button\n");
-			return -1;
+		return -1;
 	}
 	//	end Boolean button
 	//===================================================
@@ -208,11 +208,11 @@ void DeLaval::OnSetFocus(CWnd* pOldWnd)
 
 void DeLaval::OnCreateProfile()
 {
-	int pcount =		m_wndPropertyList.GetPropertyCount();
+	int pcount = m_wndPropertyList.GetPropertyCount();
 	int subitemscount = m_wndPropertyList.GetProperty(0)->GetSubItemsCount();
-	int theRadius =		m_wndPropertyList.GetProperty(0)->GetSubItem(0)->GetValue().intVal;
-	int theThickness =	m_wndPropertyList.GetProperty(0)->GetSubItem(1)->GetValue().intVal;
-	auto theLength =	m_wndPropertyList.GetProperty(0)->GetSubItem(2)->GetValue().intVal;
+	int theRadius = m_wndPropertyList.GetProperty(0)->GetSubItem(0)->GetValue().intVal;
+	int theThickness = m_wndPropertyList.GetProperty(0)->GetSubItem(1)->GetValue().intVal;
+	auto theLength = m_wndPropertyList.GetProperty(0)->GetSubItem(2)->GetValue().intVal;
 
 	auto selectedMaterial = m_wndPropertyList.GetProperty(0)->GetSubItem(3);
 	auto materialValue = selectedMaterial->GetValue();
@@ -225,17 +225,28 @@ void DeLaval::OnCreateProfile()
 	auto activeWnd = pView->GetActiveWindow();
 	auto pDoc = pView->GetDocument();
 
-	Graphic3d_NameOfMaterial theMaterial;
+	Graphic3d_NameOfMaterial theMaterial(Graphic3d_NameOfMaterial_DEFAULT);
 
-	//	TODO change to switch statement??
-	if (strMaterialName == "Copper")
+	switch (theMaterial)
+	{
+	case Graphic3d_NameOfMaterial_Copper:
 	{
 		theMaterial = Graphic3d_NameOfMaterial_Copper;
+		break;
+	}
+
+	{
+	case Graphic3d_NameOfMaterial_Steel:
+		theMaterial = Graphic3d_NameOfMaterial_Steel;
+		break;
+	}
+
+	default:
+		theMaterial = Graphic3d_NameOfMaterial_DEFAULT;
+		break;
 
 	}
-	else {
-		theMaterial = Graphic3d_NameOfMaterial_Steel;
-	}
+
 	pDoc->SetTitle(L"Chamber Liner");
 	pDoc->DrawLiner(theRadius, theThickness, theLength, 180, theMaterial);
 
@@ -248,7 +259,7 @@ void DeLaval::OnCut()
 	CEngineView* pView = (CEngineView*)pChild->GetActiveView();
 	auto activeWnd = pView->GetActiveWindow();
 	auto pDoc = pView->GetDocument();
-	
+
 	pDoc->MakeCut();
 	pDoc->SetTitle(L"Cut chamber");
 
@@ -278,7 +289,7 @@ void DeLaval::OnSample()
 
 	pDoc->SetTitle(L"Test profile");
 	pDoc->DrawSampleProfile();
-	
+
 
 }
 

@@ -37,7 +37,7 @@ CEngineDoc::CEngineDoc() noexcept
 {
 	static Handle(Aspect_DisplayConnection) displayConnection;
 	if (displayConnection.IsNull())
-			displayConnection = new Aspect_DisplayConnection();
+		displayConnection = new Aspect_DisplayConnection();
 	Handle(OpenGl_GraphicDriver) graphicDriver = new OpenGl_GraphicDriver(displayConnection, false);
 
 	/// <summary>
@@ -137,7 +137,7 @@ CEngineDoc::CEngineDoc() noexcept
 	m_context->SetDisplayMode(AIS_Shaded, true);
 	//m_context->SetDisplayMode(AIS_WireFrame, true);
 	//=============================================================================
-	
+
 }
 
 CEngineDoc::~CEngineDoc()
@@ -184,40 +184,40 @@ void CEngineDoc::DrawLiner(const Standard_Real theRadius, const Standard_Real th
 	BOOL shapeAdded = false;
 	//	TODO inherit from BRepBuilderAPI_MakeShape() ?? Probably not needed
 
-		TopoDS_Shape liner = MakeLiner(theRadius, theThickness, theLength, theAngle);
-		
-		//BRepPrimAPI_MakeCylinder cyl(30, 60);
-		//cyl.Build();
-		//TopoDS_Shape resultCyl = cyl.Shape();
-		//Handle(AIS_Shape) cylShape = new AIS_Shape(resultCyl);
-		//cylShape->SetMaterial(theMaterial);
-		
+	TopoDS_Shape liner = MakeLiner(theRadius, theThickness, theLength, theAngle);
 
-		Handle(AIS_Shape) shape = new AIS_Shape(liner);
+	//BRepPrimAPI_MakeCylinder cyl(30, 60);
+	//cyl.Build();
+	//TopoDS_Shape resultCyl = cyl.Shape();
+	//Handle(AIS_Shape) cylShape = new AIS_Shape(resultCyl);
+	//cylShape->SetMaterial(theMaterial);
 
-		auto matShape = shape->Material();
-		
-		if (!shapeAdded)
-		{
-			shape->SetMaterial(theMaterial);
 
-			auto xmat = shape->Material();
+	Handle(AIS_Shape) shape = new AIS_Shape(liner);
 
-			//	TODO should be adding an AIS_Shape here not a TopoDS_Shape
-			
-			//AddShape(liner);
-			AddAISshape(shape->Shape());
-			//AddShape(shape);
+	auto matShape = shape->Material();
 
-			//m_context->SetDisplayMode(AIS_Shaded, true);
-			//m_context->SetAutomaticHilight(Standard_True);
-			//m_context->Activate(4, true);
-			//m_context->Activate(2, true);
-			//m_context->Activate(shape);
-			//shapeAdded = true;
-		}
-		m_context->Display(shape, true);
-		//m_context->Display(cylShape, true);
+	if (!shapeAdded)
+	{
+		shape->SetMaterial(theMaterial);
+
+		auto xmat = shape->Material();
+
+		//	TODO should be adding an AIS_Shape here not a TopoDS_Shape
+
+		//AddShape(liner);
+		AddAISshape(shape->Shape());
+		//AddShape(shape);
+
+		//m_context->SetDisplayMode(AIS_Shaded, true);
+		//m_context->SetAutomaticHilight(Standard_True);
+		//m_context->Activate(4, true);
+		//m_context->Activate(2, true);
+		//m_context->Activate(shape);
+		//shapeAdded = true;
+	}
+	m_context->Display(shape, true);
+	//m_context->Display(cylShape, true);
 
 
 }
@@ -322,7 +322,7 @@ void CEngineDoc::DrawCircle()
 	//theDimensionAspect->MakeText3d(true);	//	this crashes with bounding box void TODO
 
 	Standard_Real anArc1Radius = theShape_LinesRadius->GetValue(); //	returns 20 as expected
-	
+
 	//theShape_LinesRadius->SetDimensionAspect(theDimensionAspect);
 	theShape_LinesRadius->SetTextPosition(aVertLinePnt1);
 	theShape_LinesRadius->SetFlyout(50);
@@ -331,7 +331,7 @@ void CEngineDoc::DrawCircle()
 	shape_1->SetShape(makeEdge_1.Edge());
 	shape_2->SetShape(makeEdge_2.Edge());
 	shape_lines->SetShape(arcWire1);
-	
+
 	//Prs3d_Text::Draw(aPresentation(), aTextAspect, aString, centerPoint_1);
 
 	//m_context->Display(ais_shape_text, true);
@@ -359,17 +359,17 @@ void CEngineDoc::MakeCut()
 	//auto S1Matname = S1shape->Material();
 
 	auto S1MatName = m_AISshapes.at(1).Material();
-	
+
 	BRepAlgoAPI_Cut cut(S2, S1);
 	cut.Build();
 	TopoDS_Shape aResult = cut.Shape();
-	
+
 	Handle(AIS_Shape) shape = new AIS_Shape(aResult);
 
 	//shape->SetMaterial(S1MatName);
 
 	auto xmat = shape->Material();
-	
+
 	//auto matname = shape->Material();
 	shape->SetMaterial(Graphic3d_NameOfMaterial_Copper);
 
@@ -379,15 +379,15 @@ void CEngineDoc::MakeCut()
 
 	//	shapeAdded = true;
 	//}
-	
+
 	//AddShape(aResult);
 	AddAISshape(shape->Shape());
-	
+
 	//auto mShapeList = ShapeList();
 
 	//m_context->Erase(, true);
 	m_context->EraseAll(true);
-	
+
 	m_context->Display(shape, true);
 	//	sensitive to the order in which these are placed
 	m_context->Activate(2, true);
@@ -459,12 +459,12 @@ void CEngineDoc::AddShape(const TopoDS_Shape& shape)
 		Handle(AIS_Shape) shape = new AIS_Shape(sh);
 		m_context->Display(shape, true);
 		m_context->SetDisplayMode(shape, AIS_Shaded, true);
-		
+
 	}
 	//	this adds edges visibility
 	AdjustSelectionStyle(m_context);
 	m_context->Activate(2, true);
-	
+
 	//m_context->Display(m_viewcube, true);
 }
 
@@ -492,7 +492,7 @@ void CEngineDoc::AddAISshape(AIS_Shape theShape)
 	{
 		Handle(V3d_Light) aCurrentLight = aLightIter.Value();
 		bool toSkip = false;
-	std::string aType = "UnKnown";
+		std::string aType = "UnKnown";
 		unsigned int aImageTexture = 0;
 
 		switch (aCurrentLight->Type())
@@ -522,10 +522,11 @@ void CEngineDoc::AddAISshape(AIS_Shape theShape)
 		default:
 			break;
 		}
-	if (toSkip)
-	{
-		continue;
-	}
+		if (toSkip)
+		{
+			continue;
+		}
+
 
 	}
 
@@ -545,34 +546,33 @@ std::vector<TopoDS_Shape> CEngineDoc::ShapeList()
 
 void CEngineDoc::AdjustSelectionStyle(const Handle(AIS_InteractiveContext)& m_context)
 {
-	////////////////////////////////////////////////////////////////////////////
-//	Prs3d_Drawer test TODO
-	//Handle(Prs3d_Drawer) selDrawer = new Prs3d_Drawer();
-	////
-	//selDrawer->SetLink(m_context->DefaultDrawer());
-	//selDrawer->SetFaceBoundaryDraw(true);
-	//selDrawer->SetDisplayMode(1);	//	Shaded
-	//selDrawer->SetTransparency(0.5f);
-	//selDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
-	//selDrawer->SetColor(Quantity_NOC_GOLD);
-	//selDrawer->SetBasicFillAreaAspect(new Graphic3d_AspectFillArea3d());
+	//================================================================================
+	//	Prs3d_Drawer
+	Handle(Prs3d_Drawer) selDrawer = new Prs3d_Drawer();
+	//
+	selDrawer->SetLink(m_context->DefaultDrawer());
+	selDrawer->SetFaceBoundaryDraw(true);
+	selDrawer->SetDisplayMode(1);	//	Shaded
+	selDrawer->SetTransparency(0.5f);
+	selDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
+	selDrawer->SetColor(Quantity_NOC_GOLD);
+	selDrawer->SetBasicFillAreaAspect(new Graphic3d_AspectFillArea3d());
 
-	////	Adjust fill area aspect
-	//const Handle(Graphic3d_AspectFillArea3d)& fillArea = selDrawer->BasicFillAreaAspect();
-	////
-	//fillArea->SetInteriorColor(Quantity_NOC_GOLD);
-	//fillArea->SetBackInteriorColor(Quantity_NOC_GOLD);
-	////
-	//fillArea->ChangeFrontMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
-	//fillArea->ChangeFrontMaterial().SetTransparency(0.4f);
-	//fillArea->ChangeBackMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
-	//fillArea->ChangeBackMaterial().SetTransparency(0.4f);
+	//	Adjust fill area aspect
+	const Handle(Graphic3d_AspectFillArea3d)& fillArea = selDrawer->BasicFillAreaAspect();
+	//
+	fillArea->SetInteriorColor(Quantity_NOC_GOLD);
+	fillArea->SetBackInteriorColor(Quantity_NOC_GOLD);
+	//
+	fillArea->ChangeFrontMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
+	fillArea->ChangeFrontMaterial().SetTransparency(0.4f);
+	fillArea->ChangeBackMaterial().SetMaterialName(Graphic3d_NOM_NEON_GNC);
+	fillArea->ChangeBackMaterial().SetTransparency(0.4f);
 
-	////selDrawer->UnFreeBoundaryAspect()->SetWidth(2.0);
-	////	Update AIS context
-	//m_context->SetHighlightStyle(Prs3d_TypeOfHighlight_LocalSelected, selDrawer);
-
-	//m_context->SetDefaultDrawer(selDrawer);
+	selDrawer->UnFreeBoundaryAspect()->SetWidth(2.0);
+	//	Update AIS context
+	m_context->SetHighlightStyle(Prs3d_TypeOfHighlight_LocalSelected, selDrawer);
+	m_context->SetDefaultDrawer(selDrawer);
 	//	end Prs3d
 	///////////////////////////////////////////////////////////////////////////////
 }
@@ -626,7 +626,7 @@ void CEngineDoc::OnDrawThumbnail(CDC& dc, LPRECT lprcBounds)
 	CString strText = _T("TODO: implement thumbnail drawing here");
 	LOGFONT lf;
 
-	CFont* pDefaultGUIFont = CFont::FromHandle((HFONT) GetStockObject(DEFAULT_GUI_FONT));
+	CFont* pDefaultGUIFont = CFont::FromHandle((HFONT)GetStockObject(DEFAULT_GUI_FONT));
 	pDefaultGUIFont->GetLogFont(&lf);
 	lf.lfHeight = 36;
 
@@ -657,7 +657,7 @@ void CEngineDoc::SetSearchContent(const CString& value)
 	}
 	else
 	{
-		CMFCFilterChunkValueImpl *pChunk = nullptr;
+		CMFCFilterChunkValueImpl* pChunk = nullptr;
 		ATLTRY(pChunk = new CMFCFilterChunkValueImpl);
 		if (pChunk != nullptr)
 		{
