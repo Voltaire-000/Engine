@@ -40,84 +40,63 @@ CEngineDoc::CEngineDoc() noexcept
 			displayConnection = new Aspect_DisplayConnection();
 	Handle(OpenGl_GraphicDriver) graphicDriver = new OpenGl_GraphicDriver(displayConnection, false);
 
-	//	Initialize V3d_Viewer
+	/// <summary>
+	/// Initialize V3d_Viewer
+	/// </summary>
+	/// <returns>new V3d_Viewer</returns>
 	m_viewer = new V3d_Viewer(graphicDriver);
+	//=============================================================================
 
-	//	create a new window over the existing window
+	/// <summary>
+	/// Initialize AIS_InteractiveContext
+	/// </summary>
+	/// <returns>new AIS_InteractiveContext</returns>
 	m_context = new AIS_InteractiveContext(m_viewer);
-	//m_context->DefaultDrawer();
-
 	//=============================================================================
-	//	Projection type
+
+	/// <summary>
+	/// Set DefaultType of View -- V3d_PERSPECTIVE or V3d_ORTHOGRAPHIC
+	/// </summary>
+	/// <returns>void</returns>
 	m_viewer->SetDefaultTypeOfView(V3d_PERSPECTIVE);
-
 	//=============================================================================
 
-	///////////////////////////////////////////////////////////////////////////////
+	//=============================================================================
 	//	Default Background
 	Quantity_Color theColor1 = Quantity_NOC_LIGHTSLATEGRAY;
 	Quantity_Color theColor2 = Quantity_NOC_LIGHTBLUE;
 	Aspect_GradientFillMethod theFillStyle = Aspect_GradientFillMethod_Vertical;
-
 	m_viewer->SetDefaultBgGradientColors(theColor1, theColor2, theFillStyle);
 	//=============================================================================
-	///////////////////////////////////////////////////////////////////////////////
 
-	////////////////////////////////////////////////////////////////////////////////
-	//	GRID
+	//=============================================================================
+	//	Set up the GRID
 	Aspect_GridType aGridType = Aspect_GT_Rectangular;
 	Aspect_GridDrawMode aGridDrawMode = Aspect_GDM_Lines;
 	m_viewer->SetRectangularGridValues(0, 0, 10, 10, 0);
 	Handle(Graphic3d_AspectMarker3d) aMarker = new Graphic3d_AspectMarker3d(Aspect_TOM_BALL, Quantity_NOC_BLUE4, 2);
 	m_viewer->SetGridEcho(aMarker);
 	m_viewer->ActivateGrid(aGridType, aGridDrawMode);
-	//	end GRID
-	/////////////////////////////////////////////////////////////////////////////
+	//=============================================================================
 
-	////////////////////////////////////////////////
+	//=============================================================================
 	// ViewCube
 	m_viewcube = new AIS_ViewCube();
 	m_viewcube->SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_TriedronPers, Aspect_TOTP_RIGHT_UPPER, Graphic3d_Vec2i(100, 100)));
 	Standard_Real theValue = 70;
 	m_viewcube->SetSize(55);
+	m_viewcube->SetFontHeight(12);
 	m_viewcube->SetColor(Quantity_NOC_GRAY57);
-	//m_viewcube->SetFontHeight(12);
-
 	m_context->Display(m_viewcube, true);
-	//	End ViewCube
-	///////////////////////////////////////////////
+	//=============================================================================
 
-	//============================================
-	//	Show triedron
-	//auto axis = new Geom_Axis2Placement(gp::XOY());
-	//m_triedron = new AIS_Trihedron(axis);
-	//m_triedron->SetDatumDisplayMode(Prs3d_DM_WireFrame);
-	//m_triedron->SetDrawArrows(true);
-	//m_triedron->Attributes()->DatumAspect()->LineAspect(Prs3d_DP_XAxis)->SetWidth(2.5);
-	//m_triedron->Attributes()->DatumAspect()->LineAspect(Prs3d_DP_YAxis)->SetWidth(2.5);
-	//m_triedron->Attributes()->DatumAspect()->LineAspect(Prs3d_DP_ZAxis)->SetWidth(2.5);
-	//m_triedron->SetDatumPartColor(Prs3d_DP_XAxis, Quantity_NOC_RED2);
-	//m_triedron->SetDatumPartColor(Prs3d_DP_YAxis, Quantity_NOC_GREEN2);
-	//m_triedron->SetDatumPartColor(Prs3d_DP_ZAxis, Quantity_NOC_BLUE2);
-	//m_triedron->SetLabel(Prs3d_DP_XAxis, "X");
-	//m_triedron->SetLabel(Prs3d_DP_YAxis, "Y");
-	//m_triedron->SetLabel(Prs3d_DP_ZAxis, "Z");
-	//m_triedron->SetSize(60);
-	//m_triedron->SetInfiniteState(true);
-	//m_context->Display(m_triedron, Standard_False);
-	//	end triedron
-	//=============================================
-	
-	///////////////////////////////////////////////////
-	//	Plane test
-	//=================================================
+	//	Plane test trihedron size 50
+	//=============================================================================
 	//m_viewer->DisplayPrivilegedPlane(true, 50);
-
-	//=================================================
 
 	///////////////////////////////////////////////
 	//	Lighting
-	//=========================================
+	//=============================================================================
 	//	Directional light
 	Handle(V3d_DirectionalLight) LightDir_1 = new V3d_DirectionalLight(V3d_XposYposZpos, Quantity_Color(Quantity_NOC_WHITE), 0);
 	LightDir_1->SetDirection(10.0, 0.0, 100.0);
@@ -125,7 +104,7 @@ CEngineDoc::CEngineDoc() noexcept
 	LightDir_1->SetIntensity(15.0);
 	m_viewer->AddLight(LightDir_1);
 	m_viewer->SetLightOn(LightDir_1);
-	//=========================================
+	//=============================================================================
 	//	Directional light
 	Handle(V3d_DirectionalLight) LightDir_2 = new V3d_DirectionalLight();
 	LightDir_2->SetDirection(0.0, 100, -100.0);
@@ -133,8 +112,8 @@ CEngineDoc::CEngineDoc() noexcept
 	LightDir_2->SetIntensity(15.0);
 	m_viewer->AddLight(LightDir_2);
 	m_viewer->SetLightOn(LightDir_2);
-	//=========================================
-	//=========================================
+	//=============================================================================
+	//=============================================================================
 	//	Positional light
 	gp_Pnt thePos(0, 100, 0);
 	Handle(V3d_PositionalLight)	LightPositional_1 = new V3d_PositionalLight(thePos);
@@ -142,28 +121,22 @@ CEngineDoc::CEngineDoc() noexcept
 	//LightPositional_1->SetCastShadows(TRUE);	//	setting this will cause crash
 	m_viewer->AddLight(LightPositional_1);
 	m_viewer->SetLightOn(LightPositional_1);
-	//=========================================
+	//=============================================================================
 	//	Ambient light
 	Handle(V3d_AmbientLight) LightAmb = new V3d_AmbientLight();
 	LightAmb->SetIntensity(2.0);
 	//LightAmb->SetCastShadows(TRUE);	// setting this will cause crash
 	m_viewer->AddLight(LightAmb);
 	m_viewer->SetLightOn(LightAmb);
-	//	end Lighting
+	//=============================================================================
+	// 	End Lighting
 	/////////////////////////////////////////////
 
+	//=============================================================================
+	//	Shading Mode AIS_Shaded or AIS_WireFrame
 	m_context->SetDisplayMode(AIS_Shaded, true);
 	//m_context->SetDisplayMode(AIS_WireFrame, true);
-	m_context->SetAutomaticHilight(Standard_True);
-
-	/////////////////////////////////////////////
-	// 
-	//	Set selection modes
-	//m_context->Activate(4, true);
-	//m_context->Activate(2, true);
-	m_context->Activate(m_viewcube);
-	//
-	/////////////////////////////////////////////
+	//=============================================================================
 	
 }
 
