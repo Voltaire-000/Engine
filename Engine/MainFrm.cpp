@@ -5,6 +5,7 @@
 #include "pch.h"
 #include "Engine_App.h"
 #include "MainFrm.h"
+#include "dwmapi.h"
 
 // CMainFrame
 
